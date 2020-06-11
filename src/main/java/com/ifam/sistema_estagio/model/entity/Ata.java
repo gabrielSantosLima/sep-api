@@ -9,6 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -16,47 +17,35 @@ import javax.persistence.Table;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 @Entity
-@Table(name = "ata") 
+@Table(name = "ata")
 public class Ata {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@Column(name="media_total")
+
+	@Column(name = "media_total")
 	private Integer mediaTotal;
-	
-	@Column(name="descricao")
+
+	@Column(name = "descricao")
 	private String descricao;
-	
-	@Column(nullable = false, name = "tipo")
+
+	@Column(nullable = false, name = "tipo", length = 1)
 	@Enumerated(EnumType.STRING)
 	private TipoServico tipo;
 
-	//Fichas de avaliação
+	//Fichas de estágio - Opcional
 	@OneToMany(mappedBy = "ata")
-	private List<FichaDeAvaliacao> fichasDeAvaliacao;
+	private List<FichaDeAvaliacaoEstagio> fichasEstagio;
+
+	//Fichas de projeto - Opcional
+	@OneToMany(mappedBy = "ata")
+	private List<FichaDeAvaliacaoProjeto> fichasProjeto;
 	
-	//Banca
-	@OneToOne(mappedBy = "ata")
+	//Banca correspondente
+	@OneToOne
 	private Banca banca;
 	
-	public List<FichaDeAvaliacao> getFichasDeAvaliacao() {
-		return fichasDeAvaliacao;
-	}
-
-	public void setFichasDeAvaliacao(List<FichaDeAvaliacao> fichasDeAvaliacao) {
-		this.fichasDeAvaliacao = fichasDeAvaliacao;
-	}
-
-	public Banca getBanca() {
-		return banca;
-	}
-
-	public void setBanca(Banca banca) {
-		this.banca = banca;
-	}
-
 	public String getDescricao() {
 		return descricao;
 	}

@@ -1,16 +1,19 @@
 package com.ifam.sistema_estagio.model.entity;
 
+
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.Table;
+
+import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 @Entity
-@Table(name = "estagio")
+@DiscriminatorValue(TipoServico.Values.ESTAGIO)
 public class Estagio extends EstagioPCCT {
 
 	@Column(nullable = false, name = "local")
 	private String local;
-
+	
 	public String getLocal() {
 		return local;
 	}
@@ -18,5 +21,4 @@ public class Estagio extends EstagioPCCT {
 	public void setLocal(String local) {
 		this.local = local;
 	}
-
 }

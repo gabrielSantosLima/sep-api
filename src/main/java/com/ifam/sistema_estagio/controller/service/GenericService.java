@@ -1,13 +1,11 @@
 package com.ifam.sistema_estagio.controller.service;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
-@Service
 public class GenericService<E, Repository extends JpaRepository<E, Integer>>{
 
 	@Autowired

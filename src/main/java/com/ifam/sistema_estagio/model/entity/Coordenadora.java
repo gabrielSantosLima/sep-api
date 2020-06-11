@@ -10,14 +10,7 @@ import javax.persistence.Table;
 @Table(name = "coordenadora")
 public class Coordenadora extends Usuario{
 	
+	//Bancas
 	@OneToMany(mappedBy = "coordenadora")
 	private List<Banca> bancas;
-
-	public List<Banca> getBancas() {
-		return bancas;
-	}
-
-	public void setBancas(List<Banca> bancas) {
-		this.bancas = bancas;
-	}
 }

@@ -11,5 +11,5 @@ import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
 @Repository
 public interface BancaRepository extends JpaRepository<Banca, Integer>{
 
-	List<Banca> findByEstagioPCCT(EstagioPCCT estagioPcct);
+	List<Banca> findByEstagioPcct(EstagioPCCT estagioPcct);
 }

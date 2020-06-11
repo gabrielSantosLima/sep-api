@@ -14,4 +14,9 @@ public enum TipoServico {
 	public Integer getValor() {
 		return valor;
 	}
+	
+	public static class Values{
+		public static final String ESTAGIO = "0";
+		public static final String PROJETO = "1";
+	}
 }

@@ -1,7 +1,7 @@
 package com.ifam.sistema_estagio.controller;
 
-import java.util.List;
 
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -33,8 +33,8 @@ public class BancaController {
 	// List
 	@GetMapping("/")
 	public ModelAndView list(@PathVariable Integer id) {
-		ModelAndView modelAndView = new ModelAndView("");
-		EstagioPCCT estagioPcct = estagioPcctService.findByEstagioOrProjetoId(id);
+		ModelAndView modelAndView = new ModelAndView("index");
+		EstagioPCCT estagioPcct = estagioPcctService.findById(id).get();
 
 		if (estagioPcct == null) {
 			modelAndView.addObject("mensagem", "Id informado não contém registro!");
@@ -55,16 +55,15 @@ public class BancaController {
 	@PostMapping("/")
 	@ResponseBody
 	public ResponseEntity<Banca> create(@ModelAttribute("banca") Banca banca, @PathVariable Integer id) {
-		EstagioPCCT estagioPcct = estagioPcctService.findByEstagioOrProjetoId(id);
+		EstagioPCCT estagioPcct = estagioPcctService.findById(id).get();
 
 		if (banca == null) {
 			return ResponseEntity.badRequest().build();
 		}
-
-		banca.setEstagioPcct(estagioPcct);
-
+		
 		try {
-			Banca bancaRegistrada = service.create(banca);
+			Banca bancaIdentificada = service.setEstagioOrProjeto(banca, estagioPcct);
+			Banca bancaRegistrada = service.create(bancaIdentificada);
 
 			return ResponseEntity.ok(bancaRegistrada);
 		} catch (Exception e) {

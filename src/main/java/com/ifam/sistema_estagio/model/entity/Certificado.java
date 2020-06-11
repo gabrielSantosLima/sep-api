@@ -6,7 +6,8 @@ public class Certificado {
 
 	private String nome;
 
-	/*
+	/* Exemplo de complemento:
+	 * 
 	 * Certificamos para os devidos fins de direito que RONALDO COSTA DE FREITAS
 	 * atuou como Desenvolvedor Back-End no Projeto de Extensão - Fábrica de
 	 * Software do CMC, promovido pelo Instituto Federal de Educação, Ciência e

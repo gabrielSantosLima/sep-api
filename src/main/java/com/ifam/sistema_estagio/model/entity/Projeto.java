@@ -1,11 +1,13 @@
 package com.ifam.sistema_estagio.model.entity;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Table;
+
+import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 @Entity
-@Table(name = "projeto")
+@DiscriminatorValue(TipoServico.Values.PROJETO)
 public class Projeto extends EstagioPCCT{
 
 	@Column(nullable = false, name = "descricao")

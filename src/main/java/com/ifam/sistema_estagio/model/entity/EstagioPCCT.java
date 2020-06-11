@@ -4,6 +4,8 @@ import java.sql.Time;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,13 +15,19 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class EstagioPCCT {
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(
+	name = "tipo_servico",
+	discriminatorType = DiscriminatorType.STRING,
+	length = 1)
+@Table(name = "estagio_pcct")
+public class EstagioPCCT {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.TABLE)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(nullable = false, name = "titulo")
@@ -27,44 +35,20 @@ public abstract class EstagioPCCT {
 
 	@Column(nullable = false, name = "carga_horario")
 	private Time cargaHoraria;
-
-	//Um ou mais alunos participantes
-	@OneToMany(mappedBy = "estagioPCCT")
-	private List<Aluno> alunos;
 	
-	// Chefe ou orientador responsável
-	@ManyToOne
-	@JoinColumn(name = "professor_id", nullable = false)
-	private Professor responsavel;
-	
-	//Bancas cadastradas
+	//Bancas
 	@OneToMany(mappedBy = "estagioPcct")
 	private List<Banca> bancas;
+
+	//Alunos
+	@OneToMany(mappedBy = "estagioPcct")
+	private List<Aluno> alunos;
 	
-	public List<Aluno> getAlunos() {
-		return alunos;
-	}
-
-	public void setAlunos(List<Aluno> alunos) {
-		this.alunos = alunos;
-	}
-
-	public Professor getResponsavel() {
-		return responsavel;
-	}
-
-	public void setResponsavel(Professor responsavel) {
-		this.responsavel = responsavel;
-	}
-
-	public List<Banca> getBancas() {
-		return bancas;
-	}
-
-	public void setBancas(List<Banca> bancas) {
-		this.bancas = bancas;
-	}
-
+	//Reponsável
+	@ManyToOne
+	@JoinColumn(name = "responsavel_id")
+	private Professor responsavel;
+	
 	public Integer getId() {
 		return id;
 	}

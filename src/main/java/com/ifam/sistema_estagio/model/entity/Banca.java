@@ -1,7 +1,7 @@
 package com.ifam.sistema_estagio.model.entity;
 
-import java.util.Date;
 import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -48,66 +48,29 @@ public class Banca {
 	@Temporal(TemporalType.DATE)
 	private Date horaFinalizado;
 
+	//Ata
+	@OneToOne
+	private Ata ata;
+	
 	//Avaliadores da banca
 	@ManyToMany
-    @JoinTable(
-        name = "avaliadores",
-        joinColumns = @JoinColumn(name = "banca_id"),
-        inverseJoinColumns = @JoinColumn(name = "professor_id")
-    )
+	@JoinTable(
+		name = "avaliadores",
+    	joinColumns = @JoinColumn(name = "banca_id"),
+    	inverseJoinColumns = @JoinColumn(name = "professor_id")
+	)
 	private List<Professor> professores;
 	
-	// Estagio ou Projeto ao qual pertence
+	//Coordenadora
 	@ManyToOne
-	@JoinColumn(name = "estagio_id", nullable = false)
-	private EstagioPCCT estagioPcct;
-
-	// Ata gerada como avaliação do aluno
-	@OneToOne
-	@JoinColumn(name = "ata_id", nullable = false)
-	private Ata ata;
-
-	// Coordenadora organiza banca
-	@ManyToOne
-	@JoinColumn(name = "coordenadora_id", nullable = false)
+	@JoinColumn(name = "coordenadora_id")
 	private Coordenadora coordenadora;
 
-	public List<Professor> getProfessores() {
-		return professores;
-	}
-
-	public void setProfessores(List<Professor> professores) {
-		this.professores = professores;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public EstagioPCCT getEstagioPcct() {
-		return estagioPcct;
-	}
-
-	public void setEstagioPcct(EstagioPCCT estagioPcct) {
-		this.estagioPcct = estagioPcct;
-	}
-
-	public Ata getAta() {
-		return ata;
-	}
-
-	public void setAta(Ata ata) {
-		this.ata = ata;
-	}
-
-	public Coordenadora getCoordenadora() {
-		return coordenadora;
-	}
-
-	public void setCoordenadora(Coordenadora coordenadora) {
-		this.coordenadora = coordenadora;
-	}
-
+	//Estágio ou projeto que pertence
+	@ManyToOne
+	@JoinColumn(name = "estagio_pcct_id")
+	private EstagioPCCT estagioPcct;
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
