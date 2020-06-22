@@ -2,6 +2,8 @@ package com.ifam.sistema_estagio.controller;
 
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,13 +37,14 @@ public class BancaController {
 	@GetMapping("/")
 	public ModelAndView list(@PathVariable Integer id) {
 		ModelAndView modelAndView = new ModelAndView("index");
-		EstagioPCCT estagioPcct = estagioPcctService.findById(id).get();
+		Optional<EstagioPCCT> estagioPcct = estagioPcctService.findById(id);
 
-		if (estagioPcct == null) {
+		if (!estagioPcct.isPresent()) {
 			modelAndView.addObject("mensagem", "Id informado não contém registro!");
+			return modelAndView;
 		}
 
-		List<Banca> bancas = service.findByEstagioPcct(estagioPcct);
+		List<Banca> bancas = service.findByEstagioPcct(estagioPcct.get());
 
 		if (bancas.isEmpty()) {
 			modelAndView.addObject("mensagem", "Não há bancas cadastradas!");
@@ -52,17 +56,21 @@ public class BancaController {
 	}
 
 	// Create
-	@PostMapping("/")
+	@PostMapping(path = "/", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Banca> create(@ModelAttribute("banca") Banca banca, @PathVariable Integer id) {
-		EstagioPCCT estagioPcct = estagioPcctService.findById(id).get();
+	public ResponseEntity<Banca> create(@RequestBody Banca banca, @PathVariable Integer id) {
+		Optional<EstagioPCCT> estagioPcct = estagioPcctService.findById(id);
 
+		if (!estagioPcct.isPresent()) {
+			return ResponseEntity.badRequest().body(banca);
+		}
+		
 		if (banca == null) {
 			return ResponseEntity.badRequest().build();
 		}
 		
 		try {
-			Banca bancaIdentificada = service.setEstagioOrProjeto(banca, estagioPcct);
+			Banca bancaIdentificada = service.setEstagioOrProjeto(banca, estagioPcct.get());
 			Banca bancaRegistrada = service.create(bancaIdentificada);
 
 			return ResponseEntity.ok(bancaRegistrada);
@@ -74,8 +82,9 @@ public class BancaController {
 	}
 
 	// Update
-	@PutMapping("/{idBanca}")
-	public ResponseEntity<Banca> update(@ModelAttribute("banca") Banca banca, @PathVariable("id") Integer id,
+	@PutMapping(path = "/{idBanca}", consumes = "application/json", produces = "application/json")
+	@ResponseBody
+	public ResponseEntity<Banca> update(@RequestBody Banca banca, @PathVariable("id") Integer id,
 			@PathVariable("idBanca") Integer idBanca) {
 
 		if (banca == null) {
@@ -95,6 +104,7 @@ public class BancaController {
 
 	// Delete
 	@DeleteMapping("/{idBanca}")
+	@ResponseBody
 	public ResponseEntity<Banca> delete(@PathVariable("id") Integer id, 
 			@PathVariable("idBanca") Integer idBanca) {
 

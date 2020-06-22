@@ -7,4 +7,5 @@ import com.ifam.sistema_estagio.model.entity.Professor;
 
 @Repository
 public interface ProfessorRepository extends JpaRepository<Professor, Integer>{
+	Professor findByUsername(String username);
 }

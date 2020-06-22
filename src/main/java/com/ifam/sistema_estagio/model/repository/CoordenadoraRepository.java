@@ -7,5 +7,6 @@ import com.ifam.sistema_estagio.model.entity.Coordenadora;
 
 @Repository
 public interface CoordenadoraRepository extends JpaRepository<Coordenadora, Integer>{
-
+	
+	Coordenadora findByUsername(String username);
 }

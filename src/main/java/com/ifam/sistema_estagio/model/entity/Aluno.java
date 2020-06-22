@@ -1,6 +1,7 @@
 package com.ifam.sistema_estagio.model.entity;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -35,7 +36,15 @@ public class Aluno extends Usuario {
 	@ManyToOne
 	@JoinColumn(name = "estagioPcct_id")
 	private EstagioPCCT estagioPcct;
-	
+
+	public EstagioPCCT getEstagioPcct() {
+		return estagioPcct;
+	}
+
+	public void setEstagioPcct(EstagioPCCT estagioPcct) {
+		this.estagioPcct = estagioPcct;
+	}
+
 	public Date getDataConclusao() {
 		return this.dataConclusao;
 	}
