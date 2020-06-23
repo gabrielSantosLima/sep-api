@@ -14,8 +14,6 @@ public class EmailService {
 		EmailAttachment attachment = new EmailAttachment();
 		attachment.setPath(anexoUrl);
 		attachment.setDisposition(EmailAttachment.ATTACHMENT);
-//		attachment.setDescription("Picture of John");
-//		attachment.setName("John");
 
 		// Create the email message
 		MultiPartEmail email = new MultiPartEmail();
@@ -30,5 +28,10 @@ public class EmailService {
 
 		// send the email
 		email.send();
+	}
+	
+	public static String getMessageOfRescueAccount(String usuario, String url) {
+		return "Olá usuário "+ usuario +", Tudo bem?\nRecebemos um pedido para redefinir sua senha."
+				+ " \nClique neste link para redefinir suas informações: "+ url;
 	}
 }

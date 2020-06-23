@@ -72,4 +72,28 @@ public class EstagioPCCT {
 	public void setCargaHoraria(Time cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
 	}
+
+	public List<Banca> getBancas() {
+		return bancas;
+	}
+
+	public void setBancas(List<Banca> bancas) {
+		this.bancas = bancas;
+	}
+
+	public List<Aluno> getAlunos() {
+		return alunos;
+	}
+
+	public void setAlunos(List<Aluno> alunos) {
+		this.alunos = alunos;
+	}
+
+	public Professor getResponsavel() {
+		return responsavel;
+	}
+
+	public void setResponsavel(Professor responsavel) {
+		this.responsavel = responsavel;
+	}
 }
