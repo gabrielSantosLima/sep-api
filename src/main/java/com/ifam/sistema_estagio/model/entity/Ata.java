@@ -46,6 +46,30 @@ public class Ata {
 	@OneToOne
 	private Banca banca;
 	
+	public List<FichaDeAvaliacaoEstagio> getFichasEstagio() {
+		return fichasEstagio;
+	}
+
+	public void setFichasEstagio(List<FichaDeAvaliacaoEstagio> fichasEstagio) {
+		this.fichasEstagio = fichasEstagio;
+	}
+
+	public List<FichaDeAvaliacaoProjeto> getFichasProjeto() {
+		return fichasProjeto;
+	}
+
+	public void setFichasProjeto(List<FichaDeAvaliacaoProjeto> fichasProjeto) {
+		this.fichasProjeto = fichasProjeto;
+	}
+
+	public Banca getBanca() {
+		return banca;
+	}
+
+	public void setBanca(Banca banca) {
+		this.banca = banca;
+	}
+
 	public String getDescricao() {
 		return descricao;
 	}

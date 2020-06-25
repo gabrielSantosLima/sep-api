@@ -1,0 +1,145 @@
+html,body{
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;  
+}
+
+html{
+  /*  
+  Colocar depois como font-size: 1.4rem
+  Fontes: 1px = 0.75pt / 16px = 12pt  
+  */
+  font-size: 62.5%;
+}
+
+.container{
+  width: 100%;
+  height: 100%;
+}
+
+.container .content{
+  width: 100%;
+  height: 100%;
+  
+  background: linear-gradient(90deg, rgba(156, 36, 36, 0.92) 20.83%, #E4050E 83.85%);
+}
+
+.container .content .nav{
+  width: 100%;
+  height: 5%;
+  
+  position: absolute;
+  top: 0;
+  
+  background-color: #C4C4C4;
+}
+.container .content .content-box{
+  width: 100%;
+  height: 100%;
+  
+  display: flex;
+  justify-content: center;
+}
+.container .content .content-box .box{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  
+  width: 70%;
+  height: 90%;
+  
+  background: #E0E0E0;
+  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  
+  margin-top: 4%;
+}
+
+.container .content .content-box .box .box-logo{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  border-right: 2px solid rgba(114, 0, 0, 0.06);
+}
+
+.container .content .content-box .box .box-logo img{
+  max-width: 100%;
+  height: auto;
+}
+
+.container .content .content-box .box .box-form{
+  display: flex;
+  flex-direction: column;
+  
+  align-items: center;
+  justify-content: space-around;
+  
+  height: 100%;
+}
+
+.container .content .content-box .box .box-form form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  
+  width: 100%;
+  height: 40%;
+}
+
+.container .content .content-box .box .box-form h1{
+  font-weight: 100;
+  font-size: 3.6rem;
+}
+
+.container .content .content-box .box .box-form form select{
+  width: 78%;
+  
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.6rem;
+  line-height: 2.7rem;
+  
+  background: #CBCACA;
+  border-radius: 9px;
+  border: 0;
+  
+  padding: 1%; 
+}
+
+.container .content .content-box .box .box-form form select option:not(option:first-child){
+  color: black;
+}
+
+.container .content .content-box .box .box-form form .input-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+  
+  margin-top: 10px;
+}
+
+.container .content .content-box .box .box-form form input{
+  width: 70%;
+}
+
+
+.container .content .content-box .box .box-form form .button{
+  width: 30%;
+  margin-top: 5%;
+}
+
+.container .content .content-box .box .box-form span{
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  
+  text-align: center;
+  
+  color: #929191;
+}

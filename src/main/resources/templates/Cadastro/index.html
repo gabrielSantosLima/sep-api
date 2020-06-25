@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+  <link rel="stylesheet" th:href="@{/css/Cadastro/style.css}">
+  <link rel="stylesheet" th:href="@{/css/global.css}">
+  <link th:href="@{https://fonts.googleapis.com/icon?family=Material+Icons}" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <div class="content">
+      <div class="nav"></div>
+      <div class="content-box">
+        <div class="box">
+          <div class="box-logo">
+            <img th:src="@{/icons/Logo.png}" alt="Logo">
+          </div>
+          <div class="box-form">
+            <h1>CADASTRE-SE</h1>
+            <form action="/usuario">
+              <select>
+                <option value="" disabled selected>Tipo de Usuário</option>
+                <option>Professor(a)</option>
+                <option>Coordenador(a)</option>
+              </select>
+              
+              <div class="input-container">
+                <input type="text" placeholder="Nome" required>
+                <i class="large material-icons">person</i>
+              </div>
+              
+              <div class="input-container">
+                <input type="text" placeholder="Matrícula" required>
+                <i class="large material-icons">assignment</i>
+              </div>
+              
+              <div class="input-container">
+                <input type="password" placeholder="Senha" required>
+                <i class="large material-icons">vpn_key</i>
+              </div>
+              
+              <div class="input-container">
+                <input type="email" placeholder="E-mail" required>
+                <i class="large material-icons">email</i>
+              </div>
+
+              <button class="button" type="submit">
+                <label>Cadastrar</label>
+              </button>
+            </form>
+            <span>Já Possui uma conta? <a href="">Faça Login</a></span>            
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

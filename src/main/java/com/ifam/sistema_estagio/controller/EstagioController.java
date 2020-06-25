@@ -36,13 +36,13 @@ public class EstagioController {
 	public ModelAndView list(@PathVariable Integer id) {
 		ModelAndView modelAndView = new ModelAndView("");
 		List<Estagio> estagios = service.listEstagios();
-		
+
 		if (estagios.isEmpty() || estagios == null) {
 			modelAndView.addObject("mensagem", "Não há estágios cadastrados");
-		}else {
-			modelAndView.addObject("estagios", estagios);			
+		} else {
+			modelAndView.addObject("estagios", estagios);
 		}
-		
+
 		return modelAndView;
 	}
 
@@ -51,12 +51,12 @@ public class EstagioController {
 	@ResponseBody
 	public ResponseEntity<EstagioPCCT> create(@RequestBody EstagioPCCT estagio, List<Aluno> alunos) {
 		try {
-			service.saveAsEstagio(estagio,alunos);
-			
+			service.saveAsEstagio(estagio, alunos);
+
 			return ResponseEntity.ok().build();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
-			
+
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 	}
@@ -93,6 +93,25 @@ public class EstagioController {
 		} catch (Exception e) {
 			e.printStackTrace();
 
+			return ResponseEntity.badRequest().build();
+		}
+	}
+
+	// FindById
+	@GetMapping("/{id}")
+	@ResponseBody
+	public ResponseEntity<EstagioPCCT> findById(@PathVariable("id") Integer id) {
+		Estagio estagio;
+
+		try {
+			estagio = (Estagio) service.findById(id).get();
+
+			if (estagio == null) {
+				return ResponseEntity.badRequest().build();
+			}
+
+			return ResponseEntity.ok(estagio);
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}

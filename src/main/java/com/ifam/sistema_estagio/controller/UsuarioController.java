@@ -41,7 +41,7 @@ public class UsuarioController {
 		
 		}
 		
-		return "cadastrar";
+		return "Cadastro/index";
 	}
 
 	@PostMapping("/registration")
@@ -72,7 +72,7 @@ public class UsuarioController {
 			model.addAttribute("message", "Você foi logado corretamente!");			
 		}
 		
-		return "login";
+		return "Login/index";
 	}
 	
 	@GetMapping("/home")
