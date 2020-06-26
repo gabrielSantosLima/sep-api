@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(90deg, rgba(156, 36, 36, 0.92) 20.83%, #E4050E 83.85%);
+}
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    
+}
+
+.content {
+    background-color: #E0DFDF;
+    border-radius: 10px;
+    align-items: center;
+    width: 55%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+.titulo{
+    font-size: 35px;
+    padding: 15px;
+    text-transform: uppercase;
+    margin-top: -30px;
+    margin-bottom: 5px;
+}
+
+p{
+    padding-left: 100px;
+    padding-right: 70px;
+    padding-top: 5px;
+}
+
+a {
+    text-decoration: none;
+    color:  #020202;
+    text-align: center;
+    font-size: 14px;
+    font-weight: bold;
+    margin-left: 15px;
+   
+}
+
+a:hover{
+    text-decoration: underline;
+}
+
+.voltar{
+    font-size: 20px;
+    color: #929191;
+    display: flex;
+    margin-top: 80px;
+}
+
+@media only screen and (max-width: 1200px) {
+
+    img{
+        width: 80%;
+    }
+
+    .content{
+        width: 70%;
+        height: 80%;
+        position: absolute;
+        display: flex;
+        background-color: #E0DFDF;
+        border-radius: 10px;
+        width: 80%;
+        height: 80%;
+        position: relative;
+     
+}
+
+.titulo{
+    font-size: 30px;
+}
+
+p{
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+}
+
+@media only screen and (max-height: 600px) {
+
+    img{
+        width: 60%;
+        display: flex;
+        margin-left: 40px;
+    }
+    .content{
+        width: 50%;
+        height: 80%;
+        position: absolute;
+        display: flex;
+        background-color: #E0DFDF;
+        border-radius: 10px;
+        width: 80%;
+        height: 90%;
+        position: relative;
+     
+}
+
+.titulo{
+    font-size: 30px;
+}
+
+p{
+    font-size: 13px;
+        padding-left: 30px;
+        padding-right: 30px;
+}
+
+}
+
+@media only screen and (max-height: 400px) {
+
+
+    .content{
+        width: 70%;
+        height: 80%;
+        position: absolute;
+        display: flex;
+        background-color: #E0DFDF;
+        border-radius: 10px;
+        width: 80%;
+        height: 90%;
+        position: relative;
+     
+}
+
+.titulo{
+    margin-top: 10px;
+    font-size: 20px;
+}
+
+.voltar{
+    margin-top: 20px;
+}
+}
