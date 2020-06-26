@@ -37,7 +37,7 @@ public class AtaController {
 	// List all
 	@GetMapping("/")
 	public ModelAndView list(@PathVariable Integer id){
-		ModelAndView modelAndView = new ModelAndView("");
+		ModelAndView modelAndView = new ModelAndView("Cadastro/index");
 		Banca banca = getBancaById(id);
 		
 		List<Ata> atas = service.findByBanca(banca);
@@ -71,7 +71,6 @@ public class AtaController {
 	}
 	
 	// Update
-
 	@PutMapping(path = "/{idAta}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Ata> update(@RequestBody Ata ata, @PathVariable("id") Integer id,

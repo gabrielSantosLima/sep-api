@@ -19,7 +19,7 @@ public class EmailController {
 	
 	@GetMapping("/resgatar-senha")
 	public String resgatarSenha() {
-		return "ResgatarSenha";
+		return "Email/index";
 	}
 	
 	@PostMapping(path = "/resgatar-senha", consumes = "application/json", produces = "application/json")

@@ -5,33 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Login</title>
-    <link rel="stylesheet" th:href="@{/css/Login/estilo.css}">
-    <link rel="stylesheet" href="@{https://use.fontawesome.com/releases/v5.8.2/css/all.css}">
+    <link rel="stylesheet" th:href="@{/css/Login/style.css}">
+    <link rel="stylesheet" th:href="@{https://use.fontawesome.com/releases/v5.8.2/css/all.css}">
 </head>
 <body>
-    <div class="container">
-        <div class="content login">
-            <div class="first-column">
-                <img src="Logo.svg" alt="" class="logo">
-            </div>   
-            
-            <div class="second-column">
-                <h2 class="titulo">LOGIN</h2>
-                <form class="form">
-                    <label class="label-input" >
-                        <i class="fas fa-user"></i>
-                        <input type="text" placeholder="Matrícula">
-                    </label>
-                    
-                    <label class="label-input">
-                        <i class="fas fa-lock icon-modify"></i>
-                        <input type="password" placeholder="Password">
-                    </label>
-                    
-                    <button class="btn">ENTRAR</button>
-                    <a href="#" class="senha">Esqueceu a senha ou Matrícula?</a>
-                    <a href="" class="cadastro">Crie sua conta agora ⟶</a>        
-                </form>
-    </div>
+	<div class="container">
+		<div class="content login">
+			<div class="first-column">
+				<img th:src="@{/assets/Logo.png}" alt="Logo" class="logo">
+			</div>
+
+			<div class="second-column">
+				<h2 class="titulo">LOGIN</h2>
+				<form class="form">
+					<p th:if="${error}" th:text="${error}">Usuário ou senha incorretos</p>
+					<label class="label-input"> 
+						<i class="fas fa-user"></i> 
+						<input name="username" type="text" placeholder="Usuário">
+					</label> 
+					<label class="label-input"> 
+						<i class="fas fa-lock icon-modify"></i> 
+						<input name="password" type="password" placeholder="Senha">
+					</label>
+					<label class="label-input"> 
+						<i class="fas fa-lock icon-modify"></i> 
+						<input name="passwordConfirm" type="password" placeholder="Confimar senha">
+					</label>
+
+					<button type="submit" class="btn">ENTRAR</button>
+					<a th:href="@{redirect:/resgatar-senha}" class="senha">Esqueceu a senha ou Usuário?</a> 
+					<a th:href="@{redirect:/registration}" class="cadastro">Crie sua conta agora ⟶</a>
+				</form>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

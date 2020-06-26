@@ -77,6 +77,6 @@ public class UsuarioController {
 	
 	@GetMapping("/home")
 	private String home() {
-		return "homepage";
+		return "Homepage/index";
 	}
 }

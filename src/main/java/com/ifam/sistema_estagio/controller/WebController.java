@@ -8,6 +8,6 @@ public class WebController {
 	
 	@GetMapping("/")
 	public String home() {
-		return "Login/index";
+		return "/login";
 	}
 }
