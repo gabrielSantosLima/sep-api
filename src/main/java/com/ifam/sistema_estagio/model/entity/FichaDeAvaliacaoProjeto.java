@@ -25,4 +25,36 @@ public class FichaDeAvaliacaoProjeto extends FichaDeAvaliacao{
 
 	@Embedded
 	private NotaProjetoTrabalho notaTrabalho;
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+
+	public Ata getAta() {
+		return ata;
+	}
+
+	public void setAta(Ata ata) {
+		this.ata = ata;
+	}
+
+	public NotaProjetoDefesa getNotaDefesa() {
+		return notaDefesa;
+	}
+
+	public void setNotaDefesa(NotaProjetoDefesa notaDefesa) {
+		this.notaDefesa = notaDefesa;
+	}
+
+	public NotaProjetoTrabalho getNotaTrabalho() {
+		return notaTrabalho;
+	}
+
+	public void setNotaTrabalho(NotaProjetoTrabalho notaTrabalho) {
+		this.notaTrabalho = notaTrabalho;
+	}
 }

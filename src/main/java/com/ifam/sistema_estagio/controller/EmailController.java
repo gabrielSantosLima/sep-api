@@ -1,7 +1,5 @@
 package com.ifam.sistema_estagio.controller;
 
-import java.io.File;
-
 import org.apache.commons.mail.EmailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

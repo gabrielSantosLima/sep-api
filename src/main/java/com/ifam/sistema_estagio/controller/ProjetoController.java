@@ -14,10 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ifam.sistema_estagio.controller.service.EstagioService;
 import com.ifam.sistema_estagio.controller.service.ProjetoService;
 import com.ifam.sistema_estagio.model.entity.Aluno;
-import com.ifam.sistema_estagio.model.entity.Estagio;
 import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
 import com.ifam.sistema_estagio.model.entity.Projeto;
 

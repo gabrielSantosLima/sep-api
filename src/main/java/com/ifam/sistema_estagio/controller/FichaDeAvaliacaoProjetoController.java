@@ -14,86 +14,86 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.ifam.sistema_estagio.controller.service.AtaService;
-import com.ifam.sistema_estagio.controller.service.FichaDeAvaliacaoEstagioService;
+import com.ifam.sistema_estagio.controller.service.FichaDeAvaliacaoProjetoService;
 import com.ifam.sistema_estagio.model.entity.Ata;
-import com.ifam.sistema_estagio.model.entity.FichaDeAvaliacaoEstagio;
+import com.ifam.sistema_estagio.model.entity.FichaDeAvaliacaoProjeto;
 
 @Controller
-@RequestMapping(value = "ata/{id}/avaliacao-estagio")
-public class FichaDeAvaliacaoEstagioController {
-	
+@RequestMapping(value = "atas/{id}/avaliacao-projeto")
+public class FichaDeAvaliacaoProjetoController {
+
 	@Autowired
-	private FichaDeAvaliacaoEstagioService service;
+	private FichaDeAvaliacaoProjetoService service;
 
 	@Autowired
 	private AtaService ataService;
-	
+
 	private Ata getAtaById(Integer id) {
 		return ataService.findById(id).get();
 	}
-	
+
 	@GetMapping(value = "/", consumes = "application/json", produces = "application/json")
-	public ResponseEntity<List<FichaDeAvaliacaoEstagio>> list(@PathVariable Integer id) {
+	public ResponseEntity<List<FichaDeAvaliacaoProjeto>> list(@PathVariable Integer id) {
 		Ata ata = getAtaById(id);
-		List<FichaDeAvaliacaoEstagio> fichas = service.findByAta(ata);
-		
-		if(fichas.isEmpty()) {
-			return ResponseEntity.badRequest().build();
+		List<FichaDeAvaliacaoProjeto> fichas = service.findByAta(ata);
+
+		if (fichas.isEmpty()) {
+			return ResponseEntity.badRequest().body(fichas);
 		}
-		
+
 		return ResponseEntity.ok(fichas);
 	}
-	
-	@PostMapping(value = {"", "/"}, consumes = "application/json", produces = "application/json")
-	public ResponseEntity<FichaDeAvaliacaoEstagio> create(@RequestBody FichaDeAvaliacaoEstagio ficha, @PathVariable Integer id) {
+
+	@PostMapping(value = { "", "/" }, consumes = "application/json", produces = "application/json")
+	public ResponseEntity<FichaDeAvaliacaoProjeto> create(@RequestBody FichaDeAvaliacaoProjeto ficha,
+			@PathVariable Integer id) {
 		Ata ata = getAtaById(id);
-		
-		try{
+
+		try {
 			ficha.setAta(ata);
-			
-			FichaDeAvaliacaoEstagio createdFicha = service.create(ficha);
-			
+
+			FichaDeAvaliacaoProjeto createdFicha = service.create(ficha);
+
 			return ResponseEntity.ok(createdFicha);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
 
-	@PutMapping(value = {"/{idFicha}"}, consumes = "application/json", produces = "application/json")
-	public ResponseEntity<FichaDeAvaliacaoEstagio> create(@RequestBody FichaDeAvaliacaoEstagio ficha, 
-			@PathVariable("id") Integer id, 
-			@PathVariable("idFicha") Integer idFicha) {
+	@PutMapping(value = { "/{idFicha}" }, consumes = "application/json", produces = "application/json")
+	public ResponseEntity<FichaDeAvaliacaoProjeto> create(@RequestBody FichaDeAvaliacaoProjeto ficha,
+			@PathVariable("id") Integer id, @PathVariable("idFicha") Integer idFicha) {
 		Ata ata = getAtaById(id);
-		
-		if(!ficha.getAta().equals(ata)) {
+
+		if (!ficha.getAta().equals(ata)) {
 			return ResponseEntity.badRequest().build();
 		}
-		
-		try{
-			FichaDeAvaliacaoEstagio updatedFicha = service.update(idFicha, ficha);
-			
+
+		try {
+			FichaDeAvaliacaoProjeto updatedFicha = service.update(idFicha, ficha);
+
 			return ResponseEntity.ok(updatedFicha);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}
 
-	@DeleteMapping(value = {"/{idFicha}"}, consumes = "application/json", produces = "application/json")
-	public ResponseEntity<FichaDeAvaliacaoEstagio> create(@PathVariable("id") Integer id, 
+	@DeleteMapping(value = { "/{idFicha}" }, consumes = "application/json", produces = "application/json")
+	public ResponseEntity<FichaDeAvaliacaoProjeto> create(@PathVariable("id") Integer id,
 			@PathVariable("idFicha") Integer idFicha) {
-		
+
 		Ata ata = getAtaById(id);
-		FichaDeAvaliacaoEstagio ficha = service.findById(idFicha).get();
-		
-		if(!ficha.getAta().equals(ata)) {
+		FichaDeAvaliacaoProjeto ficha = service.findById(idFicha).get();
+
+		if (!ficha.getAta().equals(ata)) {
 			return ResponseEntity.badRequest().build();
 		}
-		
-		try{
+
+		try {
 			service.delete(idFicha);
-			
+
 			return ResponseEntity.ok().build();
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
 	}

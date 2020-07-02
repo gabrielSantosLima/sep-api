@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ifam.sistema_estagio.controller.service.AtaService;
 import com.ifam.sistema_estagio.controller.service.BancaService;
@@ -36,19 +35,16 @@ public class AtaController {
 	
 	// List all
 	@GetMapping("/")
-	public ModelAndView list(@PathVariable Integer id){
-		ModelAndView modelAndView = new ModelAndView("Cadastro/index");
+	public ResponseEntity<List<Ata>> list(@PathVariable Integer id){
 		Banca banca = getBancaById(id);
 		
 		List<Ata> atas = service.findByBanca(banca);
-				
+		
 		if(atas.isEmpty()) {
-			modelAndView.addObject("message", "Não há atas cadastradas");
-		}else {
-			modelAndView.addObject("atas", atas);			
+			return ResponseEntity.badRequest().body(atas);
 		}
 		
-		return modelAndView;
+		return ResponseEntity.ok(atas);
 	}
 	
 	// Create

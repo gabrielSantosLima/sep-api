@@ -1,7 +1,6 @@
 package com.ifam.sistema_estagio.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ifam.sistema_estagio.controller.service.EstagioPcctService;
 import com.ifam.sistema_estagio.controller.service.EstagioService;
 import com.ifam.sistema_estagio.model.entity.Aluno;
 import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
 import com.ifam.sistema_estagio.model.entity.Estagio;
-import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
 
 @Controller
 @RequestMapping("/home/estagio")
@@ -99,20 +96,25 @@ public class EstagioController {
 
 	// FindById
 	@GetMapping("/{id}")
-	@ResponseBody
-	public ResponseEntity<EstagioPCCT> findById(@PathVariable("id") Integer id) {
-		Estagio estagio;
+	public ModelAndView findById(@PathVariable("id") Integer id) {
+		ModelAndView modelAndView = new ModelAndView("EstagioDescricao/index");
 
 		try {
-			estagio = (Estagio) service.findById(id).get();
+			Estagio estagio = (Estagio) service.findById(id).get();
 
 			if (estagio == null) {
-				return ResponseEntity.badRequest().build();
+				modelAndView.addObject("mensagem","Código de estágio inválido!");
+				
+				throw new Exception("Código inválido!");
 			}
 
-			return ResponseEntity.ok(estagio);
+			modelAndView.addObject("estagio", estagio);
+			
+			return modelAndView;
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
+			modelAndView.addObject("mensagem", e.getMessage());
+			
+			return modelAndView;
 		}
 	}
 }
