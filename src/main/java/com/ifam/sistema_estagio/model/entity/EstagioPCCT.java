@@ -36,6 +36,9 @@ public class EstagioPCCT {
 	@Column(nullable = false, name = "carga_horario")
 	private Time cargaHoraria;
 	
+	@Column(nullable = true, name = "concluido")
+	private Boolean concluido;
+	
 	//Bancas
 	@OneToMany(mappedBy = "estagioPcct")
 	private List<Banca> bancas;
@@ -49,6 +52,14 @@ public class EstagioPCCT {
 	@JoinColumn(name = "responsavel_id")
 	private Professor responsavel;
 	
+	public Boolean getConcluido() {
+		return concluido;
+	}
+
+	public void setConcluido(Boolean concluido) {
+		this.concluido = concluido;
+	}
+
 	public Integer getId() {
 		return id;
 	}

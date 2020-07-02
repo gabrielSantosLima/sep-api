@@ -13,7 +13,7 @@ public abstract class FichaDeAvaliacao {
 	@GeneratedValue(strategy = GenerationType.TABLE)
 	private Integer id;
 	
-	@Column(name = "media")
+	@Column(nullable = true, name = "media")
 	private Integer media;
 
 	public Integer getId() {

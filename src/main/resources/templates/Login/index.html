@@ -17,24 +17,25 @@
 
 			<div class="second-column">
 				<h2 class="titulo">LOGIN</h2>
-				<form class="form">
-					<p th:if="${error}" th:text="${error}">Usuário ou senha incorretos</p>
+				<p th:if="${error}" th:text="${error}">Usuário ou senha incorretos</p>
+				
+				<form class="form" th:action="@{/}" th:method="POST">
 					<label class="label-input"> 
 						<i class="fas fa-user"></i> 
-						<input name="username" type="text" placeholder="Usuário">
+						<input name="username" type="text" placeholder="Usuário" required>
 					</label> 
 					<label class="label-input"> 
 						<i class="fas fa-lock icon-modify"></i> 
-						<input name="password" type="password" placeholder="Senha">
+						<input name="password" type="password" placeholder="Senha" required>
 					</label>
 					<label class="label-input"> 
 						<i class="fas fa-lock icon-modify"></i> 
-						<input name="passwordConfirm" type="password" placeholder="Confimar senha">
+						<input name="passwordConfirm" type="password" placeholder="Confimar senha" required>
 					</label>
 
 					<button type="submit" class="btn">ENTRAR</button>
-					<a th:href="@{redirect:/resgatar-senha}" class="senha">Esqueceu a senha ou Usuário?</a> 
-					<a th:href="@{redirect:/registration}" class="cadastro">Crie sua conta agora ⟶</a>
+					<a th:href="@{/resgatar-senha}" class="senha">Esqueceu a senha ou Usuário?</a> 
+					<a th:href="@{/registration}" class="cadastro">Crie sua conta agora ⟶</a>
 				</form>
 			</div>
 		</div>

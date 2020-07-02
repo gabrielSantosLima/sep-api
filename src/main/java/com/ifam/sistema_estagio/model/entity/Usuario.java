@@ -22,13 +22,13 @@ public abstract class Usuario {
 	@Column(nullable = false, length = 100, name = "email")
 	private String email;
 
-	@Column(nullable = true, length = 8, name = "username")
+	@Column(nullable = true, name = "username")
 	private String username;
 
-	@Column(nullable = true, length = 8, name = "password")
+	@Column(nullable = true, name = "password")
 	private String password;
 
-	@Column(nullable = true, length = 8, name = "password_confirm")
+	@Column(nullable = true, name = "password_confirm")
 	private String passwordConfirm;
 
 	public Integer getId() {

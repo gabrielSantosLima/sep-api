@@ -22,4 +22,28 @@ public class FichaDeAvaliacaoEstagio extends FichaDeAvaliacao{
 	
 	@Embedded
 	private NotaEstagio nota;
+
+	public Professor getProfessor() {
+		return professor;
+	}
+
+	public void setProfessor(Professor professor) {
+		this.professor = professor;
+	}
+
+	public Ata getAta() {
+		return ata;
+	}
+
+	public void setAta(Ata ata) {
+		this.ata = ata;
+	}
+
+	public NotaEstagio getNota() {
+		return nota;
+	}
+
+	public void setNota(NotaEstagio nota) {
+		this.nota = nota;
+	}
 }

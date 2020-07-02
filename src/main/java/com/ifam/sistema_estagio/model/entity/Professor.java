@@ -17,7 +17,7 @@ import com.ifam.sistema_estagio.util.enums.GrauAcademico;
 @Table(name = "professor")
 public class Professor extends Usuario {
 
-	@Column(nullable = false, name = "grau")
+	@Column(nullable = true, name = "grau")
 	@Enumerated(EnumType.STRING)
 	private GrauAcademico grau;
 

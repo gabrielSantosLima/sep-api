@@ -23,7 +23,7 @@ import com.ifam.sistema_estagio.model.entity.Banca;
 import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
 
 @Controller
-@RequestMapping("/estagio-pcct/{id}/bancas")
+@RequestMapping(value= {"/estagio/{id}/bancas","/projeto/{id}/bancas"})
 public class BancaController {
 
 	@Autowired

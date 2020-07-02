@@ -25,7 +25,7 @@ import com.ifam.sistema_estagio.model.entity.Estagio;
 import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
 
 @Controller
-@RequestMapping("/estagio")
+@RequestMapping("/home/estagio")
 public class EstagioController {
 
 	@Autowired
@@ -33,8 +33,8 @@ public class EstagioController {
 
 	// List
 	@GetMapping("/")
-	public ModelAndView list(@PathVariable Integer id) {
-		ModelAndView modelAndView = new ModelAndView("");
+	public ModelAndView list() {
+		ModelAndView modelAndView = new ModelAndView("Estagio/index");
 		List<Estagio> estagios = service.listEstagios();
 
 		if (estagios.isEmpty() || estagios == null) {

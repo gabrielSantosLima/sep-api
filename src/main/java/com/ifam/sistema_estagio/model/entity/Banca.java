@@ -37,6 +37,9 @@ public class Banca {
 	@Enumerated(EnumType.STRING)
 	private TipoServico tipo;
 
+	@Column(nullable = false, name = "banca_final")
+	private Boolean banca_final;
+	
 	@Column(nullable = false, name = "local")
 	private String local;
 
@@ -71,6 +74,50 @@ public class Banca {
 	@JoinColumn(name = "estagio_pcct_id")
 	private EstagioPCCT estagioPcct;
 	
+	public Boolean getBanca_final() {
+		return banca_final;
+	}
+
+	public void setBanca_final(Boolean banca_final) {
+		this.banca_final = banca_final;
+	}
+
+	public Ata getAta() {
+		return ata;
+	}
+
+	public void setAta(Ata ata) {
+		this.ata = ata;
+	}
+
+	public List<Professor> getProfessores() {
+		return professores;
+	}
+
+	public void setProfessores(List<Professor> professores) {
+		this.professores = professores;
+	}
+
+	public Coordenadora getCoordenadora() {
+		return coordenadora;
+	}
+
+	public void setCoordenadora(Coordenadora coordenadora) {
+		this.coordenadora = coordenadora;
+	}
+
+	public EstagioPCCT getEstagioPcct() {
+		return estagioPcct;
+	}
+
+	public void setEstagioPcct(EstagioPCCT estagioPcct) {
+		this.estagioPcct = estagioPcct;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}
