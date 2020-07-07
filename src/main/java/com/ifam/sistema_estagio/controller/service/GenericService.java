@@ -58,7 +58,7 @@ public class GenericService<E, Repository extends JpaRepository<E, Integer>>{
 	//Excluir
 	public void delete(Integer id) throws Exception {
 		
-		if(exists(id)) {
+		if(!exists(id)) {
 			throw new Exception("[service] Erro ao deletar entidade!");
 		}
 		

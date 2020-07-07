@@ -38,7 +38,23 @@ public class Professor extends Usuario {
 	
 	@ManyToMany
 	private Set<Role> roles;
+
+	public Professor() {
+		super();
+	}
 	
+	public Professor(Integer id, String matricula, String nome, String email, String username, String password,
+			String passwordConfirm, GrauAcademico grau, List<Banca> bancas, List<FichaDeAvaliacaoEstagio> fichaEstagios,
+			List<FichaDeAvaliacaoProjeto> fichaProjeto, List<EstagioPCCT> estagiosPcct, Set<Role> roles) {
+		super(id, matricula, nome, email, username, password, passwordConfirm);
+		this.grau = grau;
+		this.bancas = bancas;
+		this.fichaEstagios = fichaEstagios;
+		this.fichaProjeto = fichaProjeto;
+		this.estagiosPcct = estagiosPcct;
+		this.roles = roles;
+	}
+
 	public List<Banca> getBancas() {
 		return bancas;
 	}

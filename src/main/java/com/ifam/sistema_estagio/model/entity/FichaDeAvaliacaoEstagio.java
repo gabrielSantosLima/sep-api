@@ -23,6 +23,13 @@ public class FichaDeAvaliacaoEstagio extends FichaDeAvaliacao{
 	@Embedded
 	private NotaEstagio nota;
 
+	public FichaDeAvaliacaoEstagio(Integer id, Integer media, Professor professor, Ata ata, NotaEstagio nota) {
+		super(id, media);
+		this.professor = professor;
+		this.ata = ata;
+		this.nota = nota;		
+	}
+
 	public Professor getProfessor() {
 		return professor;
 	}

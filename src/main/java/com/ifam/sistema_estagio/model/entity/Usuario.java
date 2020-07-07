@@ -31,6 +31,21 @@ public abstract class Usuario {
 	@Column(nullable = true, name = "password_confirm")
 	private String passwordConfirm;
 
+	public Usuario() {
+		
+	}
+	
+	public Usuario(Integer id, String matricula, String nome, String email, String username, String password,
+			String passwordConfirm) {
+		this.id = id;
+		this.matricula = matricula;
+		this.nome = nome;
+		this.email = email;
+		this.username = username;
+		this.password = password;
+		this.passwordConfirm = passwordConfirm;
+	}
+
 	public Integer getId() {
 		return id;
 	}

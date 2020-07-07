@@ -10,6 +10,7 @@ import javax.persistence.Table;
 @Table(name = "ficha_de_avaliacao_projeto")
 public class FichaDeAvaliacaoProjeto extends FichaDeAvaliacao{
 
+
 	//Avaliador
 	@ManyToOne
 	@JoinColumn(name = "professor_id", nullable = false)
@@ -25,6 +26,15 @@ public class FichaDeAvaliacaoProjeto extends FichaDeAvaliacao{
 
 	@Embedded
 	private NotaProjetoTrabalho notaTrabalho;
+
+	public FichaDeAvaliacaoProjeto(Integer id, Integer media, Professor professor, Ata ata,
+			NotaProjetoDefesa notaDefesa, NotaProjetoTrabalho notaTrabalho) {
+		super(id, media);
+		this.professor = professor;
+		this.ata = ata;
+		this.notaDefesa = notaDefesa;
+		this.notaTrabalho = notaTrabalho;
+	}
 
 	public Professor getProfessor() {
 		return professor;

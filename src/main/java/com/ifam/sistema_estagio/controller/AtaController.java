@@ -20,7 +20,7 @@ import com.ifam.sistema_estagio.model.entity.Ata;
 import com.ifam.sistema_estagio.model.entity.Banca;
 
 @Controller
-@RequestMapping("bancas/{id}/atas")
+@RequestMapping("/bancas/{id}/atas")
 public class AtaController {
 
 	@Autowired
@@ -34,17 +34,14 @@ public class AtaController {
 	}
 	
 	// List all
-	@GetMapping("/")
-	public ResponseEntity<List<Ata>> list(@PathVariable Integer id){
+	@GetMapping(path = {"/{id}", ""}, produces = "application/json")
+	@ResponseBody
+	public List<Ata> list(@PathVariable Integer id){
 		Banca banca = getBancaById(id);
 		
 		List<Ata> atas = service.findByBanca(banca);
 		
-		if(atas.isEmpty()) {
-			return ResponseEntity.badRequest().body(atas);
-		}
-		
-		return ResponseEntity.ok(atas);
+		return atas;
 	}
 	
 	// Create
@@ -88,7 +85,7 @@ public class AtaController {
 	}
 	
 	// Delete
-	@DeleteMapping("/{idAta}")
+	@DeleteMapping(path = "/{idAta}", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Ata> delete(@PathVariable("id") Integer id, 
 			@PathVariable("idAta") Integer idAta) {
@@ -105,9 +102,9 @@ public class AtaController {
 	}
 	
 	// Find by Banca
-	@GetMapping("/{idAta}")
+	@GetMapping(path = "/{idAta}", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Ata> findById(@PathVariable("id") Integer id, 
+	public Ata findById(@PathVariable("id") Integer id, 
 			@PathVariable("idAta") Integer idAta) {
 		Banca banca = getBancaById(id);
 		
@@ -115,12 +112,12 @@ public class AtaController {
 			Ata ata = service.findById(idAta).get();
 			
 			if(banca.equals(ata.getBanca())) {
-				return ResponseEntity.badRequest().build();				
+				return new Ata();				
 			}
 			
-			return ResponseEntity.ok(ata);
+			return ata;
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
+			return new Ata();				
 		}
 	}
 

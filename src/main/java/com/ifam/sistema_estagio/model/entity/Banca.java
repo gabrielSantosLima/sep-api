@@ -64,6 +64,22 @@ public class Banca {
 	)
 	private List<Professor> professores;
 	
+	public Banca(Integer id, Date data, TipoServico tipo, Boolean banca_final, String local, Date horaInicio,
+			Date horaFinalizado, Ata ata, List<Professor> professores, Coordenadora coordenadora,
+			EstagioPCCT estagioPcct) {
+		this.id = id;
+		this.data = data;
+		this.tipo = tipo;
+		this.banca_final = banca_final;
+		this.local = local;
+		this.horaInicio = horaInicio;
+		this.horaFinalizado = horaFinalizado;
+		this.ata = ata;
+		this.professores = professores;
+		this.coordenadora = coordenadora;
+		this.estagioPcct = estagioPcct;
+	}
+
 	//Coordenadora
 	@ManyToOne
 	@JoinColumn(name = "coordenadora_id")

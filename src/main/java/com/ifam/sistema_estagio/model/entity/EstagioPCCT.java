@@ -1,28 +1,22 @@
 package com.ifam.sistema_estagio.model.entity;
 
-import java.sql.Time;
-import java.util.List;
 
+import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ifam.sistema_estagio.util.enums.TipoServico;
+
 @Entity
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(
-	name = "tipo_servico",
-	discriminatorType = DiscriminatorType.STRING,
-	length = 1)
 @Table(name = "estagio_pcct")
 public class EstagioPCCT {
 	
@@ -34,10 +28,20 @@ public class EstagioPCCT {
 	private String titulo;
 
 	@Column(nullable = false, name = "carga_horario")
-	private Time cargaHoraria;
+	private Integer cargaHoraria;
 	
 	@Column(nullable = true, name = "concluido")
 	private Boolean concluido;
+
+	@Column(nullable = true, name = "local")
+	private String local;
+	
+	@Column(nullable = true, name = "descricao")
+	private String descricao;
+
+	@Column(nullable = false, name = "tipo")
+	@Enumerated(EnumType.ORDINAL)
+	private TipoServico tipo;
 	
 	//Bancas
 	@OneToMany(mappedBy = "estagioPcct")
@@ -52,6 +56,43 @@ public class EstagioPCCT {
 	@JoinColumn(name = "responsavel_id")
 	private Professor responsavel;
 	
+	public EstagioPCCT(Integer id, String titulo, Integer cargaHoraria, Boolean concluido,String local, String  descricao, List<Banca> bancas,
+			List<Aluno> alunos, Professor responsavel) {
+		this.id = id;
+		this.titulo = titulo;
+		this.cargaHoraria = cargaHoraria;
+		this.concluido = concluido;
+		this.local = local;
+		this.descricao = descricao;
+		this.bancas = bancas;
+		this.alunos = alunos;
+		this.responsavel = responsavel;
+	}
+
+	public TipoServico getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(TipoServico tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getLocal() {
+		return local;
+	}
+
+	public void setLocal(String local) {
+		this.local = local;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
 	public Boolean getConcluido() {
 		return concluido;
 	}
@@ -76,11 +117,11 @@ public class EstagioPCCT {
 		this.titulo = titulo;
 	}
 
-	public Time getCargaHoraria() {
+	public Integer getCargaHoraria() {
 		return cargaHoraria;
 	}
 
-	public void setCargaHoraria(Time cargaHoraria) {
+	public void setCargaHoraria(Integer cargaHoraria) {
 		this.cargaHoraria = cargaHoraria;
 	}
 

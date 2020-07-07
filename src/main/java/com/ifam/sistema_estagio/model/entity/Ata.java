@@ -45,6 +45,21 @@ public class Ata {
 	@OneToOne
 	private Banca banca;
 	
+	public Ata() {
+		
+	}
+	
+	public Ata(Integer id, Integer mediaTotal, String descricao, TipoServico tipo,
+			List<FichaDeAvaliacaoEstagio> fichasEstagio, List<FichaDeAvaliacaoProjeto> fichasProjeto, Banca banca) {
+		this.id = id;
+		this.mediaTotal = mediaTotal;
+		this.descricao = descricao;
+		this.tipo = tipo;
+		this.fichasEstagio = fichasEstagio;
+		this.fichasProjeto = fichasProjeto;
+		this.banca = banca;
+	}
+
 	public List<FichaDeAvaliacaoEstagio> getFichasEstagio() {
 		return fichasEstagio;
 	}

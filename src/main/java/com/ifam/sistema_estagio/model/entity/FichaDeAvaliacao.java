@@ -16,6 +16,11 @@ public abstract class FichaDeAvaliacao {
 	@Column(nullable = true, name = "media")
 	private Integer media;
 
+	public FichaDeAvaliacao(Integer id, Integer media) {
+		this.id = id;
+		this.media = media;
+	}
+
 	public Integer getId() {
 		return id;
 	}

@@ -3,7 +3,6 @@ package com.ifam.sistema_estagio.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,23 +15,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ifam.sistema_estagio.controller.service.EstagioService;
-import com.ifam.sistema_estagio.model.entity.Aluno;
+import com.ifam.sistema_estagio.controller.service.EstagioPcctService;
 import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
-import com.ifam.sistema_estagio.model.entity.Estagio;
+import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 @Controller
 @RequestMapping("/home/estagio")
 public class EstagioController {
 
 	@Autowired
-	private EstagioService service;
+	private EstagioPcctService service;
 
 	// List
-	@GetMapping("/")
+	@GetMapping(path = { "/", "" })
 	public ModelAndView list() {
 		ModelAndView modelAndView = new ModelAndView("Estagio/index");
-		List<Estagio> estagios = service.listEstagios();
+		List<EstagioPCCT> estagios = service.getEstagiosOrProjeto(TipoServico.ESTAGIO);
 
 		if (estagios.isEmpty() || estagios == null) {
 			modelAndView.addObject("mensagem", "Não há estágios cadastrados");
@@ -44,33 +42,34 @@ public class EstagioController {
 	}
 
 	// Create
-	@PostMapping(path = "/", consumes = "application/json", produces = "application/json")
+	@PostMapping(path = { "/", "" }, consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<EstagioPCCT> create(@RequestBody EstagioPCCT estagio, List<Aluno> alunos) {
-		try {
-			service.saveAsEstagio(estagio, alunos);
+	public ResponseEntity<EstagioPCCT> create(@RequestBody EstagioPCCT estagio) {
 
-			return ResponseEntity.ok().build();
+		try {
+			EstagioPCCT createdEstagio = service.create(estagio);
+
+			return ResponseEntity.ok(createdEstagio);
 		} catch (Exception e) {
 			e.printStackTrace();
 
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			return ResponseEntity.badRequest().build();
 		}
 	}
 
 	// Update
 	@PutMapping(path = "/{id}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<EstagioPCCT> update(@RequestBody EstagioPCCT estagioPCCT, @PathVariable("id") Integer id) {
+	public ResponseEntity<EstagioPCCT> update(@RequestBody EstagioPCCT estagio, @PathVariable("id") Integer id) {
 
-		if (estagioPCCT == null) {
+		if (estagio == null) {
 			return ResponseEntity.badRequest().build();
 		}
 
 		try {
-			EstagioPCCT EstagioPCCTAtualizado = service.updateEstagio(id, estagioPCCT);
+			service.update(id, estagio);
 
-			return ResponseEntity.ok(EstagioPCCTAtualizado);
+			return ResponseEntity.ok(estagio);
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -79,7 +78,7 @@ public class EstagioController {
 	}
 
 	// Delete
-	@DeleteMapping("/{id}")
+	@DeleteMapping(path = { "/{id}", "" }, produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<EstagioPCCT> delete(@PathVariable("id") Integer id) {
 
@@ -100,20 +99,20 @@ public class EstagioController {
 		ModelAndView modelAndView = new ModelAndView("EstagioDescricao/index");
 
 		try {
-			Estagio estagio = (Estagio) service.findById(id).get();
+			EstagioPCCT estagio = service.findById(id).get();
 
-			if (estagio == null) {
-				modelAndView.addObject("mensagem","Código de estágio inválido!");
-				
+			if (estagio == null || estagio.getTipo() != TipoServico.ESTAGIO) {
+				modelAndView.addObject("mensagem", "Código de estágio inválido!");
+
 				throw new Exception("Código inválido!");
 			}
 
 			modelAndView.addObject("estagio", estagio);
-			
+
 			return modelAndView;
 		} catch (Exception e) {
 			modelAndView.addObject("mensagem", e.getMessage());
-			
+
 			return modelAndView;
 		}
 	}

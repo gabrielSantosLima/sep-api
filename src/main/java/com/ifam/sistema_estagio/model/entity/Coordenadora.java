@@ -19,6 +19,12 @@ public class Coordenadora extends Usuario{
 	@ManyToMany
 	private Set<Role> roles;
 
+	public Coordenadora(Integer id, String matricula, String nome, String email, String username, String password,
+			String passwordConfirm, List<Banca> bancas) {
+		super(id, matricula, nome, email, username, password, passwordConfirm);
+		this.bancas = bancas;
+	}
+
 	public List<Banca> getBancas() {
 		return bancas;
 	}

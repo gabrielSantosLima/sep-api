@@ -3,37 +3,39 @@ package com.ifam.sistema_estagio.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ifam.sistema_estagio.controller.service.ProjetoService;
-import com.ifam.sistema_estagio.model.entity.Aluno;
+import com.ifam.sistema_estagio.controller.service.EstagioPcctService;
 import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
-import com.ifam.sistema_estagio.model.entity.Projeto;
+import com.ifam.sistema_estagio.util.enums.TipoServico;
 
+@Controller
+@RequestMapping("/home/projeto")
 public class ProjetoController {
 
 	@Autowired
-	private ProjetoService service;
+	private EstagioPcctService service;
 
 	// List
-	@GetMapping("/")
-	public ModelAndView list(@PathVariable Integer id) {
-		ModelAndView modelAndView = new ModelAndView("");
-		List<Projeto> projetos = service.listProjetos();
+	@GetMapping(path = { "/", "" })
+	public ModelAndView list() {
+		ModelAndView modelAndView = new ModelAndView("Projeto/index");
+		List<EstagioPCCT> projetos = service.getEstagiosOrProjeto(TipoServico.PROJETO);
 
 		if (projetos.isEmpty() || projetos == null) {
 			modelAndView.addObject("mensagem", "Não há estágios cadastrados");
 		} else {
-			modelAndView.addObject("estagios", projetos);
+			modelAndView.addObject("projetos", projetos);
 		}
 
 		return modelAndView;
@@ -42,31 +44,32 @@ public class ProjetoController {
 	// Create
 	@PostMapping(path = "/", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<EstagioPCCT> create(@RequestBody EstagioPCCT projeto, List<Aluno> alunos) {
-		try {
-			service.saveAsProjeto(projeto, alunos);
+	public ResponseEntity<EstagioPCCT> create(@RequestBody EstagioPCCT projeto) {
 
-			return ResponseEntity.ok().build();
+		try {
+			EstagioPCCT createdProjeto = service.create(projeto);
+
+			return ResponseEntity.ok(createdProjeto);
 		} catch (Exception e) {
 			e.printStackTrace();
 
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			return ResponseEntity.badRequest().build();
 		}
 	}
 
 	// Update
 	@PutMapping(path = "/{id}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<EstagioPCCT> update(@RequestBody EstagioPCCT estagioPCCT, @PathVariable("id") Integer id) {
+	public ResponseEntity<EstagioPCCT> update(@RequestBody EstagioPCCT projeto, @PathVariable("id") Integer id) {
 
-		if (estagioPCCT == null) {
+		if (projeto == null) {
 			return ResponseEntity.badRequest().build();
 		}
 
 		try {
-			EstagioPCCT EstagioPCCTAtualizado = service.updateProjeto(id, estagioPCCT);
+			service.update(id, projeto);
 
-			return ResponseEntity.ok(EstagioPCCTAtualizado);
+			return ResponseEntity.ok(projeto);
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -75,7 +78,7 @@ public class ProjetoController {
 	}
 
 	// Delete
-	@DeleteMapping("/{id}")
+	@DeleteMapping(path="/{id}", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<EstagioPCCT> delete(@PathVariable("id") Integer id) {
 
@@ -91,21 +94,26 @@ public class ProjetoController {
 	}
 
 	// FindById
-	@GetMapping(path = "/{id}",consumes = "application/json", produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<EstagioPCCT> findById(@PathVariable("id") Integer id) {
-		Projeto projeto;
+	@GetMapping("/{id}")
+	public ModelAndView findById(@PathVariable("id") Integer id) {
+		ModelAndView modelAndView = new ModelAndView("ProjetoDescricao/index");
 
 		try {
-			projeto = (Projeto) service.findById(id).get();
+			EstagioPCCT projeto = service.findById(id).get();
 
-			if (projeto == null) {
-				return ResponseEntity.badRequest().build();
+			if (projeto == null || projeto.getTipo() != TipoServico.PROJETO) {
+				modelAndView.addObject("mensagem", "Código de estágio inválido!");
+
+				throw new Exception("Código inválido!");
 			}
 
-			return ResponseEntity.ok(projeto);
+			modelAndView.addObject("projeto", projeto);
+
+			return modelAndView;
 		} catch (Exception e) {
-			return ResponseEntity.badRequest().build();
+			modelAndView.addObject("mensagem", e.getMessage());
+
+			return modelAndView;
 		}
 	}
 }

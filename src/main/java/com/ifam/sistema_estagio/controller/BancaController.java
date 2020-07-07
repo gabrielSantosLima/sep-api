@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ifam.sistema_estagio.controller.service.BancaService;
 import com.ifam.sistema_estagio.controller.service.EstagioPcctService;
@@ -32,47 +31,41 @@ public class BancaController {
 	@Autowired
 	private EstagioPcctService estagioPcctService;
 
+	private Optional<EstagioPCCT> getEstagioPcctById(Integer id){
+		return estagioPcctService.findById(id);
+	}
+	
 	// List
-	@GetMapping("/")
-	public ModelAndView list(@PathVariable Integer id) {
-		ModelAndView modelAndView = new ModelAndView("index");
-		Optional<EstagioPCCT> estagioPcct = estagioPcctService.findById(id);
-
-		if (!estagioPcct.isPresent()) {
-			modelAndView.addObject("mensagem", "Id informado não contém registro!");
-			return modelAndView;
-		}
-
+	@GetMapping(path = {"/", ""}, produces = "application/json")
+	@ResponseBody
+	public List<Banca> list(@PathVariable Integer id){
+		Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
+		
 		List<Banca> bancas = service.findByEstagioPcct(estagioPcct.get());
-
-		if (bancas.isEmpty()) {
-			modelAndView.addObject("mensagem", "Não há bancas cadastradas!");
-		} else {
-			modelAndView.addObject("bancas", bancas);
-		}
-
-		return modelAndView;
+		
+		return bancas;
 	}
 
 	// Create
-	@PostMapping(path = "/", consumes = "application/json", produces = "application/json")
+	@PostMapping(path = {"/",""}, consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Banca> create(@RequestBody Banca banca, @PathVariable Integer id) {
-		Optional<EstagioPCCT> estagioPcct = estagioPcctService.findById(id);
+		Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
 
 		if (!estagioPcct.isPresent()) {
 			return ResponseEntity.badRequest().body(banca);
 		}
 		
 		if (banca == null) {
-			return ResponseEntity.badRequest().build();
+			return ResponseEntity.badRequest().body(banca);
 		}
 		
 		try {
-			Banca bancaIdentificada = service.setEstagioOrProjeto(banca, estagioPcct.get());
-			Banca bancaRegistrada = service.create(bancaIdentificada);
+			banca.setEstagioPcct(estagioPcct.get());
+			
+			Banca createdBanca = service.create(banca);
 
-			return ResponseEntity.ok(bancaRegistrada);
+			return ResponseEntity.ok(createdBanca);
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -85,8 +78,9 @@ public class BancaController {
 	@ResponseBody
 	public ResponseEntity<Banca> update(@RequestBody Banca banca, @PathVariable("id") Integer id,
 			@PathVariable("idBanca") Integer idBanca) {
+		Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
 
-		if (banca == null) {
+		if (banca == null || !banca.getEstagioPcct().equals(estagioPcct.get())) {
 			return ResponseEntity.badRequest().build();
 		}
 		
@@ -102,12 +96,17 @@ public class BancaController {
 	}
 
 	// Delete
-	@DeleteMapping("/{idBanca}")
+	@DeleteMapping(path = "/{idBanca}", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Banca> delete(@PathVariable("id") Integer id, 
 			@PathVariable("idBanca") Integer idBanca) {
+		Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
 
 		try {
+			if(id != estagioPcct.get().getId()) {
+				return ResponseEntity.badRequest().build();
+			}
+			
 			service.delete(idBanca);
 
 			return ResponseEntity.ok().build();
