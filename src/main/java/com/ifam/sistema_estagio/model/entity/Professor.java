@@ -11,56 +11,59 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ifam.sistema_estagio.model.entity.interfaces.UsuarioLogavel;
 import com.ifam.sistema_estagio.util.enums.GrauAcademico;
 
 @Entity
 @Table(name = "professor")
-public class Professor extends Usuario {
+public class Professor extends Usuario implements UsuarioLogavel {
 
 	@Column(nullable = true, name = "grau")
 	@Enumerated(EnumType.STRING)
 	private GrauAcademico grau;
 
-	@ManyToMany(mappedBy = "professores")
-	private List<Banca> bancas;
-	
-	//Fichas de avaliação de estágios
+	// Avaliadores da banca
+	@OneToMany(mappedBy = "professor")
+	private List<Avaliadores> avaliadores;
+
+	// Fichas de avaliação de estágios
 	@OneToMany(mappedBy = "professor")
 	private List<FichaDeAvaliacaoEstagio> fichaEstagios;
-	
-	//Fichas de avaliação de projetos
+
+	// Fichas de avaliação de projetos
 	@OneToMany(mappedBy = "professor")
 	private List<FichaDeAvaliacaoProjeto> fichaProjeto;
-	
-	//Projetos ou estágios
+
+	// Projetos ou estágios
 	@OneToMany(mappedBy = "responsavel")
 	private List<EstagioPCCT> estagiosPcct;
-	
+
 	@ManyToMany
 	private Set<Role> roles;
 
 	public Professor() {
 		super();
 	}
-	
+
 	public Professor(Integer id, String matricula, String nome, String email, String username, String password,
-			String passwordConfirm, GrauAcademico grau, List<Banca> bancas, List<FichaDeAvaliacaoEstagio> fichaEstagios,
+			String passwordConfirm, GrauAcademico grau, List<Avaliadores> avaliadores, List<FichaDeAvaliacaoEstagio> fichaEstagios,
 			List<FichaDeAvaliacaoProjeto> fichaProjeto, List<EstagioPCCT> estagiosPcct, Set<Role> roles) {
+		
 		super(id, matricula, nome, email, username, password, passwordConfirm);
 		this.grau = grau;
-		this.bancas = bancas;
+		this.avaliadores = avaliadores;
 		this.fichaEstagios = fichaEstagios;
 		this.fichaProjeto = fichaProjeto;
 		this.estagiosPcct = estagiosPcct;
 		this.roles = roles;
 	}
 
-	public List<Banca> getBancas() {
-		return bancas;
+	public List<Avaliadores> getAvaliadores() {
+		return avaliadores;
 	}
 
-	public void setBancas(List<Banca> bancas) {
-		this.bancas = bancas;
+	public void setAvaliadores(List<Avaliadores> avaliadores) {
+		this.avaliadores = avaliadores;
 	}
 
 	public List<FichaDeAvaliacaoEstagio> getFichaEstagios() {

@@ -1,6 +1,7 @@
 package com.ifam.sistema_estagio.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,10 @@ public class BancaController {
 	@ResponseBody
 	public List<Banca> list(@PathVariable Integer id){
 		Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
+		
+		if(!estagioPcct.isPresent()) {
+			return new ArrayList<>();
+		}
 		
 		List<Banca> bancas = service.findByEstagioPcct(estagioPcct.get());
 		

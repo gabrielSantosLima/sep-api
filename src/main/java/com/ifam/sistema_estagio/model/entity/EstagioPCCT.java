@@ -44,7 +44,7 @@ public class EstagioPCCT {
 	private TipoServico tipo;
 	
 	//Bancas
-	@OneToMany(mappedBy = "estagioPcct")
+	@OneToMany
 	private List<Banca> bancas;
 
 	//Alunos
@@ -55,6 +55,10 @@ public class EstagioPCCT {
 	@ManyToOne
 	@JoinColumn(name = "responsavel_id")
 	private Professor responsavel;
+	
+	public EstagioPCCT() {
+		
+	}
 	
 	public EstagioPCCT(Integer id, String titulo, Integer cargaHoraria, Boolean concluido,String local, String  descricao, List<Banca> bancas,
 			List<Aluno> alunos, Professor responsavel) {

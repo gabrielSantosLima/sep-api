@@ -8,9 +8,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ifam.sistema_estagio.model.entity.interfaces.UsuarioLogavel;
+
 @Entity
 @Table(name = "coordenadora")
-public class Coordenadora extends Usuario{
+public class Coordenadora extends Usuario implements UsuarioLogavel{
 	
 	//Bancas
 	@OneToMany(mappedBy = "coordenadora")
@@ -19,6 +21,10 @@ public class Coordenadora extends Usuario{
 	@ManyToMany
 	private Set<Role> roles;
 
+	public Coordenadora() {
+		
+	}
+	
 	public Coordenadora(Integer id, String matricula, String nome, String email, String username, String password,
 			String passwordConfirm, List<Banca> bancas) {
 		super(id, matricula, nome, email, username, password, passwordConfirm);

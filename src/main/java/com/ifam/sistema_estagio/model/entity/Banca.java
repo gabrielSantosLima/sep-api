@@ -11,9 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -56,29 +55,8 @@ public class Banca {
 	private Ata ata;
 	
 	//Avaliadores da banca
-	@ManyToMany
-	@JoinTable(
-		name = "avaliadores",
-    	joinColumns = @JoinColumn(name = "banca_id"),
-    	inverseJoinColumns = @JoinColumn(name = "professor_id")
-	)
-	private List<Professor> professores;
-	
-	public Banca(Integer id, Date data, TipoServico tipo, Boolean banca_final, String local, Date horaInicio,
-			Date horaFinalizado, Ata ata, List<Professor> professores, Coordenadora coordenadora,
-			EstagioPCCT estagioPcct) {
-		this.id = id;
-		this.data = data;
-		this.tipo = tipo;
-		this.banca_final = banca_final;
-		this.local = local;
-		this.horaInicio = horaInicio;
-		this.horaFinalizado = horaFinalizado;
-		this.ata = ata;
-		this.professores = professores;
-		this.coordenadora = coordenadora;
-		this.estagioPcct = estagioPcct;
-	}
+	@OneToMany(mappedBy = "banca")
+	private List<Avaliadores> avaliadores;
 
 	//Coordenadora
 	@ManyToOne
@@ -89,6 +67,26 @@ public class Banca {
 	@ManyToOne
 	@JoinColumn(name = "estagio_pcct_id")
 	private EstagioPCCT estagioPcct;
+
+	public Banca () {
+		
+	}
+	
+	public Banca(Integer id, Date data, TipoServico tipo, Boolean banca_final, String local, Date horaInicio,
+			Date horaFinalizado, Ata ata, List<Avaliadores> avaliadores, Coordenadora coordenadora,
+			EstagioPCCT estagioPcct) {
+		this.id = id;
+		this.data = data;
+		this.tipo = tipo;
+		this.banca_final = banca_final;
+		this.local = local;
+		this.horaInicio = horaInicio;
+		this.horaFinalizado = horaFinalizado;
+		this.ata = ata;
+		this.avaliadores = avaliadores;
+		this.coordenadora = coordenadora;
+		this.estagioPcct = estagioPcct;
+	}
 	
 	public Boolean getBanca_final() {
 		return banca_final;
@@ -106,12 +104,12 @@ public class Banca {
 		this.ata = ata;
 	}
 
-	public List<Professor> getProfessores() {
-		return professores;
+	public List<Avaliadores> getAvaliadores() {
+		return avaliadores;
 	}
 
-	public void setProfessores(List<Professor> professores) {
-		this.professores = professores;
+	public void setAvaliadores(List<Avaliadores> avaliadores) {
+		this.avaliadores = avaliadores;
 	}
 
 	public Coordenadora getCoordenadora() {

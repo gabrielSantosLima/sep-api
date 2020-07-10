@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ifam.sistema_estagio.model.entity.Coordenadora;
 import com.ifam.sistema_estagio.model.entity.Role;
-import com.ifam.sistema_estagio.model.entity.Usuario;
+import com.ifam.sistema_estagio.model.entity.interfaces.UsuarioLogavel;
 import com.ifam.sistema_estagio.model.entity.Professor;
 import com.ifam.sistema_estagio.model.repository.CoordenadoraRepository;
 import com.ifam.sistema_estagio.model.repository.ProfessorRepository;
@@ -32,8 +32,8 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Usuario usuario = coordenadoraRepository.findByUsername(username);
-
+		UsuarioLogavel usuario = coordenadoraRepository.findByUsername(username);
+		
 		if (usuario == null) {
 			usuario = professorRepository.findByUsername(username);
 		}
@@ -55,5 +55,4 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
 		return new User(usuario.getUsername(), usuario.getPassword(), grantedAuthority);
 	}
-
 }
