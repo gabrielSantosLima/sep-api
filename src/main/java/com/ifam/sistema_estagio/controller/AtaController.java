@@ -34,7 +34,7 @@ public class AtaController {
 	}
 	
 	// List all
-	@GetMapping(path = {"/{id}", ""}, produces = "application/json")
+	@GetMapping(path = {"/", ""}, produces = "application/json")
 	@ResponseBody
 	public List<Ata> list(@PathVariable Integer id){
 		Banca banca = getBancaById(id);
@@ -45,16 +45,15 @@ public class AtaController {
 	}
 	
 	// Create
-	@PostMapping(path = "/", consumes = "application/json", produces = "application/json")
+	@PostMapping(path = {"/", ""}, consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Ata> create(@PathVariable Integer id, @RequestBody Ata ata){
-		Banca banca = getBancaById(id);
-		ata.setBanca(banca);
-		
 		try {
-			Ata createdAta;
+			Banca banca = getBancaById(id);
+			ata.setBanca(banca);
+		
 			
-			createdAta = service.create(ata);
+			Ata createdAta = service.create(ata);
 			
 			return ResponseEntity.ok(createdAta);
 		}catch(Exception e) {
@@ -68,12 +67,12 @@ public class AtaController {
 	@ResponseBody
 	public ResponseEntity<Ata> update(@RequestBody Ata ata, @PathVariable("id") Integer id,
 			@PathVariable("idAta") Integer idAta) {
-
-		if (ata == null) {
-			return ResponseEntity.badRequest().build();
-		}
-		
 		try {
+
+			if (ata == null) {
+				return ResponseEntity.badRequest().build();
+			}
+		
 			Ata updatedAta = service.update(idAta, ata);
 
 			return ResponseEntity.ok(updatedAta);
@@ -106,9 +105,9 @@ public class AtaController {
 	@ResponseBody
 	public Ata findById(@PathVariable("id") Integer id, 
 			@PathVariable("idAta") Integer idAta) {
-		Banca banca = getBancaById(id);
-		
 		try {
+			Banca banca = getBancaById(id);
+		
 			Ata ata = service.findById(idAta).get();
 			
 			if(banca.equals(ata.getBanca())) {

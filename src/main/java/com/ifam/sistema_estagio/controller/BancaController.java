@@ -55,17 +55,17 @@ public class BancaController {
 	@PostMapping(path = {"/",""}, consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Banca> create(@RequestBody Banca banca, @PathVariable Integer id) {
-		Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
-
-		if (!estagioPcct.isPresent()) {
-			return ResponseEntity.badRequest().body(banca);
-		}
-		
-		if (banca == null) {
-			return ResponseEntity.badRequest().body(banca);
-		}
-		
 		try {
+			Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
+	
+			if (!estagioPcct.isPresent()) {
+				return ResponseEntity.badRequest().body(banca);
+			}
+			
+			if (banca == null) {
+				return ResponseEntity.badRequest().body(banca);
+			}
+		
 			banca.setEstagioPcct(estagioPcct.get());
 			
 			Banca createdBanca = service.create(banca);
@@ -83,13 +83,13 @@ public class BancaController {
 	@ResponseBody
 	public ResponseEntity<Banca> update(@RequestBody Banca banca, @PathVariable("id") Integer id,
 			@PathVariable("idBanca") Integer idBanca) {
-		Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
-
-		if (banca == null || !banca.getEstagioPcct().equals(estagioPcct.get())) {
-			return ResponseEntity.badRequest().build();
-		}
-		
 		try {
+			Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
+	
+			if (banca == null || banca.getEstagioPcct().getId() != estagioPcct.get().getId()) {
+				return ResponseEntity.badRequest().build();
+			}
+		
 			Banca bancaAtualizada = service.update(idBanca, banca);
 
 			return ResponseEntity.ok(bancaAtualizada);
@@ -105,9 +105,9 @@ public class BancaController {
 	@ResponseBody
 	public ResponseEntity<Banca> delete(@PathVariable("id") Integer id, 
 			@PathVariable("idBanca") Integer idBanca) {
-		Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
-
 		try {
+			Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
+
 			if(id != estagioPcct.get().getId()) {
 				return ResponseEntity.badRequest().build();
 			}

@@ -47,9 +47,9 @@ public class FichaDeAvaliacaoProjetoController {
 	@PostMapping(value = { "", "/" }, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<FichaDeAvaliacaoProjeto> create(@RequestBody FichaDeAvaliacaoProjeto ficha,
 			@PathVariable Integer id) {
-		Ata ata = getAtaById(id);
-
 		try {
+			Ata ata = getAtaById(id);
+
 			ficha.setAta(ata);
 
 			FichaDeAvaliacaoProjeto createdFicha = service.create(ficha);
@@ -63,13 +63,13 @@ public class FichaDeAvaliacaoProjetoController {
 	@PutMapping(value = { "/{idFicha}" }, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<FichaDeAvaliacaoProjeto> create(@RequestBody FichaDeAvaliacaoProjeto ficha,
 			@PathVariable("id") Integer id, @PathVariable("idFicha") Integer idFicha) {
-		Ata ata = getAtaById(id);
-
-		if (!ficha.getAta().equals(ata)) {
-			return ResponseEntity.badRequest().build();
-		}
-
 		try {
+			Ata ata = getAtaById(id);
+	
+			if (!ficha.getAta().equals(ata)) {
+				return ResponseEntity.badRequest().build();
+			}
+
 			FichaDeAvaliacaoProjeto updatedFicha = service.update(idFicha, ficha);
 
 			return ResponseEntity.ok(updatedFicha);
@@ -81,15 +81,14 @@ public class FichaDeAvaliacaoProjetoController {
 	@DeleteMapping(value = { "/{idFicha}" }, consumes = "application/json", produces = "application/json")
 	public ResponseEntity<FichaDeAvaliacaoProjeto> create(@PathVariable("id") Integer id,
 			@PathVariable("idFicha") Integer idFicha) {
-
-		Ata ata = getAtaById(id);
-		FichaDeAvaliacaoProjeto ficha = service.findById(idFicha).get();
-
-		if (!ficha.getAta().equals(ata)) {
-			return ResponseEntity.badRequest().build();
-		}
-
 		try {
+			Ata ata = getAtaById(id);
+			FichaDeAvaliacaoProjeto ficha = service.findById(idFicha).get();
+	
+			if (!ficha.getAta().equals(ata)) {
+				return ResponseEntity.badRequest().build();
+			}
+
 			service.delete(idFicha);
 
 			return ResponseEntity.ok().build();

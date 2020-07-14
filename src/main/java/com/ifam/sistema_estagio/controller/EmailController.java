@@ -35,7 +35,7 @@ public class EmailController {
 
 	@PostMapping(path = "/documentos", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public String resgatarSenha(@RequestBody EmailSimples email, @RequestBody String pathFile) {
+	public String sendEmailAttachment(@RequestBody EmailSimples email, @RequestBody String pathFile) {
 		try {
 			service.sendEmailAttachment(email, pathFile);
 			

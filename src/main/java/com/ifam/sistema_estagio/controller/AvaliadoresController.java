@@ -27,14 +27,14 @@ public class AvaliadoresController {
 	@GetMapping(path = { "/", "" }, produces = "application/json")
 	@ResponseBody
 	public List<Avaliadores> list(@PathVariable Integer id) {
-		List<Avaliadores> avaliadores;
 		try {
-			avaliadores = service.findByBancaId(id);
+			
+			 List<Avaliadores> avaliadores = service.findByBancaId(id);
+			 
+			 return avaliadores;
 		} catch (Exception e) {
 			return new ArrayList<>();
 		}
-
-		return avaliadores;
 	}
 
 	@PostMapping(path = {"/",""}, consumes = "application/json", produces = "application/json")
@@ -49,7 +49,6 @@ public class AvaliadoresController {
 					createdAvaliadores.add(service.createByIds(idProfessor, id));
 
 				} catch (Exception e) {
-					e.printStackTrace();
 				}
 			});
 
@@ -63,7 +62,6 @@ public class AvaliadoresController {
 	@ResponseBody
 	public ResponseEntity<Avaliadores> delete(@PathVariable("id") Integer idBanca,
 			@PathVariable("idAvaliador") Integer idAvaliador) {
-		AvaliadoresJSONObject v = new AvaliadoresJSONObject();
 		try {
 			service.delete(idAvaliador);
 

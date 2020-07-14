@@ -15,29 +15,27 @@ public class GenericService<E, Repository extends JpaRepository<E, Integer>>{
 	public E create(E e) throws Exception {
 		
 		if(e == null) {
-			throw new Exception("[service] Erro na criação da entidade!");
+			throw new Exception("[service] Entidade nula!");
 		}
 		
 		return repository.save(e);
 	}
 	
 	//Atualizar
-	public E update(Integer id, E e) throws Exception {
+	public E update(Integer id, E newE) throws Exception {
 
-		if(e == null) {
-			throw new Exception("[service] Erro na atualização da entidade!");
+		if(newE == null) {
+			throw new Exception("[service] Entidade nula!");
 		}
 		
 		if(!exists(id)) {
-			repository.save(e);			
+			throw new Exception("[service] Entidade não existe!");
 		}
 		
-		E newE = findById(id).get();
-		delete(id);
 		
-		repository.save(newE);
+		E updatedE = repository.save(newE);
 		
-		return newE;
+		return updatedE;
 	}
 	
 	//Listar
@@ -59,7 +57,7 @@ public class GenericService<E, Repository extends JpaRepository<E, Integer>>{
 	public void delete(Integer id) throws Exception {
 		
 		if(!exists(id)) {
-			throw new Exception("[service] Erro ao deletar entidade!");
+			throw new Exception("[service] Entidade não existe!");
 		}
 		
 		repository.deleteById(id);

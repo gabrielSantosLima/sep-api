@@ -53,12 +53,12 @@ public class AlunoController {
 	@PutMapping(path = "/{id}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<Aluno> update(@RequestBody Aluno aluno, @PathVariable Integer id) {
-
-		if (aluno == null) {
-			return ResponseEntity.badRequest().build();
-		}
-
 		try {
+
+			if (aluno == null) {
+				return ResponseEntity.badRequest().build();
+			}
+
 			service.update(id, aluno);
 
 			return ResponseEntity.ok(aluno);

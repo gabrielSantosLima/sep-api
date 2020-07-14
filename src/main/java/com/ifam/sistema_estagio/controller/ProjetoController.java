@@ -61,12 +61,11 @@ public class ProjetoController {
 	@PutMapping(path = "/{id}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
 	public ResponseEntity<EstagioPCCT> update(@RequestBody EstagioPCCT projeto, @PathVariable("id") Integer id) {
-
-		if (projeto == null) {
-			return ResponseEntity.badRequest().build();
-		}
-
 		try {
+			if (projeto == null) {
+				return ResponseEntity.badRequest().build();
+			}
+
 			service.update(id, projeto);
 
 			return ResponseEntity.ok(projeto);
