@@ -1,6 +1,7 @@
 package com.ifam.sistema_estagio.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ifam.sistema_estagio.controller.service.EstagioPcctService;
+import com.ifam.sistema_estagio.controller.service.ProfessorService;
 import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
+import com.ifam.sistema_estagio.model.entity.Professor;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 @Controller
@@ -25,7 +28,10 @@ public class ProjetoController {
 
 	@Autowired
 	private EstagioPcctService service;
-
+	
+	@Autowired
+	private ProfessorService professorService;
+	
 	// List
 	@GetMapping(path = { "/", "" })
 	public ModelAndView list() {
@@ -47,6 +53,14 @@ public class ProjetoController {
 	public ResponseEntity<EstagioPCCT> create(@RequestBody EstagioPCCT projeto) {
 
 		try {
+			Optional<Professor> professor = professorService.findById(projeto.getResponsavel().getId());
+			
+			if(!professor.isPresent()) {
+				return ResponseEntity.badRequest().build();				
+			}
+			
+			projeto.setResponsavel(professor.get());
+			
 			EstagioPCCT createdProjeto = service.create(projeto);
 
 			return ResponseEntity.ok(createdProjeto);

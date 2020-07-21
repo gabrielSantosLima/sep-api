@@ -6,9 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -16,25 +13,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.ifam.sistema_estagio.util.enums.Curso;
+import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
+import com.ifam.sistema_estagio.util.enums.GrauAcademico;
 import com.ifam.sistema_estagio.util.enums.ModalidadeCurso;
 
 @Entity
 @Table(name = "aluno")
-public class Aluno {
+public class Aluno extends Usuario{
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-
-	@Column(nullable = false, name = "matricula")
-	private String matricula;
-	
-	@Column(nullable = false, length = 200, name = "nome")
-	private String nome;
-
-	@Column(nullable = false, length = 100, name = "email")
-	private String email;
-	
 	@Column(nullable = false, name = "data_conclusao")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataConclusao;
@@ -44,7 +30,7 @@ public class Aluno {
 	private Curso curso;
 
 	@Column(nullable = false, name = "modalidade_curso")
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private ModalidadeCurso modalidadeCurso;
 
 	//Estágio ou projeto
@@ -53,51 +39,16 @@ public class Aluno {
 	private EstagioPCCT estagioPcct;
 
 	public Aluno() {
-		
+		super();
 	}
 	
-	public Aluno(Integer id, String matricula, String nome, String email, Date dataConclusao, Curso curso,
-			ModalidadeCurso modalidadeCurso, EstagioPCCT estagioPcct) {
-		this.id = id;
-		this.matricula = matricula;
-		this.nome = nome;
-		this.email = email;
+	public Aluno(Integer id, String matricula, String nome, String email, FuncaoEstagio tipo, Date dataConclusao, Curso curso,
+			ModalidadeCurso modalidadeCurso, EstagioPCCT estagioPcct, GrauAcademico grau) {
+		super(id, matricula, nome, email, tipo, grau);
 		this.dataConclusao = dataConclusao;
 		this.curso = curso;
 		this.modalidadeCurso = modalidadeCurso;
 		this.estagioPcct = estagioPcct;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public EstagioPCCT getEstagioPcct() {

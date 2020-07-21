@@ -13,15 +13,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ifam.sistema_estagio.model.entity.Coordenadora;
 import com.ifam.sistema_estagio.model.entity.Role;
 import com.ifam.sistema_estagio.model.entity.interfaces.UsuarioLogavel;
-import com.ifam.sistema_estagio.model.entity.Professor;
 import com.ifam.sistema_estagio.model.repository.CoordenadoraRepository;
 import com.ifam.sistema_estagio.model.repository.ProfessorRepository;
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService{
+public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private CoordenadoraRepository coordenadoraRepository;
@@ -33,24 +31,19 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UsuarioLogavel usuario = coordenadoraRepository.findByUsername(username);
-		
+
 		if (usuario == null) {
 			usuario = professorRepository.findByUsername(username);
 		}
 
-		if (usuario == null)
+		if (usuario == null) {
 			throw new UsernameNotFoundException(username);
-
+		}
+		
 		Set<GrantedAuthority> grantedAuthority = new HashSet<>();
 
-		if (usuario instanceof Coordenadora) {
-			for (Role role : ((Coordenadora) usuario).getRoles()) {
-				grantedAuthority.add(new SimpleGrantedAuthority(role.getName()));
-			}
-		} else {
-			for (Role role : ((Professor) usuario).getRoles()) {
-				grantedAuthority.add(new SimpleGrantedAuthority(role.getName()));
-			}
+		for (Role role : usuario.getRoles()) {
+			grantedAuthority.add(new SimpleGrantedAuthority(role.getName()));
 		}
 
 		return new User(usuario.getUsername(), usuario.getPassword(), grantedAuthority);

@@ -6,9 +6,11 @@ import org.apache.commons.mail.EmailAttachment;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.MultiPartEmail;
 import org.apache.commons.mail.SimpleEmail;
+import org.springframework.stereotype.Service;
 
 import com.ifam.sistema_estagio.model.entity.EmailSimples;
 
+@Service
 public class EmailService {
 
 	public void sendEmailAttachment(EmailSimples emailUser, String anexoUrl) throws EmailException {
@@ -37,9 +39,9 @@ public class EmailService {
 		
 		Email email = new SimpleEmail();
 		email.setHostName(emailUser.getHostName());
-		email.setSmtpPort(465);
-		email.setAuthenticator(new DefaultAuthenticator("username", "password"));
-		email.setSSLOnConnect(true);
+		email.setSmtpPort(emailUser.getSmtpPort());
+		email.setAuthenticator(new DefaultAuthenticator(emailUser.getUsername(), emailUser.getPassword()));
+		email.setSSLOnConnect(emailUser.getSslInConnection());
 		email.setFrom(emailUser.getFrom());
 		email.setSubject(emailUser.getSubject());
 		email.setMsg(emailUser.getMessage());

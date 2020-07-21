@@ -16,29 +16,46 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ifam.sistema_estagio.controller.service.AlunoService;
+import com.ifam.sistema_estagio.controller.service.EstagioPcctService;
 import com.ifam.sistema_estagio.model.entity.Aluno;
+import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
 
 @Controller
-@RequestMapping("/aluno")
+@RequestMapping(value = { "/estagio/{id}/aluno", "/projeto/{id}/aluno" })
 public class AlunoController {
+
 	@Autowired
 	private AlunoService service;
 
+	@Autowired
+	private EstagioPcctService estagioService;
+
+	private Optional<EstagioPCCT> getEstagioPcctById(Integer id) {
+		return estagioService.findById(id);
+	}
+
 	// List
-	@GetMapping(path = {"/", ""}, produces = "application/json")
+	@GetMapping(path = { "/", "" }, produces = "application/json")
 	@ResponseBody
-	public List<Aluno> list(){
+	public List<Aluno> list() {
 		List<Aluno> alunos = service.list();
-		
+
 		return alunos;
 	}
 
 	// Create
-	@PostMapping(path = {"/", ""}, consumes = "application/json", produces = "application/json")
+	@PostMapping(path = { "/", "" }, consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Aluno> create(@RequestBody Aluno aluno) {
-		
+	public ResponseEntity<Aluno> create(@RequestBody Aluno aluno, @PathVariable Integer id) {
 		try {
+			Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
+
+			if (!estagioPcct.isPresent()) {
+				return ResponseEntity.badRequest().build();
+			}
+
+			aluno.setEstagioPcct(estagioPcct.get());
+
 			Aluno createdAluno = service.create(aluno);
 
 			return ResponseEntity.ok(createdAluno);
@@ -50,16 +67,21 @@ public class AlunoController {
 	}
 
 	// Update
-	@PutMapping(path = "/{id}", consumes = "application/json", produces = "application/json")
+	@PutMapping(path = "/{idAluno}", consumes = "application/json", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Aluno> update(@RequestBody Aluno aluno, @PathVariable Integer id) {
+	public ResponseEntity<Aluno> update(@RequestBody Aluno aluno, @PathVariable("id") Integer id, @PathVariable("idAluno") Integer idAluno) {
 		try {
+			Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
+
+			if (!estagioPcct.isPresent()) {
+				return ResponseEntity.badRequest().build();
+			}
 
 			if (aluno == null) {
 				return ResponseEntity.badRequest().build();
 			}
 
-			service.update(id, aluno);
+			service.update(idAluno, aluno);
 
 			return ResponseEntity.ok(aluno);
 		} catch (Exception e) {
@@ -70,12 +92,18 @@ public class AlunoController {
 	}
 
 	// Delete
-	@DeleteMapping(path= "/{id}", produces = "application/json")
+	@DeleteMapping(path = "/{idAluno}", produces = "application/json")
 	@ResponseBody
-	public ResponseEntity<Aluno> delete(@PathVariable Integer id) {
+	public ResponseEntity<Aluno> delete(@PathVariable("id") Integer id ,@PathVariable("idAluno") Integer idAluno) {
 
 		try {
-			service.delete(id);
+			Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
+
+			if (!estagioPcct.isPresent()) {
+				return ResponseEntity.badRequest().build();
+			}
+			
+			service.delete(idAluno);
 
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
@@ -86,19 +114,25 @@ public class AlunoController {
 	}
 
 	// FindById
-	@GetMapping(path = "/{id}", produces = "application/json")
+	@GetMapping(path = "/{idAluno}", produces = "application/json")
 	@ResponseBody
-	public Aluno findById(@PathVariable("id") Integer id) {
+	public Aluno findById(@PathVariable("id") Integer id, @PathVariable("idAluno") Integer idAluno) {
 		try {
-			Optional<Aluno> foundAluno = service.findById(id);
+			Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
 
-			if(!foundAluno.isPresent()) {
+			if (!estagioPcct.isPresent()) {
 				return new Aluno();
 			}
 			
+			Optional<Aluno> foundAluno = service.findById(idAluno);
+
+			if (!foundAluno.isPresent()) {
+				return new Aluno();
+			}
+
 			return foundAluno.get();
 		} catch (Exception e) {
-			
+
 			return new Aluno();
 		}
 	}

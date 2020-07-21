@@ -5,22 +5,23 @@ import java.util.List;
 
 public enum GrauAcademico {
 	
-	GRADUADO("Graduado"),
-	MESTRE("Mestre"),
-	DOUTOR("Doutor"),
-	POS_DOUTOR("Pós-Doc");
+	ENSINO_FUNDAMENTAL(0),
+	ENSINO_MEDIO(1),
+	GRADUADO(2),
+	MESTRE(3),
+	DOUTOR(4);
 	
-	private String grau;
+	private Integer grau;
 	
-	GrauAcademico(String grau){
+	GrauAcademico(Integer grau){
 		this.grau = grau;
 	}
 	
-	public String getGrau() {
+	public Integer getGrau() {
 		return grau;
 	}
 	
-	public static GrauAcademico of(String grau) {
+	public static GrauAcademico of(Integer grau) {
 		return Arrays.asList(GrauAcademico.values())
 				.stream()
 				.filter(g -> g.getGrau() == grau)

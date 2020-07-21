@@ -1,52 +1,40 @@
 package com.ifam.sistema_estagio.model.entity;
 
-import java.util.Date;
-
 public class Certificado {
 
-	private String nome;
-
-	/* Exemplo de complemento:
-	 * 
-	 * Certificamos para os devidos fins de direito que RONALDO COSTA DE FREITAS
-	 * atuou como Desenvolvedor Back-End no Projeto de Extensão - Fábrica de
-	 * Software do CMC, promovido pelo Instituto Federal de Educação, Ciência e
-	 * Tecnologia.
-	 */
-	private String complemento;
-
-	private String emissor;
-	private Date dataEmissao;
-
-	public String getComplemento() {
-		return complemento;
+//	 Exemplo de complemento:
+//	  
+//	 Certificamos para os devidos fins de direito que RONALDO COSTA DE FREITAS
+//	 atuou como Desenvolvedor Back-End no Projeto de Extensão - Fábrica de
+//	 Software do CMC, promovido pelo Instituto Federal de Educação, Ciência e
+//	 Tecnologia.
+	 
+	
+	private String data;
+	private String mensagem;
+	
+	public Certificado(String data, String mensagem) {
+		super();
+		this.data = data;
+		this.mensagem = mensagem;
 	}
 
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
+	public Certificado() {
 	}
 
-	public Date getDataEmissao() {
-		return dataEmissao;
+	public String getData() {
+		return data;
 	}
 
-	public void setDataEmissao(Date dataEmissao) {
-		this.dataEmissao = dataEmissao;
+	public void setData(String data) {
+		this.data = data;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getMensagem() {
+		return mensagem;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getEmissor() {
-		return emissor;
-	}
-
-	public void setEmissor(String emissor) {
-		this.emissor = emissor;
+	public void setMensagem(String mensagem) {
+		this.mensagem = mensagem;
 	}
 }

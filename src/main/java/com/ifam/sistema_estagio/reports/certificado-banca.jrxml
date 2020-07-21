@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado-banca" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="0" uuid="167e7573-64ec-4fb8-b089-d73220271282">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="data" class="java.lang.String"/>
+	<field name="mensagem" class="java.lang.String"/>
+	<background>
+		<band height="575" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<image scaleImage="FillFrame" hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="1" width="821" height="571" uuid="7cd1dcea-bdea-44a6-830b-ebafd564f987">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<imageExpression><![CDATA["C:/Users/jaugu/OneDrive/Área de Trabalho/Gabriel/Arquivos - Sistema de Estágio/Documentação/Documentos de Estágio e PCCT/Partes/Certificados/imagem-canto.png"]]></imageExpression>
+			</image>
+		</band>
+	</background>
+	<pageHeader>
+		<band height="134">
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="0" y="0" width="132" height="108" uuid="750d6191-870b-4984-aca0-95be379207eb"/>
+				<imageExpression><![CDATA["C:/Users/jaugu/OneDrive/Área de Trabalho/Gabriel/Arquivos - Sistema de Estágio/Documentação/Documentos de Estágio e PCCT/Partes/Certificados/brasaorepublica.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="130" y="0" width="459" height="90" uuid="0c5e927d-e523-4dac-a35c-0d8cdfcb56a9"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="12" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[MINISTÉRIO DA EDUCAÇÃO
+SECRETARIA DE EDUCAÇÃO PROFISSIONAL E TECNOLÓGICA
+INSTITUTO FEDERAL DE EDUCAÇÃO, CIÊNCIA E TECNOLOGIA DO AMAZONAS
+CAMPUS MANAUS CENTRO
+DIRETORIA DE ENSINO MÉDIO E TÉCNICO - DIREN
+DEPARTAMENTO ACADÊMICO DE INFORMAÇÃO E COMUNICAÇÃO
+COORDENAÇÃO DO CURSO DE INFORMÁTICA
+]]></text>
+			</staticText>
+			<image hAlign="Center" vAlign="Middle">
+				<reportElement x="589" y="0" width="182" height="109" uuid="d4c07b72-c8fe-4f5b-a42c-76f35e7821e8"/>
+				<imageExpression><![CDATA["C:/Users/jaugu/OneDrive/Área de Trabalho/Gabriel/Arquivos - Sistema de Estágio/Documentação/Documentos de Estágio e PCCT/Partes/Certificados/ifam.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="53">
+			<staticText>
+				<reportElement x="0" y="11" width="802" height="30" forecolor="#1E590C" uuid="229f53e0-fdf6-4907-8fc9-87feeb74217c"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
+					<font fontName="Times New Roman" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[C E R T I F I C A D O]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="133" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<textField>
+				<reportElement x="0" y="0" width="802" height="125" uuid="8200e674-69e1-4e6a-9eff-8a4dbaa684f9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7887b8fb-6f7e-44fa-9c53-04228f11f27f"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<box topPadding="20" leftPadding="0" bottomPadding="0" rightPadding="0"/>
+				<textElement textAlignment="Left" markup="html">
+					<font fontName="Arial" size="14"/>
+					<paragraph firstLineIndent="226"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mensagem}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="116">
+			<textField>
+				<reportElement x="380" y="2" width="320" height="30" uuid="cb031b49-9a9e-435c-8897-b2f0bc707e16">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="13" isBold="true"/>
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="56" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="13" width="179" height="30" uuid="2645cda1-a9f0-4d82-8f8e-0bc3f14745ad"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Chefe do Departamento Acadêmico]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="13" width="179" height="30" uuid="cb7c1054-a0bd-42e4-815a-f6694f334011"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Coordenador do Curso]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="100" y="13" width="180" height="1" uuid="823fdff8-89f7-42ba-a49b-e32d4aeb872d">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="300" y="13" width="180" height="1" uuid="a9dbbda2-6433-411d-b82c-53954fc71e1c">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</pageFooter>
+</jasperReport>
