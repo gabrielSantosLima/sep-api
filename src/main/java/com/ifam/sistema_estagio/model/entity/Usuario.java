@@ -12,7 +12,7 @@ import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 import com.ifam.sistema_estagio.util.enums.GrauAcademico;
 
 @MappedSuperclass
-public abstract class Usuario{
+public abstract class Usuario {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +20,10 @@ public abstract class Usuario{
 
 	@Column(nullable = false, name = "matricula")
 	private String matricula;
-	
+
+	@Column(nullable = false, name = "cpf")
+	private String cpf;
+
 	@Column(nullable = false, length = 200, name = "nome")
 	private String nome;
 
@@ -36,18 +39,26 @@ public abstract class Usuario{
 	private GrauAcademico grau;
 
 	public Usuario() {
-		
+
 	}
-	
-	public Usuario(Integer id, String matricula, String nome, String email, FuncaoEstagio tipo, GrauAcademico grau) {
+
+	public Usuario(Integer id, 
+			String matricula,
+			String nome, 
+			String email, 
+			FuncaoEstagio tipo,
+			GrauAcademico grau, 
+			String cpf
+		) {
 		this.id = id;
 		this.matricula = matricula;
 		this.nome = nome;
 		this.email = email;
 		this.tipo = tipo;
 		this.grau = grau;
+		this.cpf = cpf;
 	}
-	
+
 	public GrauAcademico getGrau() {
 		return grau;
 	}
@@ -94,5 +105,13 @@ public abstract class Usuario{
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 }

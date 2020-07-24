@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 @EnableJpaRepositories
 public class SistemaEstagioApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(SistemaEstagioApplication.class, args);
 	}

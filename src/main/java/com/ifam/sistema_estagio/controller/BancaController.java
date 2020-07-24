@@ -65,10 +65,8 @@ public class BancaController {
 			if (banca == null) {
 				return ResponseEntity.badRequest().body(banca);
 			}
-		
-			banca.setEstagioPcct(estagioPcct.get());
 			
-			Banca createdBanca = service.create(banca);
+			Banca createdBanca = service.create(banca, estagioPcct.get());
 
 			return ResponseEntity.ok(createdBanca);
 		} catch (Exception e) {

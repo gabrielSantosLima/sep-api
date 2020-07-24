@@ -39,6 +39,9 @@ public class EstagioPCCT {
 	@Column(nullable = true, name = "descricao")
 	private String descricao;
 
+	@Column(nullable = true, name = "trabalho")
+	private byte[] trabalho;
+
 	@Column(nullable = false, name = "tipo")
 	@Enumerated(EnumType.ORDINAL)
 	private TipoServico tipo;
@@ -61,13 +64,14 @@ public class EstagioPCCT {
 	}
 	
 	public EstagioPCCT(Integer id, String titulo, Integer cargaHoraria, Boolean concluido,String local, String  descricao, List<Banca> bancas,
-			List<Aluno> alunos, Professor responsavel) {
+			List<Aluno> alunos, Professor responsavel, byte[] trabalho) {
 		this.id = id;
 		this.titulo = titulo;
 		this.cargaHoraria = cargaHoraria;
 		this.concluido = concluido;
 		this.local = local;
 		this.descricao = descricao;
+		this.trabalho = trabalho;
 		this.bancas = bancas;
 		this.alunos = alunos;
 		this.responsavel = responsavel;
@@ -151,5 +155,13 @@ public class EstagioPCCT {
 
 	public void setResponsavel(Professor responsavel) {
 		this.responsavel = responsavel;
+	}
+
+	public byte[] getTrabalho() {
+		return trabalho;
+	}
+
+	public void setTrabalho(byte[] trabalho) {
+		this.trabalho = trabalho;
 	}
 }

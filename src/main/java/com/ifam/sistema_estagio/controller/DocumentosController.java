@@ -1,6 +1,5 @@
 package com.ifam.sistema_estagio.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ifam.sistema_estagio.controller.service.DocumentosService;
-import com.ifam.sistema_estagio.model.entity.Certificado;
+import com.ifam.sistema_estagio.reports.fields.CertificadoFields;
 
 import net.sf.jasperreports.engine.JRException;
 
@@ -37,18 +36,21 @@ public class DocumentosController {
 	@ResponseBody
 	public byte[] getCertificado() {
 		try {
-			List<Certificado> certificados = new ArrayList<>();
-			certificados.add(new Certificado("13 de Fevereiro de 2020", "Certificamos para os devidos fins de direito que <b>RONALDO COSTA DE FREITAS</b>\r\n" + 
-					"	 atuou como <b>Desenvolvedor Back-End</b> no Projeto de Extensão - Fábrica de\r\n" + 
-					"	 Software do CMC, promovido pelo Instituto Federal de Educação, Ciência e\r\n" + 
-					"	 Tecnologia."));
-			certificados.add(new Certificado("13 de Fevereiro de 2020", "Boraaa"));
-			certificados.add(new Certificado("13 de Fevereiro de 2020", "Boraaa"));
+			List<CertificadoFields> certificados = new ArrayList<>();
+			certificados.add(new CertificadoFields("13 de Fevereiro de 2020", "Certificamos para os devidos fins de direito que o <b>Prof. MSc. Sérgio Augusto Coelho Bezerra</b> participou como orientador(a) e presidente na banca de defesa do Trabalho de Conclusão de Curso de <b>Adrielly Moraes Lustoza, Raquel Albuquerque Maciel do Curso Técnico Integrado em Informática.</b><br>\r\n" + 
+					"Coordenação do Curso de Informática do Instituto Federal de Educação, Ciência e Tecnologia do Amazonas - IFAM.\r\n" + 
+					""));
+			certificados.add(new CertificadoFields("13 de Fevereiro de 2020", "Certificamos para os devidos fins de direito que o <b>Prof. MSc. Sérgio Augusto Coelho Bezerra</b> participou como orientador(a) e presidente na banca de defesa do Trabalho de Conclusão de Curso de <b>Adrielly Moraes Lustoza, Raquel Albuquerque Maciel do Curso Técnico Integrado em Informática.</b><br>\r\n" + 
+					"Coordenação do Curso de Informática do Instituto Federal de Educação, Ciência e Tecnologia do Amazonas - IFAM.\r\n" + 
+					""));
+			certificados.add(new CertificadoFields("13 de Fevereiro de 2020", "Certificamos para os devidos fins de direito que o <b>Prof. MSc. Sérgio Augusto Coelho Bezerra</b> participou como orientador(a) e presidente na banca de defesa do Trabalho de Conclusão de Curso de <b>Adrielly Moraes Lustoza, Raquel Albuquerque Maciel do Curso Técnico Integrado em Informática.</b><br>\r\n" + 
+					"Coordenação do Curso de Informática do Instituto Federal de Educação, Ciência e Tecnologia do Amazonas - IFAM.\r\n" + 
+					""));
 
 			byte[] file = service.generateCertificado(certificados);
 			
 			return file;
-		} catch (JRException | IOException e) {
+		} catch (JRException e) {
 			e.printStackTrace();
 
 			return null;

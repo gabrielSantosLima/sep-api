@@ -42,9 +42,19 @@ public class Aluno extends Usuario{
 		super();
 	}
 	
-	public Aluno(Integer id, String matricula, String nome, String email, FuncaoEstagio tipo, Date dataConclusao, Curso curso,
-			ModalidadeCurso modalidadeCurso, EstagioPCCT estagioPcct, GrauAcademico grau) {
-		super(id, matricula, nome, email, tipo, grau);
+	public Aluno(Integer id, 
+			String matricula, 
+			String nome, 
+			String email, 
+			FuncaoEstagio tipo, 
+			Date dataConclusao, 
+			Curso curso,
+			ModalidadeCurso modalidadeCurso, 
+			EstagioPCCT estagioPcct, 
+			GrauAcademico grau, 
+			String cpf
+		) {
+		super(id, matricula, nome, email, tipo, grau, cpf);
 		this.dataConclusao = dataConclusao;
 		this.curso = curso;
 		this.modalidadeCurso = modalidadeCurso;

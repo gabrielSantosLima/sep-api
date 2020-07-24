@@ -1,5 +1,7 @@
 package com.ifam.sistema_estagio.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,28 +30,38 @@ public class UsuarioController {
 	private SecurityService securityService;
 
 	@GetMapping("/registration")
-	private String registration(Model model, @RequestParam("u") String usuario) {
+	private String registration(Model model, @RequestParam Optional<String> usuario) {
 
-		if(usuario == "professor") {
-			model.addAttribute("usuario", new Professor());			
-		}else if(usuario == "coordenadora") {
-			model.addAttribute("usuario", new Coordenadora());			
+		if (!usuario.isPresent())
+			return "Login/index";
+
+		System.out.print(usuario.get());
+
+		if (usuario.get().equals("professor")) {
+
+			model.addAttribute("usuario", new Professor());
+
+		} else if (usuario.get().equals("coordenadora")) {
+
+			model.addAttribute("usuario", new Coordenadora());
+
 		}
 
 		return "Cadastro/index";
 	}
 
 	@PostMapping("/registration")
-	private String registration(@ModelAttribute("usuario") UsuarioLogavel usuario, BindingResult bindingResult) {
+	private String registration(@ModelAttribute("usuario") UsuarioLogavel usuario,
+			BindingResult bindingResult) {
 
 		if (bindingResult.hasErrors()) {
 			return "cadastrar";
 		}
-		
-		if(usuario instanceof Coordenadora) {
+
+		if (usuario instanceof Coordenadora) {
 			coordenadoraService.create((Coordenadora) usuario);
-		}else {
-			professorService.create((Professor) usuario);			
+		} else if (usuario instanceof Professor) {
+			professorService.create((Professor) usuario);
 		}
 
 		securityService.autoLogin(usuario.getUsername(), usuario.getPasswordConfirm());
@@ -65,7 +77,7 @@ public class UsuarioController {
 		}
 		if (logout != null) {
 			model.addAttribute("message", "Você foi logado corretamente!");
-			
+
 			return "redirect:/home";
 		}
 

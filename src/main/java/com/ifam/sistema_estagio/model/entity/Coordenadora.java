@@ -44,9 +44,10 @@ public class Coordenadora extends Usuario implements UsuarioLogavel{
 			FuncaoEstagio tipo, 
 			List<Banca> bancas, 
 			Set<Role> roles,
-			GrauAcademico grau
+			GrauAcademico grau,
+			String cpf
 		) {
-		super(id, matricula, nome, email, tipo, grau);
+		super(id, matricula, nome, email, tipo, grau, cpf);
 		this.bancas = bancas;
 		this.roles = roles;
 	}

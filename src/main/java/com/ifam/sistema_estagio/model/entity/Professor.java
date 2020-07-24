@@ -63,9 +63,10 @@ public class Professor extends Usuario implements UsuarioLogavel {
 			List<FichaDeAvaliacaoEstagio> fichaEstagios, 
 			List<FichaDeAvaliacaoProjeto> fichaProjeto,
 			List<EstagioPCCT> estagiosPcct, 
-			Set<Role> roles
+			Set<Role> roles,
+			String cpf
 		) {
-		super(id, matricula, nome, email, tipo, grau);
+		super(id, matricula, nome, email, tipo, grau, cpf);
 		this.avaliadores = avaliadores;
 		this.fichaEstagios = fichaEstagios;
 		this.fichaProjeto = fichaProjeto;
