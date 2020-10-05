@@ -3,29 +3,21 @@ package com.ifam.sistema_estagio.controller;
 
 import org.apache.commons.mail.EmailException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ifam.sistema_estagio.controller.service.EmailService;
 import com.ifam.sistema_estagio.model.entity.EmailSimples;
 
-@Controller
+@RestController
 public class EmailController {
 	
 	@Autowired
 	private EmailService service;
 	
-	@GetMapping("/resgatar-senha")
-	public String resgatarSenha() {
-		return "Email/index";
-	}
-	
-	@PostMapping(path = "/resgatar-senha", consumes = "application/json")
-	@ResponseBody
+	@PostMapping(path = "/resgatar-senha")
 	public String resgatarSenha(@RequestBody EmailSimples email) {
 		try {
 			
@@ -39,8 +31,7 @@ public class EmailController {
 		}
 	}
 
-	@PostMapping(path = "/documentos", consumes = "application/json", produces = "application/json")
-	@ResponseBody
+	@PostMapping(path = "/documentos")
 	public String sendEmailAttachment(@RequestBody EmailSimples email, @RequestParam String pathFile) {
 		try {
 			service.sendEmailAttachment(email, pathFile);

@@ -5,11 +5,10 @@ import java.util.Arrays;
 public enum ModalidadeCurso {
 	
 	INTEGRADO(0),
-	GRADUAÇÃO(1),
-	TECNICO(2),
-	RESIDENTE(3),
-	MESTRADO(4),	
-	DOUTORADO(5),;	
+	SUBSEQUENTE(1),
+	GRADUAÇÃO(2),
+	MESTRADO(3),	
+	DOUTORADO(4),;	
 	
 	private Integer grau;
 	

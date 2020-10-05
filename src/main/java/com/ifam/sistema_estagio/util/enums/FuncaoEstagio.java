@@ -4,8 +4,7 @@ public enum FuncaoEstagio {
 	
 	COORDENADOR(0),
 	COORDENADOR_ADJUNTO(1),
-	COLABORADOR(2),
-	ADM(3);
+	COLABORADOR(2);
 	
 	private Integer valor;
 	
@@ -15,12 +14,5 @@ public enum FuncaoEstagio {
 	
 	public Integer getValor() {
 		return valor;
-	}
-	
-	public static class Values{
-		public static final String COORDENADOR = "0";
-		public static final String COORDENADOR_ADJUNTO = "1";
-		public static final String COLABORADOR = "2";
-		public static final String ADM = "3";
 	}
 }

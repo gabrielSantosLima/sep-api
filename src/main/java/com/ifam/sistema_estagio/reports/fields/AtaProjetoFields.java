@@ -2,6 +2,7 @@ package com.ifam.sistema_estagio.reports.fields;
 
 public class AtaProjetoFields{
 
+	private String titulo;
 	private String media;
 	private String data;
 	private String mensagem;
@@ -12,10 +13,18 @@ public class AtaProjetoFields{
 	private String membroExtra;
 
 	public AtaProjetoFields() {
-
+		this.titulo=" ";
+		this.media=" ";
+		this.data=" ";
+		this.mensagem=" ";
+		this.membro_1=" ";
+		this.membro_2=" ";
+		this.presidente=" ";
+		this.mediaExtenso=" ";
+		this.membroExtra=" ";
 	}
 
-	public AtaProjetoFields(String media, String data, String mensagem, String membro_1,
+	public AtaProjetoFields(String titulo, String media, String data, String mensagem, String membro_1,
 			String membro_2, String presidente, String mediaExtenso, String membroExtra) {
 		this.media = media;
 		this.data = data;
@@ -25,6 +34,15 @@ public class AtaProjetoFields{
 		this.presidente = presidente;
 		this.mediaExtenso = mediaExtenso;
 		this.membroExtra = membroExtra;
+		this.titulo = titulo;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getMedia() {

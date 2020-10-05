@@ -1,8 +1,6 @@
 package com.ifam.sistema_estagio.model.entity.interfaces;
 
-import java.util.Set;
-
-import com.ifam.sistema_estagio.model.entity.Role;
+import com.ifam.sistema_estagio.model.entity.Papel;
 
 public interface UsuarioLogavel {
 	
@@ -18,7 +16,7 @@ public interface UsuarioLogavel {
 
 	void setPasswordConfirm(String passwordConfirm);
 	
-	Set<Role> getRoles();
+	Papel getPapel();
 
-	void setRoles(Set<Role> roles);
+	void setPapel(Papel papel);
 }

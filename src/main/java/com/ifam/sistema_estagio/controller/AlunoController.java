@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,15 +12,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ifam.sistema_estagio.controller.service.AlunoService;
 import com.ifam.sistema_estagio.controller.service.EstagioPcctService;
 import com.ifam.sistema_estagio.model.entity.Aluno;
 import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
 
-@Controller
-@RequestMapping(value = { "/estagio/{id}/aluno", "/projeto/{id}/aluno" })
+@RestController
+@RequestMapping("/estagio-pcct/{id}/aluno")
 public class AlunoController {
 
 	@Autowired
@@ -35,8 +34,7 @@ public class AlunoController {
 	}
 
 	// List
-	@GetMapping(path = { "/", "" }, produces = "application/json")
-	@ResponseBody
+	@GetMapping(path = { "/", "" })
 	public List<Aluno> list() {
 		List<Aluno> alunos = service.list();
 
@@ -44,8 +42,7 @@ public class AlunoController {
 	}
 
 	// Create
-	@PostMapping(path = { "/", "" }, consumes = "application/json", produces = "application/json")
-	@ResponseBody
+	@PostMapping(path = { "/", "" })
 	public ResponseEntity<Aluno> create(@RequestBody Aluno aluno, @PathVariable Integer id) {
 		try {
 			Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
@@ -67,8 +64,7 @@ public class AlunoController {
 	}
 
 	// Update
-	@PutMapping(path = "/{idAluno}", consumes = "application/json", produces = "application/json")
-	@ResponseBody
+	@PutMapping(path = "/{idAluno}")
 	public ResponseEntity<Aluno> update(@RequestBody Aluno aluno, @PathVariable("id") Integer id, @PathVariable("idAluno") Integer idAluno) {
 		try {
 			Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);
@@ -92,8 +88,7 @@ public class AlunoController {
 	}
 
 	// Delete
-	@DeleteMapping(path = "/{idAluno}", produces = "application/json")
-	@ResponseBody
+	@DeleteMapping(path = "/{idAluno}")
 	public ResponseEntity<Aluno> delete(@PathVariable("id") Integer id ,@PathVariable("idAluno") Integer idAluno) {
 
 		try {
@@ -114,8 +109,7 @@ public class AlunoController {
 	}
 
 	// FindById
-	@GetMapping(path = "/{idAluno}", produces = "application/json")
-	@ResponseBody
+	@GetMapping(path = "/{idAluno}")
 	public Aluno findById(@PathVariable("id") Integer id, @PathVariable("idAluno") Integer idAluno) {
 		try {
 			Optional<EstagioPCCT> estagioPcct = getEstagioPcctById(id);

@@ -6,7 +6,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @MappedSuperclass
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class FichaDeAvaliacao {
 	
 	@Id
@@ -15,25 +24,4 @@ public abstract class FichaDeAvaliacao {
 	
 	@Column(nullable = true, name = "media")
 	private Integer media;
-
-	public FichaDeAvaliacao(Integer id, Integer media) {
-		this.id = id;
-		this.media = media;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Integer getMedia() {
-		return media;
-	}
-
-	public void setMedia(Integer media) {
-		this.media = media;
-	}
 }

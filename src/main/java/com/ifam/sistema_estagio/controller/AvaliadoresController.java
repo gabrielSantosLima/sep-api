@@ -5,27 +5,25 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ifam.sistema_estagio.controller.service.AvaliadoresService;
 import com.ifam.sistema_estagio.model.entity.Avaliadores;
 
-@Controller
-@RequestMapping("banca/{id}/avaliadores")
+@RestController
+@RequestMapping("/banca/{id}/avaliadores")
 public class AvaliadoresController {
 
 	@Autowired
 	private AvaliadoresService service;
 
-	@GetMapping(path = { "/", "" }, produces = "application/json")
-	@ResponseBody
+	@GetMapping(path = { "/", "" })
 	public List<Avaliadores> list(@PathVariable Integer id) {
 		try {
 			
@@ -37,8 +35,7 @@ public class AvaliadoresController {
 		}
 	}
 
-	@PostMapping(path = {"/",""}, consumes = "application/json", produces = "application/json")
-	@ResponseBody
+	@PostMapping(path = {"/",""})
 	public ResponseEntity<List<Avaliadores>> create(@RequestBody AvaliadoresJSONObject avaliadores, @PathVariable Integer id) {
 		try {
 			List<Avaliadores> createdAvaliadores = new ArrayList<>();
@@ -58,8 +55,7 @@ public class AvaliadoresController {
 		}
 	}
 
-	@DeleteMapping(path = "/{idAvaliador}", produces = "application/json")
-	@ResponseBody
+	@DeleteMapping(path = "/{idAvaliador}")
 	public ResponseEntity<Avaliadores> delete(@PathVariable("id") Integer idBanca,
 			@PathVariable("idAvaliador") Integer idAvaliador) {
 		try {

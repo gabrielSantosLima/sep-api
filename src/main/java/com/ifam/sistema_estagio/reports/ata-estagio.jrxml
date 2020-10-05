@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ata-estagio" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="318ee6c3-aea1-42b5-a9fe-b5ca1c52ff4c">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="titulo" class="java.lang.String"/>
+	<field name="media" class="java.lang.String"/>
+	<field name="horaFinalizado" class="java.lang.String"/>
+	<field name="data" class="java.lang.String"/>
+	<field name="coordenadora" class="java.lang.String"/>
+	<field name="mensagem" class="java.lang.String"/>
+	<field name="membro_1" class="java.lang.String"/>
+	<field name="membro_2" class="java.lang.String"/>
+	<field name="aluno" class="java.lang.String"/>
+	<field name="curso" class="java.lang.String"/>
+	<field name="presidente" class="java.lang.String"/>
+	<field name="mensagemChefe" class="java.lang.String"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField>
+				<reportElement x="280" y="0" width="269" height="70" uuid="3e8f2b33-a8ba-48d6-b1b0-ab566a5dd80f"/>
+				<textElement markup="html">
+					<font fontName="Times New Roman" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="445" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="549" height="150" uuid="ef7b933e-08e6-49ac-871f-9b3c60408425">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement markup="html">
+					<font fontName="Times New Roman"/>
+					<paragraph firstLineIndent="0" leftIndent="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mensagem}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="150" width="250" height="30" uuid="86b7a4fc-a96c-482f-8b60-4707bfbc4280">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph leftIndent="30"/>
+				</textElement>
+				<text><![CDATA[(  ) Aprovação do Relatório Final de Estágio.
+(  ) Reprovação do Relatório Final de Estágio.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="180" width="548" height="30" uuid="3f949979-5848-4a3d-a2ae-a35e4d2640d8">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Times New Roman"/>
+					<paragraph firstLineIndent="8"/>
+				</textElement>
+				<text><![CDATA[Sendo que foi atribuída a Média Final de .................. pontos. A sessão foi encerrada às ...................... horas. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="167" y="210" width="220" height="30" uuid="4765da05-93d8-4446-b044-be722cc219fb">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Times New Roman" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALTERAÇÕES PROPOSTAS PELA BANCA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="240" width="549" height="85" uuid="88822174-2933-4d9b-b74d-0e4b872780ac">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement>
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<text><![CDATA[................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="390" y="410" width="160" height="30" uuid="05cf8695-c468-42db-bd07-6a15a4ad9ab5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="330" width="549" height="80" uuid="3fc34f4f-c54d-4ae5-af69-1ff36dfa55dc">
+					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Justified" markup="html">
+					<font fontName="Times New Roman"/>
+					<paragraph firstLineIndent="0" leftIndent="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{mensagemChefe}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="266">
+			<rectangle>
+				<reportElement x="194" y="92" width="180" height="1" uuid="ba899753-bf61-477b-81a2-eab1d0265b2b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="156" y="95" width="72" height="30" uuid="76543ff4-7323-4199-bed6-15a7eb58c768">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial" size="10"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Membro (a) 1:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="156" y="135" width="72" height="30" uuid="3c756376-0948-4dde-a992-92409e5aa840">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial" size="10"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Membro (a) 2:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="194" y="132" width="180" height="1" uuid="af245491-8a37-454e-9d05-34157caf3db3">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="156" y="175" width="50" height="30" uuid="4622534d-ea66-4b5f-9d6f-535993d54991">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial" size="10"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<text><![CDATA[Discente:]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="194" y="172" width="180" height="1" uuid="3f8077cf-39ba-42a5-99e6-be8960dc8973">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="233" y="95" width="213" height="30" uuid="fbb068a2-e0ba-4a67-ae47-798db7ae2db2">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Arial"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{membro_1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="228" y="135" width="218" height="30" uuid="7f61d859-2f97-4c61-b5d5-197532f8e230">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{membro_2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="206" y="175" width="230" height="30" uuid="3e4ef846-4c20-4c10-b3fd-7dd8e9879490">
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Top">
+					<font fontName="Arial"/>
+					<paragraph leftIndent="3"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{aluno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="223" width="228" height="20" uuid="50207e50-479b-4996-b074-a04e38a9df2a"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{coordenadora}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="243" width="228" height="23" uuid="23556347-869b-43e3-af55-6aa954a8e8d3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="156" y="54" width="242" height="20" uuid="b975880e-4505-40d9-bb11-7d5b1ed0e217"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Professor (a) Orientador (a)/Presidente]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="156" y="30" width="242" height="20" uuid="9dfb0ee5-76ea-4f4b-a96b-4643f7c19b5e"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{presidente}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="194" y="31" width="180" height="1" uuid="5d7cdd42-5243-4e5e-ba9d-56ff9a403479">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="194" y="220" width="180" height="1" uuid="8ec8190e-9e60-4450-b38e-df54edfb2af0">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</columnFooter>
+</jasperReport>

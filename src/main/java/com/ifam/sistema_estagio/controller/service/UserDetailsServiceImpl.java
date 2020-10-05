@@ -13,39 +13,58 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ifam.sistema_estagio.model.entity.Role;
+import com.ifam.sistema_estagio.model.entity.Papel;
 import com.ifam.sistema_estagio.model.entity.interfaces.UsuarioLogavel;
-import com.ifam.sistema_estagio.model.repository.CoordenadoraRepository;
-import com.ifam.sistema_estagio.model.repository.ProfessorRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	@Autowired
-	private CoordenadoraRepository coordenadoraRepository;
+	private CoordenadoraService coordenadoraService;
 
 	@Autowired
-	private ProfessorRepository professorRepository;
+	private ProfessorService professorService;
+
+	@Autowired
+	private AlunoService alunoService;
 
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UsuarioLogavel usuario = coordenadoraRepository.findByUsername(username);
-
-		if (usuario == null) {
-			usuario = professorRepository.findByUsername(username);
-		}
-
-		if (usuario == null) {
-			throw new UsernameNotFoundException(username);
+		UsuarioLogavel usuario;
+		
+		try{
+			usuario = coordenadoraService.findByUsername(username).get();
+			
+			if (usuario == null) {
+				usuario = professorService.findByUsername(username).get();
+			}
+			
+			if(usuario == null) {
+				usuario = alunoService.findByUsername(username).get();
+			}
+			
+		}catch(Exception e) {
+			throw new UsernameNotFoundException(username);			
 		}
 		
-		Set<GrantedAuthority> grantedAuthority = new HashSet<>();
-
-		for (Role role : usuario.getRoles()) {
-			grantedAuthority.add(new SimpleGrantedAuthority(role.getName()));
+		if(usuario == null) {
+			throw new UsernameNotFoundException(username);			
 		}
+		
+		Set<GrantedAuthority> grantedAuthority = getGrantedAuthorities(usuario.getPapel());
 
 		return new User(usuario.getUsername(), usuario.getPassword(), grantedAuthority);
+	}
+	
+	private Set<GrantedAuthority> getGrantedAuthorities(Papel papel) {
+		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
+		grantedAuthorities.add(new SimpleGrantedAuthority(papel.getName()));
+			
+		papel.getFuncoes().stream().forEach(funcao -> {
+			grantedAuthorities.add(new SimpleGrantedAuthority(funcao.getName()));
+		});
+		
+		return grantedAuthorities;
 	}
 }

@@ -1,7 +1,6 @@
 package com.ifam.sistema_estagio.util.enums;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum GrauAcademico {
 	
@@ -27,9 +26,5 @@ public enum GrauAcademico {
 				.filter(g -> g.getGrau() == grau)
 				.findFirst()
 				.get();
-	}
-	
-	public static List<GrauAcademico> all() {
-		return Arrays.asList(GrauAcademico.values());
 	}
 }

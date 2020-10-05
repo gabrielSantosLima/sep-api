@@ -6,7 +6,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ficha_de_avaliacao_estagio")
 public class FichaDeAvaliacaoEstagio extends FichaDeAvaliacao{
 
@@ -22,35 +31,4 @@ public class FichaDeAvaliacaoEstagio extends FichaDeAvaliacao{
 	
 	@Embedded
 	private NotaEstagio nota;
-
-	public FichaDeAvaliacaoEstagio(Integer id, Integer media, Professor professor, Ata ata, NotaEstagio nota) {
-		super(id, media);
-		this.professor = professor;
-		this.ata = ata;
-		this.nota = nota;		
-	}
-
-	public Professor getProfessor() {
-		return professor;
-	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
-	}
-
-	public Ata getAta() {
-		return ata;
-	}
-
-	public void setAta(Ata ata) {
-		this.ata = ata;
-	}
-
-	public NotaEstagio getNota() {
-		return nota;
-	}
-
-	public void setNota(NotaEstagio nota) {
-		this.nota = nota;
-	}
 }

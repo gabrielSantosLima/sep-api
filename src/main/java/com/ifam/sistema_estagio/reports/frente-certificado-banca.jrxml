@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="frente-certificado-banca" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8455e406-3e7f-495f-9c5a-46247f710b60">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="titulo" class="java.lang.String">
+		<fieldDescription><![CDATA[Título do trabalho: ""]]></fieldDescription>
+	</field>
+	<field name="autores" class="java.lang.String">
+		<fieldDescription><![CDATA[Alunos]]></fieldDescription>
+	</field>
+	<field name="data" class="java.lang.String"/>
+	<field name="participantes" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="555" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<rectangle>
+				<reportElement x="0" y="0" width="800" height="555" uuid="63b63cfb-04c6-4539-8702-e35fd9177662"/>
+			</rectangle>
+			<textField>
+				<reportElement positionType="Float" x="20" y="20" width="760" height="60" uuid="a502f5df-c960-4062-8fd0-355735f6c643">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="14" isBold="true"/>
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement positionType="Float" x="20" y="90" width="180" height="50" uuid="addcf2a9-96b4-4ce1-9c3c-5c8473b0b874">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<text><![CDATA[Autor (es):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="20" y="211" width="140" height="50" uuid="1d601520-ecfb-4f81-95d2-eb476906fdce">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<text><![CDATA[Data da Defesa: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement positionType="Float" x="20" y="270" width="180" height="50" uuid="3c00a72d-a504-4499-8b29-50aa99211741">
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font fontName="Arial" size="14" isBold="true"/>
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<text><![CDATA[Banca Examinadora: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="20" y="143" width="460" height="50" uuid="f6011600-bac5-4e82-93b0-896d295c3e16">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{autores}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="211" width="100" height="50" uuid="fbb70f03-b688-4535-bd01-04843c34c270">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="14"/>
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="20" y="334" width="460" height="120" uuid="82450981-981b-4083-9f6d-47048b0b251b">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement>
+					<font fontName="Arial" size="12"/>
+					<paragraph lineSpacingSize="2.0" leftIndent="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{participantes}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="510" y="270" width="280" height="270" uuid="39699bcd-08b5-4bc6-8246-580a7b0473ef"/>
+				<imageExpression><![CDATA["C:/Users/jaugu/OneDrive/Área de Trabalho/Gabriel/Arquivos - Sistema de Estágio/Documentação/Documentos de Estágio e PCCT/Partes/Certificados/livro-registro.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</detail>
+</jasperReport>

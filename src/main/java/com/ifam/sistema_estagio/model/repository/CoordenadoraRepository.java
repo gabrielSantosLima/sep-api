@@ -1,6 +1,9 @@
 package com.ifam.sistema_estagio.model.repository;
 
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ifam.sistema_estagio.model.entity.Coordenadora;
@@ -8,5 +11,5 @@ import com.ifam.sistema_estagio.model.entity.Coordenadora;
 @Repository
 public interface CoordenadoraRepository extends JpaRepository<Coordenadora, Integer>{
 	
-	Coordenadora findByUsername(String username);
+	Optional<Coordenadora> findByUsername(String username);
 }

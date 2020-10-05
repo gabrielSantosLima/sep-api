@@ -11,7 +11,14 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 @Table(name = "avaliadores")
 public class Avaliadores {
 
@@ -28,37 +35,9 @@ public class Avaliadores {
 	@JoinColumn(name = "banca_id", nullable = false)
 	private Banca banca;
 
-	public Avaliadores() {
-
-	}
-
 	public Avaliadores(Professor professor, Banca banca) {
 		this.banca = banca;
 		this.professor = professor;
-	}
-
-	public Professor getProfessor() {
-		return professor;
-	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
-	}
-
-	public Banca getBanca() {
-		return banca;
-	}
-
-	public void setBanca(Banca banca) {
-		this.banca = banca;
-	}
-
-	public ChavePrimaria getId() {
-		return id;
-	}
-
-	public void setId(ChavePrimaria id) {
-		this.id = id;
 	}
 }
 

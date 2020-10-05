@@ -1,0 +1,427 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ficha-de-avaliacao-estagio" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="466731e8-501d-4bbb-bed9-7dc05f27f84c">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="nota_conhecimentos" class="java.lang.String"/>
+	<field name="nota_organizacao" class="java.lang.String"/>
+	<field name="nota_atividades" class="java.lang.String"/>
+	<field name="nota_apresentacao" class="java.lang.String"/>
+	<field name="soma" class="java.lang.String"/>
+	<field name="discente" class="java.lang.String"/>
+	<field name="curso" class="java.lang.String"/>
+	<field name="data_fim" class="java.lang.String"/>
+	<field name="funcao" class="java.lang.String"/>
+	<field name="avaliador" class="java.lang.String"/>
+	<field name="passou" class="java.lang.String"/>
+	<field name="nao_passou" class="java.lang.String"/>
+	<field name="data_emissao" class="java.lang.String"/>
+	<field name="funcao_avaliador" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="50">
+			<staticText>
+				<reportElement x="0" y="0" width="554" height="48" uuid="29f41656-e534-4122-bc8b-e03c3f1e9b3a">
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FICHA DE AVALIAÇÃO DO RELATÓRIO FINAL DE ESTÁGIO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="280" splitType="Stretch">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<frame>
+				<reportElement x="22" y="10" width="511" height="249" uuid="366b4a8f-4f21-402c-8827-e3b28576fc08"/>
+				<rectangle>
+					<reportElement x="0" y="0" width="511" height="249" uuid="d9e7f443-0909-401d-83d0-ab239dfc4bb5"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="268" y="179" width="243" height="70" uuid="0c8eb460-6d65-4a26-8141-2c9927902f17"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="179" width="268" height="70" uuid="919312e8-18b2-41ed-9223-91943ba38db1"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="268" y="110" width="243" height="69" uuid="7c681326-e03c-43dc-acbe-9fd0dd2e3a71"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="110" width="268" height="69" uuid="e36a28d2-bb78-4069-8d86-440409aa1acd"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="328" y="50" width="183" height="60" uuid="57f4a2ad-ff5a-4b3b-9fc4-53ffbd3ca99a"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="50" width="328" height="60" uuid="b10f3488-4906-4fc0-8be0-cbefe2da37e7"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="0" width="511" height="50" uuid="acec3dd0-440b-42ff-8e19-5291c570c04b"/>
+				</rectangle>
+				<textField>
+					<reportElement x="328" y="80" width="183" height="30" uuid="c2cdfa6d-80be-41e2-b058-df5cb354a880">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+						<paragraph leftIndent="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{data_fim}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="0" y="80" width="328" height="30" uuid="3c383f7e-8aa4-48ad-99c0-5012cb50f153">
+						<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+						<paragraph leftIndent="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="159" y="0" width="352" height="50" uuid="3cc7093b-0eaf-4850-9fd2-853ec04d46bb">
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+						<paragraph leftIndent="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{discente}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="268" y="180" width="243" height="35" backcolor="#DBD9D9" uuid="d0854e69-1b7f-461e-895e-69f59e9820fa">
+						<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12" isBold="false" isStrikeThrough="false"/>
+						<paragraph lineSpacingSize="1.0" leftIndent="10" spacingBefore="0" spacingAfter="0"/>
+					</textElement>
+					<text><![CDATA[(	) Total ≥ 6,0:APROVADO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="268" y="214" width="243" height="35" backcolor="#DBD9D9" uuid="d159cef1-36fc-487f-8045-e3d156930188">
+						<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Middle" markup="none">
+						<font fontName="Arial" size="12" isBold="false" isStrikeThrough="false"/>
+						<paragraph leftIndent="10" spacingBefore="0" spacingAfter="0"/>
+					</textElement>
+					<text><![CDATA[(	) Total < 6,0:REPROVADO]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="282" y="190" width="33" height="20" uuid="5a75e2e8-e3f9-4fec-ba3a-5aa08283bea2">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{passou}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="282" y="222" width="33" height="20" uuid="98099dec-afca-469c-857a-308bcc99d19b">
+						<property name="com.jaspersoft.studio.unit.width" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+						<property name="com.jaspersoft.studio.unit.x" value="px"/>
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nao_passou}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="328" y="50" width="160" height="30" backcolor="#DBD9D9" uuid="cc00c3c5-6239-4186-8c3a-ed915c81738b">
+						<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Arial" size="12" isBold="true"/>
+						<paragraph leftIndent="8" spacingBefore="8" spacingAfter="0"/>
+					</textElement>
+					<text><![CDATA[ANO DE CONCLUSÃO: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="268" y="110" width="160" height="30" backcolor="#DBD9D9" uuid="22050d7a-2b08-40ee-b7f0-cfb29eae3ef4">
+						<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Arial" size="12" isBold="true"/>
+						<paragraph leftIndent="8" spacingBefore="8" spacingAfter="0"/>
+					</textElement>
+					<text><![CDATA[AVALIADOR(A):]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="180" width="160" height="30" backcolor="#DBD9D9" uuid="84bd8dc0-d747-4d47-9c3f-7917bf29a3c4">
+						<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Arial" size="12" isBold="true"/>
+						<paragraph leftIndent="8" spacingBefore="8" spacingAfter="0"/>
+					</textElement>
+					<text><![CDATA[ATA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="110" width="160" height="30" backcolor="#DBD9D9" uuid="f2672219-1ddb-4b20-86a6-d5923c606233">
+						<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Arial" size="12" isBold="true"/>
+						<paragraph leftIndent="8" spacingBefore="8" spacingAfter="0"/>
+					</textElement>
+					<text><![CDATA[FUNÇÃO: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="50" width="90" height="30" backcolor="#DBD9D9" uuid="833259ed-7527-430f-9dcc-4617381a6f38">
+						<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Arial" size="12" isBold="true"/>
+						<paragraph leftIndent="8" spacingBefore="8" spacingAfter="0"/>
+					</textElement>
+					<text><![CDATA[CURSO: ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="0" width="160" height="30" backcolor="#DBD9D9" uuid="200049c9-f1b2-44d5-9c94-c1726796a51a">
+						<property name="com.jaspersoft.studio.unit.spacingAfter" value="px"/>
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="pixel"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Left" verticalAlignment="Top">
+						<font fontName="Arial" size="12" isBold="true"/>
+						<paragraph leftIndent="8" spacingBefore="8" spacingAfter="0"/>
+					</textElement>
+					<text><![CDATA[NOME DO DISCENTE: ]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="0" y="140" width="268" height="39" uuid="d8a3b254-c95f-4e10-a9a2-b9c0e575249e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{funcao}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="268" y="140" width="243" height="39" uuid="d89cc15f-9030-4657-881b-d71fa601f015"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{avaliador}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+		<band height="350">
+			<property name="com.jaspersoft.studio.unit.height" value="px"/>
+			<frame>
+				<reportElement x="22" y="30" width="511" height="290" uuid="c4e4a8d5-dd36-48ef-8e45-de5d96b918c2"/>
+				<rectangle>
+					<reportElement x="0" y="0" width="511" height="300" uuid="f47036f7-2f72-4c7e-8e03-04d249a4a07f"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="0" width="380" height="40" backcolor="#DBD9D9" uuid="6e43bf4a-a3ec-4cfb-a409-bcccd516729e"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="380" y="0" width="131" height="40" backcolor="#DBD9D9" uuid="043596cd-9ba7-4763-8f6d-cbb344fc3c4c"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="40" width="380" height="70" uuid="2f8e85dd-7901-442f-a00b-d5e4ed029432"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="110" width="380" height="50" uuid="8203bd30-8237-4efa-bfcb-587031a7e24f"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="160" width="380" height="50" uuid="7697681e-2e39-48a3-9816-a77598eb7818"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="210" width="380" height="50" uuid="79ed3766-f5e2-4f19-93b5-f02420fa6a54"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="260" width="380" height="40" uuid="3d0edff1-83e6-467e-a535-0eed589bcac0"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="380" y="40" width="131" height="70" uuid="e90109df-9b76-4f82-9fec-0963a8bb31ec"/>
+				</rectangle>
+				<rectangle>
+					<reportElement x="380" y="110" width="131" height="50" uuid="f90b5847-d18c-4c01-8706-15fd6936e32e">
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="380" y="160" width="131" height="50" uuid="6098b8e2-0121-491a-96f3-29c0506b1089">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+				</rectangle>
+				<rectangle>
+					<reportElement x="380" y="210" width="131" height="50" uuid="55b179b3-0159-44f1-a743-3f4259746df4">
+						<property name="com.jaspersoft.studio.unit.y" value="px"/>
+						<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					</reportElement>
+				</rectangle>
+				<staticText>
+					<reportElement x="0" y="0" width="380" height="40" backcolor="#DBD9D9" uuid="d4bf94b1-a75c-4b61-9cef-19edbb75049c"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ASPECTOS CONSIDERADOS NA AVALIAÇÃO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="40" width="380" height="70" backcolor="#DBD9D9" uuid="058af866-a1a3-4009-af80-4a5cf8f82676">
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+						<font fontName="Arial" size="12" isBold="false"/>
+						<paragraph leftIndent="8" rightIndent="8" spacingBefore="0"/>
+					</textElement>
+					<text><![CDATA[1.	<b>CONHECIMENTOS TÉCNICOS</b> (Representa o volume de conhecimentos técnicos demonstrados, em nível no relatório e apresentação/arguição, sobre as atividades desenvolvidas). Nota de 0 a 4 pontos.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="110" width="380" height="50" backcolor="#DBD9D9" uuid="da1603a3-a071-4bba-a3cb-66891e49eac3">
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+						<font fontName="Arial" size="12" isBold="false"/>
+						<paragraph leftIndent="8" rightIndent="8" spacingBefore="0"/>
+					</textElement>
+					<text><![CDATA[2.	<b>ORGANIZAÇÃO DO RELATÓRIO</b> (Sequência lógica, clareza e nível de linguagem, qualidade e redação do conteúdo). Nota de 0 a 2 pontos.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="160" width="380" height="50" backcolor="#DBD9D9" uuid="8d9c8ad6-44bf-49f1-8448-19b39a7de660">
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+						<font fontName="Arial" size="12" isBold="false"/>
+						<paragraph leftIndent="8" rightIndent="8" spacingBefore="0"/>
+					</textElement>
+					<text><![CDATA[3.	<b>ATIVIDADES DESENVOLVIDAS</b> (Afinidade entre as atividades desenvolvidas e o perfil do curso). Nota de 0 a 2 pontos.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="210" width="380" height="50" backcolor="#DBD9D9" uuid="72ff161c-94b7-4d00-9adc-ee7baf7c9a6c">
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Justified" verticalAlignment="Middle" markup="html">
+						<font fontName="Arial" size="12" isBold="false"/>
+						<paragraph leftIndent="8" rightIndent="8" spacingBefore="0"/>
+					</textElement>
+					<text><![CDATA[4.	<b>APRESENTAÇÃO</b> (Sequência lógica, clareza de linguagem, segurança, utilização do tempo e recursos). Nota de 0 a 2 pontos.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="260" width="380" height="40" backcolor="#DBD9D9" uuid="2ea919e7-fb58-44af-a9d5-e67469e7a961">
+						<property name="com.jaspersoft.studio.unit.spacingBefore" value="px"/>
+						<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+						<property name="com.jaspersoft.studio.unit.rightIndent" value="px"/>
+					</reportElement>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true"/>
+						<paragraph leftIndent="8" rightIndent="8" spacingBefore="0"/>
+					</textElement>
+					<text><![CDATA[TOTAL (1+2+3+4)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="380" y="0" width="131" height="40" backcolor="#DBD9D9" uuid="8f8a59db-c8df-43a9-80da-19fcf19e1154"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="12" isBold="true"/>
+					</textElement>
+					<text><![CDATA[NOTA]]></text>
+				</staticText>
+				<textField>
+					<reportElement x="380" y="40" width="131" height="70" uuid="562aa79d-db09-4c05-85d3-11a0c717f992"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nota_conhecimentos}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="110" width="131" height="50" uuid="d6329be7-26b8-4662-b0f0-a25009986d4b"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nota_organizacao}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="379" y="160" width="132" height="50" uuid="810eecec-50d1-4330-bb73-da01ab42c502"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nota_atividades}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="210" width="131" height="50" uuid="33160a85-ff7e-4818-b44a-81c5f2f7574e"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nota_apresentacao}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="380" y="260" width="131" height="40" uuid="aea17c2b-8a2f-48bd-bb2c-4137b1dacad0"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="11" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{soma}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="98" splitType="Stretch">
+			<textField>
+				<reportElement x="153" y="60" width="249" height="30" uuid="17f1e220-053d-4124-b6df-deddadd7ef1f"/>
+				<textElement textAlignment="Center" markup="html">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{funcao_avaliador}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="153" y="50" width="250" height="1" uuid="860bae0f-2ea4-4897-a068-bdc5ee16c29b">
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<property name="com.jaspersoft.studio.unit.x" value="px"/>
+					<property name="com.jaspersoft.studio.unit.y" value="px"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Dotted"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="370" y="0" width="163" height="30" uuid="0b655ccf-798a-41b4-8ef5-a6dd0d514dff">
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="html">
+					<font fontName="Arial" size="11"/>
+					<paragraph leftIndent="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{data_emissao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

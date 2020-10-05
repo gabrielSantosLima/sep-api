@@ -1,7 +1,6 @@
 package com.ifam.sistema_estagio.util.enums;
 
 import java.util.Arrays;
-import java.util.List;
 
 public enum Curso {
 	INF("Informática"),
@@ -26,9 +25,5 @@ public enum Curso {
 				.filter(curso -> curso.getNomeCurso() == nomeCurso)
 				.findFirst()
 				.get();
-	}
-	
-	public static List<Curso> all() {
-		return Arrays.asList(Curso.values());
 	}
 }

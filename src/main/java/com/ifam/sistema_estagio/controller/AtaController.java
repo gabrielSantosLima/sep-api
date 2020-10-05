@@ -1,10 +1,11 @@
 package com.ifam.sistema_estagio.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,14 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.ifam.sistema_estagio.controller.service.AtaService;
 import com.ifam.sistema_estagio.controller.service.BancaService;
 import com.ifam.sistema_estagio.model.entity.Ata;
 import com.ifam.sistema_estagio.model.entity.Banca;
 
-@Controller
+@RestController
 @RequestMapping("/bancas/{id}/atas")
 public class AtaController {
 
@@ -28,51 +29,54 @@ public class AtaController {
 
 	@Autowired
 	private BancaService bancaService;
-	
-	private Banca getBancaById(Integer id) {
-		return bancaService.findById(id).get();
+
+	private Optional<Banca> getBancaById(Integer id) {
+		return bancaService.findById(id);
 	}
-	
+
 	// List all
-	@GetMapping(path = {"/", ""}, produces = "application/json")
-	@ResponseBody
-	public List<Ata> list(@PathVariable Integer id){
-		Banca banca = getBancaById(id);
-		
-		List<Ata> atas = service.findByBanca(banca);
-		
+	@GetMapping(path = { "/", "" })
+	public List<Ata> list(@PathVariable Integer id) {
+		Optional<Banca> banca = getBancaById(id);
+
+		if (!banca.isPresent()) {
+			return new ArrayList<>();
+		}
+
+		List<Ata> atas = service.findByBanca(banca.get());
+
 		return atas;
 	}
-	
+
 	// Create
-	@PostMapping(path = {"/", ""}, consumes = "application/json", produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<Ata> create(@PathVariable Integer id, @RequestBody Ata ata){
+	@PostMapping(path = { "/", "" })
+	public ResponseEntity<Ata> create(@PathVariable Integer id, @RequestBody Ata ata) {
 		try {
-			Banca banca = getBancaById(id);
-			ata.setBanca(banca);
-		
-			
-			Ata createdAta = service.create(ata);
-			
+			Optional<Banca> banca = getBancaById(id);
+
+			if (!banca.isPresent()) {
+				return ResponseEntity.badRequest().build();
+			}
+
+			Ata createdAta = service.create(ata, banca.get());
+
 			return ResponseEntity.ok(createdAta);
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
-		
+
 	}
-	
+
 	// Update
-	@PutMapping(path = "/{idAta}", consumes = "application/json", produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<Ata> update(@RequestBody Ata ata, @PathVariable("id") Integer id,
-			@PathVariable("idAta") Integer idAta) {
+	@PutMapping(path = "/{idAta}")
+	public ResponseEntity<Ata> update(@RequestBody Ata ata,
+			@PathVariable("id") Integer id, @PathVariable("idAta") Integer idAta) {
 		try {
 
 			if (ata == null) {
 				return ResponseEntity.badRequest().build();
 			}
-		
+
 			Ata updatedAta = service.update(idAta, ata);
 
 			return ResponseEntity.ok(updatedAta);
@@ -82,11 +86,10 @@ public class AtaController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-	
+
 	// Delete
-	@DeleteMapping(path = "/{idAta}", produces = "application/json")
-	@ResponseBody
-	public ResponseEntity<Ata> delete(@PathVariable("id") Integer id, 
+	@DeleteMapping(path = "/{idAta}")
+	public ResponseEntity<Ata> delete(@PathVariable("id") Integer id,
 			@PathVariable("idAta") Integer idAta) {
 
 		try {
@@ -99,24 +102,27 @@ public class AtaController {
 			return ResponseEntity.badRequest().build();
 		}
 	}
-	
+
 	// Find by Banca
-	@GetMapping(path = "/{idAta}", produces = "application/json")
-	@ResponseBody
-	public Ata findById(@PathVariable("id") Integer id, 
+	@GetMapping(path = "/{idAta}")
+	public Ata findById(@PathVariable("id") Integer id,
 			@PathVariable("idAta") Integer idAta) {
 		try {
-			Banca banca = getBancaById(id);
-		
-			Ata ata = service.findById(idAta).get();
-			
-			if(banca.equals(ata.getBanca())) {
-				return new Ata();				
+			Optional<Banca> banca = getBancaById(id);
+
+			if (!banca.isPresent()) {
+				return new Ata();
 			}
-			
+
+			Ata ata = service.findById(idAta).get();
+
+			if (id == ata.getBanca().getId()) {
+				return new Ata();
+			}
+
 			return ata;
 		} catch (Exception e) {
-			return new Ata();				
+			return new Ata();
 		}
 	}
 

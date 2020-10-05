@@ -11,7 +11,16 @@ import javax.persistence.MappedSuperclass;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 import com.ifam.sistema_estagio.util.enums.GrauAcademico;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @MappedSuperclass
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public abstract class Usuario {
 
 	@Id
@@ -37,81 +46,14 @@ public abstract class Usuario {
 	@Column(nullable = true, name = "grau")
 	@Enumerated(EnumType.STRING)
 	private GrauAcademico grau;
+		
+	@Column(nullable = true, name = "username")
+	private String username;
 
-	public Usuario() {
+	@Column(nullable = true, name = "password")
+	private String password;
 
-	}
+	@Column(nullable = true, name = "password_confirm")
+	private String passwordConfirm;
 
-	public Usuario(Integer id, 
-			String matricula,
-			String nome, 
-			String email, 
-			FuncaoEstagio tipo,
-			GrauAcademico grau, 
-			String cpf
-		) {
-		this.id = id;
-		this.matricula = matricula;
-		this.nome = nome;
-		this.email = email;
-		this.tipo = tipo;
-		this.grau = grau;
-		this.cpf = cpf;
-	}
-
-	public GrauAcademico getGrau() {
-		return grau;
-	}
-
-	public void setGrau(GrauAcademico grau) {
-		this.grau = grau;
-	}
-
-	public FuncaoEstagio getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(FuncaoEstagio tipo) {
-		this.tipo = tipo;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getMatricula() {
-		return matricula;
-	}
-
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getCpf() {
-		return cpf;
-	}
-
-	public void setCpf(String cpf) {
-		this.cpf = cpf;
-	}
 }

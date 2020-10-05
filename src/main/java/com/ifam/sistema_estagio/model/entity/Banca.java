@@ -1,7 +1,7 @@
 package com.ifam.sistema_estagio.model.entity;
 
-import java.util.List;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,9 +18,19 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.ifam.sistema_estagio.util.enums.Curso;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "banca")
 public class Banca {
 
@@ -35,6 +45,10 @@ public class Banca {
 	@Column(nullable = false, name = "tipo")
 	@Enumerated(EnumType.STRING)
 	private TipoServico tipo;
+
+	@Column(nullable = false, name = "curso")
+	@Enumerated(EnumType.STRING)
+	private Curso curso;
 
 	@Column(nullable = false, name = "banca_final")
 	private Boolean banca_final;
@@ -67,112 +81,4 @@ public class Banca {
 	@ManyToOne
 	@JoinColumn(name = "estagio_pcct_id")
 	private EstagioPCCT estagioPcct;
-
-	public Banca () {
-		
-	}
-	
-	public Banca(Integer id, Date data, TipoServico tipo, Boolean banca_final, String local, Date horaInicio,
-			Date horaFinalizado, Ata ata, List<Avaliadores> avaliadores, Coordenadora coordenadora,
-			EstagioPCCT estagioPcct) {
-		this.id = id;
-		this.data = data;
-		this.tipo = tipo;
-		this.banca_final = banca_final;
-		this.local = local;
-		this.horaInicio = horaInicio;
-		this.horaFinalizado = horaFinalizado;
-		this.ata = ata;
-		this.avaliadores = avaliadores;
-		this.coordenadora = coordenadora;
-		this.estagioPcct = estagioPcct;
-	}
-	
-	public Boolean getBanca_final() {
-		return banca_final;
-	}
-
-	public void setBanca_final(Boolean banca_final) {
-		this.banca_final = banca_final;
-	}
-
-	public Ata getAta() {
-		return ata;
-	}
-
-	public void setAta(Ata ata) {
-		this.ata = ata;
-	}
-
-	public List<Avaliadores> getAvaliadores() {
-		return avaliadores;
-	}
-
-	public void setAvaliadores(List<Avaliadores> avaliadores) {
-		this.avaliadores = avaliadores;
-	}
-
-	public Coordenadora getCoordenadora() {
-		return coordenadora;
-	}
-
-	public void setCoordenadora(Coordenadora coordenadora) {
-		this.coordenadora = coordenadora;
-	}
-
-	public EstagioPCCT getEstagioPcct() {
-		return estagioPcct;
-	}
-
-	public void setEstagioPcct(EstagioPCCT estagioPcct) {
-		this.estagioPcct = estagioPcct;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-
-	public TipoServico getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoServico tipo) {
-		this.tipo = tipo;
-	}
-
-	public String getLocal() {
-		return local;
-	}
-
-	public void setLocal(String local) {
-		this.local = local;
-	}
-
-	public Date getHoraInicio() {
-		return horaInicio;
-	}
-
-	public void setHoraInicio(Date horaInicio) {
-		this.horaInicio = horaInicio;
-	}
-
-	public Date getHoraFinalizado() {
-		return horaFinalizado;
-	}
-
-	public void setHoraFinalizado(Date horaFinalizado) {
-		this.horaFinalizado = horaFinalizado;
-	}
 }

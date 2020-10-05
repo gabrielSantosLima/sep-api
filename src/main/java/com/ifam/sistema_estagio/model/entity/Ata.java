@@ -15,7 +15,16 @@ import javax.persistence.Table;
 
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ata")
 public class Ata {
 
@@ -44,75 +53,4 @@ public class Ata {
 	//Banca correspondente
 	@OneToOne
 	private Banca banca;
-	
-	public Ata() {
-		
-	}
-	
-	public Ata(Integer id, Integer mediaTotal, String descricao, TipoServico tipo,
-			List<FichaDeAvaliacaoEstagio> fichasEstagio, List<FichaDeAvaliacaoProjeto> fichasProjeto, Banca banca) {
-		this.id = id;
-		this.mediaTotal = mediaTotal;
-		this.descricao = descricao;
-		this.tipo = tipo;
-		this.fichasEstagio = fichasEstagio;
-		this.fichasProjeto = fichasProjeto;
-		this.banca = banca;
-	}
-
-	public List<FichaDeAvaliacaoEstagio> getFichasEstagio() {
-		return fichasEstagio;
-	}
-
-	public void setFichasEstagio(List<FichaDeAvaliacaoEstagio> fichasEstagio) {
-		this.fichasEstagio = fichasEstagio;
-	}
-
-	public List<FichaDeAvaliacaoProjeto> getFichasProjeto() {
-		return fichasProjeto;
-	}
-
-	public void setFichasProjeto(List<FichaDeAvaliacaoProjeto> fichasProjeto) {
-		this.fichasProjeto = fichasProjeto;
-	}
-
-	public Banca getBanca() {
-		return banca;
-	}
-
-	public void setBanca(Banca banca) {
-		this.banca = banca;
-	}
-
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
-	public TipoServico getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoServico tipo) {
-		this.tipo = tipo;
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public Integer getMediaTotal() {
-		return mediaTotal;
-	}
-
-	public void setMediaTotal(Integer mediaTotal) {
-		this.mediaTotal = mediaTotal;
-	}
 }

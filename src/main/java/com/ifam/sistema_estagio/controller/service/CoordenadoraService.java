@@ -1,6 +1,6 @@
 package com.ifam.sistema_estagio.controller.service;
 
-import java.util.HashSet;
+import java.util.Optional;
 
 import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ifam.sistema_estagio.model.entity.Coordenadora;
 import com.ifam.sistema_estagio.model.repository.CoordenadoraRepository;
-import com.ifam.sistema_estagio.model.repository.RoleRepository;
+import com.ifam.sistema_estagio.model.repository.PapelRepository;
 
 @Service
 public class CoordenadoraService extends GenericService<Coordenadora, CoordenadoraRepository> {
@@ -18,19 +18,18 @@ public class CoordenadoraService extends GenericService<Coordenadora, Coordenado
 	private CoordenadoraRepository repository;
 
 	@Autowired
-	private RoleRepository roleRepository;
+	private PapelRepository papelRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder bCryptPassowrdEncoder;
 
-	@Override
-	public Coordenadora create(Coordenadora e) throws HibernateException {
+	public Coordenadora create(Coordenadora e, String papel) throws HibernateException {
 		e.setPassword(bCryptPassowrdEncoder.encode(e.getPassword()));
-		e.setRoles(new HashSet<>(roleRepository.findAll()));
+		e.setPapel(papelRepository.findByName(papel).get());
 		return repository.save(e);
 	}
 
-	public Coordenadora findByUsername(String username) {
+	public Optional<Coordenadora> findByUsername(String username) {
 		return repository.findByUsername(username);
 	}
 }

@@ -3,7 +3,16 @@ package com.ifam.sistema_estagio.model.entity;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Embeddable
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class NotaProjetoTrabalho {
 
 	@Column(name = "nota_apresentacao")
@@ -26,60 +35,4 @@ public class NotaProjetoTrabalho {
 	
 	@Column(name = "nota_resultados")
 	private Integer notaResultados;
-
-	public Integer getNotaApresentacao() {
-		return notaApresentacao;
-	}
-
-	public void setNotaApresentacao(Integer notaApresentacao) {
-		this.notaApresentacao = notaApresentacao;
-	}
-
-	public Integer getNotaABNT() {
-		return notaABNT;
-	}
-
-	public void setNotaABNT(Integer notaABNT) {
-		this.notaABNT = notaABNT;
-	}
-
-	public Integer getNotaMetodologia() {
-		return notaMetodologia;
-	}
-
-	public void setNotaMetodologia(Integer notaMetodologia) {
-		this.notaMetodologia = notaMetodologia;
-	}
-
-	public Integer getNotaConteudo() {
-		return notaConteudo;
-	}
-
-	public void setNotaConteudo(Integer notaConteudo) {
-		this.notaConteudo = notaConteudo;
-	}
-
-	public Integer getNotaFund() {
-		return notaFund;
-	}
-
-	public void setNotaFund(Integer notaFund) {
-		this.notaFund = notaFund;
-	}
-
-	public Integer getNotaDiagramas() {
-		return notaDiagramas;
-	}
-
-	public void setNotaDiagramas(Integer notaDiagramas) {
-		this.notaDiagramas = notaDiagramas;
-	}
-
-	public Integer getNotaResultados() {
-		return notaResultados;
-	}
-
-	public void setNotaResultados(Integer notaResultados) {
-		this.notaResultados = notaResultados;
-	}
 }

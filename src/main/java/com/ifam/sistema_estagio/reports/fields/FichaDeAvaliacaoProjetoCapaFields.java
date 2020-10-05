@@ -19,7 +19,21 @@ public class FichaDeAvaliacaoProjetoCapaFields{
 	private String data;
 
 	public FichaDeAvaliacaoProjetoCapaFields() {
-
+		this.autor=" ";
+		this.titulo=" ";
+		this.av1=" ";
+		this.av2=" ";
+		this.av3=" ";
+		this.nota_defesa_av1=" ";
+		this.nota_defesa_av2=" ";
+		this.nota_defesa_av3=" ";
+		this.nota_relatorio_av1=" ";
+		this.nota_relatorio_av2=" ";
+		this.nota_relatorio_av3=" ";
+		this.media_defesa=" ";
+		this.media_relatorio=" ";
+		this.media=" ";
+		this.data=" ";
 	}
 
 	public FichaDeAvaliacaoProjetoCapaFields(String autor, String titulo, String av1,
@@ -43,7 +57,7 @@ public class FichaDeAvaliacaoProjetoCapaFields{
 		this.media = media;
 		this.data = data;
 	}
-
+	
 	public String getAutor() {
 		return autor;
 	}

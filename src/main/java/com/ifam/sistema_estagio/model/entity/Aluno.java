@@ -12,14 +12,22 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.ifam.sistema_estagio.model.entity.interfaces.UsuarioLogavel;
 import com.ifam.sistema_estagio.util.enums.Curso;
-import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
-import com.ifam.sistema_estagio.util.enums.GrauAcademico;
 import com.ifam.sistema_estagio.util.enums.ModalidadeCurso;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "aluno")
-public class Aluno extends Usuario{
+public class Aluno extends Usuario implements UsuarioLogavel{
 
 	@Column(nullable = false, name = "data_conclusao")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -33,63 +41,15 @@ public class Aluno extends Usuario{
 	@Enumerated(EnumType.STRING)
 	private ModalidadeCurso modalidadeCurso;
 
+	@Column(nullable = true, name = "anexo")
+	private byte[] anexo;
+	
 	//Estágio ou projeto
 	@ManyToOne
 	@JoinColumn(name = "estagioPcct_id")
 	private EstagioPCCT estagioPcct;
-
-	public Aluno() {
-		super();
-	}
 	
-	public Aluno(Integer id, 
-			String matricula, 
-			String nome, 
-			String email, 
-			FuncaoEstagio tipo, 
-			Date dataConclusao, 
-			Curso curso,
-			ModalidadeCurso modalidadeCurso, 
-			EstagioPCCT estagioPcct, 
-			GrauAcademico grau, 
-			String cpf
-		) {
-		super(id, matricula, nome, email, tipo, grau, cpf);
-		this.dataConclusao = dataConclusao;
-		this.curso = curso;
-		this.modalidadeCurso = modalidadeCurso;
-		this.estagioPcct = estagioPcct;
-	}
-
-	public EstagioPCCT getEstagioPcct() {
-		return estagioPcct;
-	}
-
-	public void setEstagioPcct(EstagioPCCT estagioPcct) {
-		this.estagioPcct = estagioPcct;
-	}
-
-	public Date getDataConclusao() {
-		return this.dataConclusao;
-	}
-
-	public void setDataConclusao(Date dataConclusao) {
-		this.dataConclusao = dataConclusao;
-	}
-
-	public Curso getCurso() {
-		return this.curso;
-	}
-
-	public void setCurso(Curso curso) {
-		this.curso = curso;
-	}
-
-	public ModalidadeCurso getModalidadeCurso() {
-		return this.modalidadeCurso;
-	}
-
-	public void setModalidadeCurso(ModalidadeCurso modalidadeCurso) {
-		this.modalidadeCurso = modalidadeCurso;
-	}
+	@ManyToOne
+	@JoinColumn(name = "papel_id")
+	private Papel papel;
 }

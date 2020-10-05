@@ -1,6 +1,8 @@
 package com.ifam.sistema_estagio.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,14 +15,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ifam.sistema_estagio.controller.service.EstagioPcctService;
 import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 @Controller
-@RequestMapping("/home/estagio")
+@RequestMapping("/estagio")
 public class EstagioController {
 
 	@Autowired
@@ -28,17 +29,14 @@ public class EstagioController {
 
 	// List
 	@GetMapping(path = { "/", "" })
-	public ModelAndView list() {
-		ModelAndView modelAndView = new ModelAndView("Estagio/index");
+	public List<EstagioPCCT> list() {
 		List<EstagioPCCT> estagios = service.getEstagiosOrProjeto(TipoServico.ESTAGIO);
 
 		if (estagios.isEmpty() || estagios == null) {
-			modelAndView.addObject("mensagem", "Não há estágios cadastrados");
-		} else {
-			modelAndView.addObject("estagios", estagios);
+			return new ArrayList<>();
 		}
-
-		return modelAndView;
+		
+		return estagios;
 	}
 
 	// Create
@@ -95,25 +93,18 @@ public class EstagioController {
 
 	// FindById
 	@GetMapping("/{id}")
-	public ModelAndView findById(@PathVariable("id") Integer id) {
-		ModelAndView modelAndView = new ModelAndView("EstagioDescricao/index");
-
+	public ResponseEntity<EstagioPCCT> findById(@PathVariable("id") Integer id) {
 		try {
-			EstagioPCCT estagio = service.findById(id).get();
-
-			if (estagio == null || estagio.getTipo() != TipoServico.ESTAGIO) {
-				modelAndView.addObject("mensagem", "Código de estágio inválido!");
-
-				throw new Exception("Código inválido!");
+			Optional<EstagioPCCT> estagio = service.findById(id);
+			
+			if(!estagio.isPresent()) {
+				return ResponseEntity.badRequest().build();
 			}
-
-			modelAndView.addObject("estagio", estagio);
-
-			return modelAndView;
+			
+			
+			return ResponseEntity.ok(estagio.get());
 		} catch (Exception e) {
-			modelAndView.addObject("mensagem", e.getMessage());
-
-			return modelAndView;
+			return ResponseEntity.badRequest().build();
 		}
 	}
 }

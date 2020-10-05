@@ -2,6 +2,7 @@ package com.ifam.sistema_estagio.reports.fields;
 
 public class AtaEstagioFields{
 
+	private String titulo;
 	private String media;
 	private String horaFinalizado;
 	private String data;
@@ -15,10 +16,21 @@ public class AtaEstagioFields{
 	private String mensagemChefe;
 
 	public AtaEstagioFields() {
-
+		this.titulo= " ";
+		this.media= " ";
+		this.horaFinalizado= " ";
+		this.data= " ";
+		this.coordenadora= " ";
+		this.mensagem= " ";
+		this.membro_1= " ";
+		this.membro_2= " ";
+		this.aluno= " ";
+		this.curso= " ";
+		this.presidente= " ";
+		this.mensagemChefe= " ";
 	}
 
-	public AtaEstagioFields(String media, String horaFinalizado, String data,
+	public AtaEstagioFields(String titulo,String media, String horaFinalizado, String data,
 			String coordenadora, String mensagem, String membro_1, String membro_2,
 			String aluno, String curso, String presidente, String mensagemChefe) {
 		this.media = media;
@@ -32,6 +44,15 @@ public class AtaEstagioFields{
 		this.curso = curso;
 		this.presidente = presidente;
 		this.mensagemChefe = mensagemChefe;
+		this.titulo = titulo;
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public String getMedia() {

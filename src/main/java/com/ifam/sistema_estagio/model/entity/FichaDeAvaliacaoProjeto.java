@@ -3,14 +3,23 @@ package com.ifam.sistema_estagio.model.entity;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 import javax.persistence.Embedded;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "ficha_de_avaliacao_projeto")
 public class FichaDeAvaliacaoProjeto extends FichaDeAvaliacao{
-
-
+	
 	//Avaliador
 	@ManyToOne
 	@JoinColumn(name = "professor_id", nullable = false)
@@ -26,45 +35,4 @@ public class FichaDeAvaliacaoProjeto extends FichaDeAvaliacao{
 
 	@Embedded
 	private NotaProjetoTrabalho notaTrabalho;
-
-	public FichaDeAvaliacaoProjeto(Integer id, Integer media, Professor professor, Ata ata,
-			NotaProjetoDefesa notaDefesa, NotaProjetoTrabalho notaTrabalho) {
-		super(id, media);
-		this.professor = professor;
-		this.ata = ata;
-		this.notaDefesa = notaDefesa;
-		this.notaTrabalho = notaTrabalho;
-	}
-
-	public Professor getProfessor() {
-		return professor;
-	}
-
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
-	}
-
-	public Ata getAta() {
-		return ata;
-	}
-
-	public void setAta(Ata ata) {
-		this.ata = ata;
-	}
-
-	public NotaProjetoDefesa getNotaDefesa() {
-		return notaDefesa;
-	}
-
-	public void setNotaDefesa(NotaProjetoDefesa notaDefesa) {
-		this.notaDefesa = notaDefesa;
-	}
-
-	public NotaProjetoTrabalho getNotaTrabalho() {
-		return notaTrabalho;
-	}
-
-	public void setNotaTrabalho(NotaProjetoTrabalho notaTrabalho) {
-		this.notaTrabalho = notaTrabalho;
-	}
 }
