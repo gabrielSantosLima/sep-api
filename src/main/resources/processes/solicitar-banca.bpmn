@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions 
+  id="definitions"
+  targetNamespace="http://activiti.org/bpmn20"
+  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:activiti="http://activiti.org/bpmn"
+  >
+  
+  <process id="solicitar_banca" name="Solicitação de Banca">
+  
+    <startEvent id="inicio" name="Solicitar Banca">
+      <outgoing>Flow_0sax0f7</outgoing>
+    </startEvent>
+  
+    <sequenceFlow id="Flow_0sax0f7" sourceRef="inicio" targetRef="envio-email" />
+  
+    <exclusiveGateway id="confirmacao_participantes" name="participantes confirmaram">
+      <incoming>Flow_156qccf</incoming>
+      <outgoing>Flow_1lvdwrj</outgoing>
+      <outgoing>Flow_1xa3n89</outgoing>
+    </exclusiveGateway>
+  
+    <sequenceFlow id="Flow_156qccf" sourceRef="envio-email" targetRef="confirmacao_participantes" />
+  
+    <sequenceFlow id="Flow_1lvdwrj" sourceRef="confirmacao_participantes" targetRef="notificar-coordenadora" />
+  
+    <sequenceFlow id="Flow_1xa3n89" sourceRef="confirmacao_participantes" targetRef="envio-email-negado" />
+  
+    <exclusiveGateway id="continuar-banca" name="continuar banca">
+      <incoming>Flow_0nebz19</incoming>
+      <outgoing>Flow_02j8392</outgoing>
+      <outgoing>Flow_1uio308</outgoing>
+    </exclusiveGateway>
+  
+    <sequenceFlow id="Flow_0nebz19" sourceRef="envio-email-negado" targetRef="continuar-banca" />
+  
+    <endEvent id="cancelar-banca" name="Banca Cancelada">
+      <incoming>Flow_02j8392</incoming>
+    </endEvent>
+  
+    <sequenceFlow id="Flow_02j8392" sourceRef="continuar-banca" targetRef="cancelar-banca" />
+  
+    <sequenceFlow id="Flow_1uio308" sourceRef="continuar-banca" targetRef="envio-email" />
+  
+    <exclusiveGateway id="banca-aprovada" name="banca aprovada">
+      <incoming>Flow_0nlt7z0</incoming>
+      <outgoing>Flow_0y4h96n</outgoing>
+      <outgoing>Flow_1vijv8l</outgoing>
+    </exclusiveGateway>
+  
+    <sequenceFlow id="Flow_0nlt7z0" sourceRef="notificar-coordenadora" targetRef="banca-aprovada" />
+  
+    <endEvent id="banca-negada" name="Banca Negada">
+      <incoming>Flow_0y4h96n</incoming>
+    </endEvent>
+  
+    <sequenceFlow id="Flow_0y4h96n" sourceRef="aprova-banca" targetRef="banca-negada" />
+  
+    <endEvent id="aprova-banca" name="Banca Aprovada">
+      <incoming>Flow_1vijv8l</incoming>
+    </endEvent>
+  
+    <sequenceFlow id="Flow_1vijv8l" sourceRef="aprova-banca" targetRef="aprova-banca" />
+  
+    <serviceTask id="envio-email" name="Envio de e-mail para os participantes">
+      <incoming>Flow_0sax0f7</incoming>
+      <incoming>Flow_1uio308</incoming>
+      <outgoing>Flow_156qccf</outgoing>
+    </serviceTask>
+  
+    <serviceTask id="envio-email-negado" name="Envio de e-mail notificando a indisponibilidade do participante">
+      <incoming>Flow_1xa3n89</incoming>
+      <outgoing>Flow_0nebz19</outgoing>
+    </serviceTask>
+  
+    <serviceTask id="notificar-coordenadora" name="Notificar coordenadora">
+      <incoming>Flow_1lvdwrj</incoming>
+      <outgoing>Flow_0nlt7z0</outgoing>
+    </serviceTask>
+  </process>
+</definitions>
