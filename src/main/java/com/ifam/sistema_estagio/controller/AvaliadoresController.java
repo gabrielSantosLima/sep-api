@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ifam.sistema_estagio.controller.service.AvaliadoresService;
-import com.ifam.sistema_estagio.model.entity.Avaliadores;
+import com.ifam.sistema_estagio.entity.Avaliadores;
+import com.ifam.sistema_estagio.services.AvaliadoresService;
 
 @RestController
 @RequestMapping("/banca/{id}/avaliadores")

@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ifam.sistema_estagio.controller.service.EstagioPcctService;
-import com.ifam.sistema_estagio.controller.service.ProfessorService;
-import com.ifam.sistema_estagio.model.entity.EstagioPCCT;
-import com.ifam.sistema_estagio.model.entity.Professor;
+import com.ifam.sistema_estagio.entity.EstagioPCCT;
+import com.ifam.sistema_estagio.entity.Professor;
+import com.ifam.sistema_estagio.services.EstagioPcctService;
+import com.ifam.sistema_estagio.services.ProfessorService;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 @RestController

@@ -10,16 +10,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ifam.sistema_estagio.controller.service.AvaliadoresService;
-import com.ifam.sistema_estagio.controller.service.BancaService;
-import com.ifam.sistema_estagio.controller.service.DocumentosService;
-import com.ifam.sistema_estagio.reports.fields.AtaEstagioFields;
-import com.ifam.sistema_estagio.reports.fields.AtaProjetoFields;
-import com.ifam.sistema_estagio.reports.fields.CertificadoFields;
-import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoEstagioFields;
-import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoProjetoCapaFields;
-import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoProjetoDefesaFields;
-import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoProjetoRelatorioFields;
+import com.ifam.sistema_estagio.reports.AtaEstagioFields;
+import com.ifam.sistema_estagio.reports.AtaProjetoFields;
+import com.ifam.sistema_estagio.reports.CertificadoFields;
+import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoEstagioFields;
+import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoCapaFields;
+import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoDefesaFields;
+import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoRelatorioFields;
+import com.ifam.sistema_estagio.services.AvaliadoresService;
+import com.ifam.sistema_estagio.services.BancaService;
+import com.ifam.sistema_estagio.services.DocumentosService;
 
 import net.sf.jasperreports.engine.JRException;
 
@@ -29,12 +29,6 @@ public class DocumentosController {
 
 	@Autowired
 	private DocumentosService service;
-
-	@Autowired
-	private BancaService bancaService;
-
-	@Autowired
-	private AvaliadoresService avaliadoresService;
 
 	@GetMapping(path = "/certificado/{idBanca}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public byte[] gerarCerticados(@PathVariable Integer idBanca) {

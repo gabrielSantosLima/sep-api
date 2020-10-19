@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ifam.sistema_estagio.controller.service.AtaService;
-import com.ifam.sistema_estagio.controller.service.FichaDeAvaliacaoProjetoService;
-import com.ifam.sistema_estagio.model.entity.Ata;
-import com.ifam.sistema_estagio.model.entity.FichaDeAvaliacaoProjeto;
+import com.ifam.sistema_estagio.entity.Ata;
+import com.ifam.sistema_estagio.entity.FichaDeAvaliacaoProjeto;
+import com.ifam.sistema_estagio.services.AtaService;
+import com.ifam.sistema_estagio.services.FichaDeAvaliacaoProjetoService;
 
 @Controller
 @RequestMapping(value = "atas/{id}/avaliacao-projeto")

@@ -1,82 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<definitions 
-  id="definitions"
-  targetNamespace="http://activiti.org/bpmn20"
-  xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xmlns:activiti="http://activiti.org/bpmn"
-  >
-  
-  <process id="solicitar_banca" name="Solicitação de Banca">
-  
-    <startEvent id="inicio" name="Solicitar Banca">
-      <outgoing>Flow_0sax0f7</outgoing>
-    </startEvent>
-  
-    <sequenceFlow id="Flow_0sax0f7" sourceRef="inicio" targetRef="envio-email" />
-  
-    <exclusiveGateway id="confirmacao_participantes" name="participantes confirmaram">
-      <incoming>Flow_156qccf</incoming>
-      <outgoing>Flow_1lvdwrj</outgoing>
-      <outgoing>Flow_1xa3n89</outgoing>
-    </exclusiveGateway>
-  
-    <sequenceFlow id="Flow_156qccf" sourceRef="envio-email" targetRef="confirmacao_participantes" />
-  
-    <sequenceFlow id="Flow_1lvdwrj" sourceRef="confirmacao_participantes" targetRef="notificar-coordenadora" />
-  
-    <sequenceFlow id="Flow_1xa3n89" sourceRef="confirmacao_participantes" targetRef="envio-email-negado" />
-  
-    <exclusiveGateway id="continuar-banca" name="continuar banca">
-      <incoming>Flow_0nebz19</incoming>
-      <outgoing>Flow_02j8392</outgoing>
-      <outgoing>Flow_1uio308</outgoing>
-    </exclusiveGateway>
-  
-    <sequenceFlow id="Flow_0nebz19" sourceRef="envio-email-negado" targetRef="continuar-banca" />
-  
-    <endEvent id="cancelar-banca" name="Banca Cancelada">
-      <incoming>Flow_02j8392</incoming>
-    </endEvent>
-  
-    <sequenceFlow id="Flow_02j8392" sourceRef="continuar-banca" targetRef="cancelar-banca" />
-  
-    <sequenceFlow id="Flow_1uio308" sourceRef="continuar-banca" targetRef="envio-email" />
-  
-    <exclusiveGateway id="banca-aprovada" name="banca aprovada">
-      <incoming>Flow_0nlt7z0</incoming>
-      <outgoing>Flow_0y4h96n</outgoing>
-      <outgoing>Flow_1vijv8l</outgoing>
-    </exclusiveGateway>
-  
-    <sequenceFlow id="Flow_0nlt7z0" sourceRef="notificar-coordenadora" targetRef="banca-aprovada" />
-  
-    <endEvent id="banca-negada" name="Banca Negada">
-      <incoming>Flow_0y4h96n</incoming>
-    </endEvent>
-  
-    <sequenceFlow id="Flow_0y4h96n" sourceRef="aprova-banca" targetRef="banca-negada" />
-  
-    <endEvent id="aprova-banca" name="Banca Aprovada">
-      <incoming>Flow_1vijv8l</incoming>
-    </endEvent>
-  
-    <sequenceFlow id="Flow_1vijv8l" sourceRef="aprova-banca" targetRef="aprova-banca" />
-  
-    <serviceTask id="envio-email" name="Envio de e-mail para os participantes">
-      <incoming>Flow_0sax0f7</incoming>
-      <incoming>Flow_1uio308</incoming>
-      <outgoing>Flow_156qccf</outgoing>
-    </serviceTask>
-  
-    <serviceTask id="envio-email-negado" name="Envio de e-mail notificando a indisponibilidade do participante">
-      <incoming>Flow_1xa3n89</incoming>
-      <outgoing>Flow_0nebz19</outgoing>
-    </serviceTask>
-  
-    <serviceTask id="notificar-coordenadora" name="Notificar coordenadora">
-      <incoming>Flow_1lvdwrj</incoming>
-      <outgoing>Flow_0nlt7z0</outgoing>
-    </serviceTask>
-  </process>
-</definitions>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0ytg4p5" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.3.0">
+  <bpmn:process id="solicitar-banca" name="Solicitação de Banca" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" name="Processo iniciado">
+      <bpmn:outgoing>Flow_0ywtmce</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0ywtmce" sourceRef="StartEvent_1" targetRef="mandar-email" />
+    <bpmn:serviceTask id="mandar-email" name="Mandar e-mail para todos os partipantes" camunda:delegateExpression="${enviarEmailService}">
+      <bpmn:incoming>Flow_0ywtmce</bpmn:incoming>
+      <bpmn:outgoing>Flow_03vmv08</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_03vmv08" sourceRef="mandar-email" targetRef="confirmacao-participantes" />
+    <bpmn:exclusiveGateway id="confirmacao" name="Todos Confirmam?">
+      <bpmn:incoming>Flow_1r7eju1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0o6eca8</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0h5hwam</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1r7eju1" sourceRef="confirmacao-participantes" targetRef="confirmacao" />
+    <bpmn:endEvent id="cancelada" name="Banca cancelada">
+      <bpmn:incoming>Flow_0o6eca8</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0o6eca8" name="${!confirmados}" sourceRef="confirmacao" targetRef="cancelada">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${!confirmados}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0h5hwam" name="${confirmados}" sourceRef="confirmacao" targetRef="notificacao-cood">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmados}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="notificacao-cood" name="Notificar coordenador(a) para aprovação" camunda:delegateExpression="${notiticarService}">
+      <bpmn:incoming>Flow_0h5hwam</bpmn:incoming>
+      <bpmn:outgoing>Flow_0g456xr</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0g456xr" sourceRef="notificacao-cood" targetRef="verificacao-cood" />
+    <bpmn:task id="verificacao-cood" name="Coordenador(a) verifica notificação">
+      <bpmn:incoming>Flow_0g456xr</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dukonf</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:exclusiveGateway id="aprovacao" name="Aprovou?">
+      <bpmn:incoming>Flow_1dukonf</bpmn:incoming>
+      <bpmn:outgoing>Flow_094i1yo</bpmn:outgoing>
+      <bpmn:outgoing>Flow_02x3w0q</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_1dukonf" sourceRef="verificacao-cood" targetRef="aprovacao" />
+    <bpmn:endEvent id="negada" name="Banca negada">
+      <bpmn:incoming>Flow_094i1yo</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_094i1yo" name="${!aprovada}" sourceRef="aprovacao" targetRef="negada">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aprovada}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="aprovada" name="Banca Aprovada">
+      <bpmn:incoming>Flow_02x3w0q</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_02x3w0q" name="${aprovada}" sourceRef="aprovacao" targetRef="aprovada">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aprovada}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:task id="confirmacao-participantes" name="Confirmar e-mail">
+      <bpmn:incoming>Flow_03vmv08</bpmn:incoming>
+      <bpmn:outgoing>Flow_1r7eju1</bpmn:outgoing>
+    </bpmn:task>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="solicitar-banca">
+      <bpmndi:BPMNEdge id="Flow_02x3w0q_di" bpmnElement="Flow_02x3w0q">
+        <di:waypoint x="900" y="305" />
+        <di:waypoint x="900" y="390" />
+        <di:waypoint x="1012" y="390" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="840" y="345" width="60" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_094i1yo_di" bpmnElement="Flow_094i1yo">
+        <di:waypoint x="925" y="280" />
+        <di:waypoint x="1012" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="938" y="262" width="63" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dukonf_di" bpmnElement="Flow_1dukonf">
+        <di:waypoint x="820" y="280" />
+        <di:waypoint x="875" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0g456xr_di" bpmnElement="Flow_0g456xr">
+        <di:waypoint x="670" y="280" />
+        <di:waypoint x="720" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h5hwam_di" bpmnElement="Flow_0h5hwam">
+        <di:waypoint x="620" y="165" />
+        <di:waypoint x="620" y="240" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="633" y="200" width="74" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0o6eca8_di" bpmnElement="Flow_0o6eca8">
+        <di:waypoint x="645" y="140" />
+        <di:waypoint x="782" y="140" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="675" y="122" width="77" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1r7eju1_di" bpmnElement="Flow_1r7eju1">
+        <di:waypoint x="530" y="140" />
+        <di:waypoint x="595" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_03vmv08_di" bpmnElement="Flow_03vmv08">
+        <di:waypoint x="370" y="140" />
+        <di:waypoint x="430" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ywtmce_di" bpmnElement="Flow_0ywtmce">
+        <di:waypoint x="218" y="140" />
+        <di:waypoint x="270" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="157" y="165" width="87" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1kcq2gh_di" bpmnElement="confirmacao" isMarkerVisible="true">
+        <dc:Bounds x="595" y="115" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="590" y="77.5" width="60" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0oyp7sf_di" bpmnElement="cancelada">
+        <dc:Bounds x="782" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="758" y="165" width="85" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xqhetm_di" bpmnElement="notificacao-cood">
+        <dc:Bounds x="570" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_066lew8_di" bpmnElement="verificacao-cood">
+        <dc:Bounds x="720" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_11p10iw_di" bpmnElement="aprovacao" isMarkerVisible="true">
+        <dc:Bounds x="875" y="255" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="877" y="225" width="47" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0nfgrfw_di" bpmnElement="negada">
+        <dc:Bounds x="1012" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="995" y="305" width="71" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_03kkbat_di" bpmnElement="aprovada">
+        <dc:Bounds x="1012" y="372" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="989" y="415" width="82" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1rm19h8_di" bpmnElement="confirmacao-participantes">
+        <dc:Bounds x="430" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1n0fwkg_di" bpmnElement="mandar-email">
+        <dc:Bounds x="270" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
