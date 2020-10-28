@@ -2,7 +2,6 @@ package com.ifam.sistema_estagio.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,18 +10,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.ifam.sistema_estagio.controller.service.AvaliadoresService;
-import com.ifam.sistema_estagio.controller.service.BancaService;
-import com.ifam.sistema_estagio.controller.service.DocumentosService;
-import com.ifam.sistema_estagio.model.entity.Avaliadores;
-import com.ifam.sistema_estagio.model.entity.Banca;
-import com.ifam.sistema_estagio.reports.fields.AtaEstagioFields;
-import com.ifam.sistema_estagio.reports.fields.AtaProjetoFields;
-import com.ifam.sistema_estagio.reports.fields.CertificadoFields;
-import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoEstagioFields;
-import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoProjetoCapaFields;
-import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoProjetoDefesaFields;
-import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoProjetoRelatorioFields;
+import com.ifam.sistema_estagio.reports.AtaEstagioFields;
+import com.ifam.sistema_estagio.reports.AtaProjetoFields;
+import com.ifam.sistema_estagio.reports.CertificadoFields;
+import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoEstagioFields;
+import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoCapaFields;
+import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoDefesaFields;
+import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoRelatorioFields;
+import com.ifam.sistema_estagio.services.DocumentosService;
 
 import net.sf.jasperreports.engine.JRException;
 
@@ -33,58 +28,12 @@ public class DocumentosController {
 	@Autowired
 	private DocumentosService service;
 
-	@Autowired
-	private BancaService bancaService;
-
-	@Autowired
-	private AvaliadoresService avaliadoresService;
-
 	@GetMapping(path = "/certificado/{idBanca}", produces = MediaType.APPLICATION_PDF_VALUE)
 	public byte[] gerarCerticados(@PathVariable Integer idBanca) {
 		try {
-			// Prepara Fields
-			List<CertificadoFields> certificados = new ArrayList<>();
-			Optional<Banca> banca = bancaService.findById(idBanca);
-
-			if (!banca.isPresent()) {
-				return null;
-			}
-
-			List<Avaliadores> avaliadores = avaliadoresService.findByBancaId(idBanca);
-
-			if (avaliadores.isEmpty()) {
-				return null;
-			}
-
-			// Processa dados
-			avaliadores.forEach(avaliador -> {
-				Banca bancaValida = banca.get();
-
-				String nomeAvaliador = avaliador.getProfessor().getNome();
-
-				String papelAvaliador = avaliador.getProfessor().getTipo().toString()
-						.toLowerCase();
-
-				String alunos = bancaValida.getEstagioPcct().getAlunos().toString();
-
-				String data = bancaValida.getData().toString();
-
-				String curso = bancaValida.getCurso().getNomeCursoCompleto();
-
-				String cood = "Coordenação do Curso de "
-						+ bancaValida.getCurso().getNomeCoordenacao()
-						+ " do Instituto Federal de Educação, Ciência e Tecnologia do Amazonas - IFAM";
-
-				String mensagem = "Certificamos para os devidos fins de direito que o Prof. "
-						+ nomeAvaliador + "participou como " + papelAvaliador
-						+ "na banca de defesa do Trabalho de Conclusão de Curso de <b>"
-						+ alunos + "</b> do" + curso + "<br>&emsp;" + cood;
-
-				certificados.add(new CertificadoFields(data, mensagem));
-			});
 
 			// Exporta pdf
-			byte[] pdf = service.generateCertificado(certificados);
+			byte[] pdf = service.generateCertificado(new ArrayList<CertificadoFields>());
 
 			return pdf;
 		} catch (Exception e) {

@@ -2,21 +2,16 @@ package com.ifam.sistema_estagio.util.enums;
 
 public enum TipoServico {
 	
-	ESTAGIO(0),
-	PROJETO(1);
+	ESTAGIO("Estágio"),
+	PROJETO("Projeto");
 	
-	private Integer valor;
+	private String valor;
 	
-	TipoServico(Integer valor){
+	TipoServico(String valor){
 		this.valor = valor;
 	}
 	
-	public Integer getValor() {
+	public String getValor() {
 		return valor;
-	}
-	
-	public static class Values{
-		public static final String ESTAGIO = "0";
-		public static final String PROJETO = "1";
 	}
 }

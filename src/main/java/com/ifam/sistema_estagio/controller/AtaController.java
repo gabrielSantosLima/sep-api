@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ifam.sistema_estagio.controller.service.AtaService;
-import com.ifam.sistema_estagio.controller.service.BancaService;
-import com.ifam.sistema_estagio.model.entity.Ata;
-import com.ifam.sistema_estagio.model.entity.Banca;
+import com.ifam.sistema_estagio.entity.Ata;
+import com.ifam.sistema_estagio.entity.Banca;
+import com.ifam.sistema_estagio.services.AtaService;
+import com.ifam.sistema_estagio.services.BancaService;
 
 @RestController
 @RequestMapping("/bancas/{id}/atas")
