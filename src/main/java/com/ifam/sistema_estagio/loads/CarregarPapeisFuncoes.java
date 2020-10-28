@@ -15,6 +15,7 @@ import com.ifam.sistema_estagio.repository.FuncaoRepository;
 import com.ifam.sistema_estagio.repository.PapelRepository;
 
 @Component
+@SuppressWarnings("unused")
 public class CarregarPapeisFuncoes implements ApplicationRunner{
 
 	@Autowired

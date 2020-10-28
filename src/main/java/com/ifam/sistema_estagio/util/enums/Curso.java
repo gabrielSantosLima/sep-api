@@ -18,12 +18,4 @@ public enum Curso {
 	public String getNomeCurso() {
 		return nomeCurso;
 	}
-	
-	public static Curso of(String nomeCurso) {
-		return Arrays.asList(Curso.values())
-				.stream()
-				.filter(curso -> curso.getNomeCurso() == nomeCurso)
-				.findFirst()
-				.get();
-	}
 }

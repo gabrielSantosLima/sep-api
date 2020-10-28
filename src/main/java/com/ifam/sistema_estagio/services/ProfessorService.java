@@ -25,7 +25,6 @@ public class ProfessorService extends GenericService<Professor, ProfessorReposit
 
 	public Professor create(Professor e, String papel) throws HibernateException {
 		e.setPassword(bCryptPassowrdEncoder.encode(e.getPassword()));
-		e.setPapel(papelRepository.findByName(papel).get());
 		return repository.save(e);
 	}
 

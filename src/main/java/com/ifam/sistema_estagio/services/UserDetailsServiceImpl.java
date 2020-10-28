@@ -59,10 +59,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	private Set<GrantedAuthority> getGrantedAuthorities(Papel papel) {
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
-		grantedAuthorities.add(new SimpleGrantedAuthority(papel.getName()));
+		grantedAuthorities.add(new SimpleGrantedAuthority(papel.getNome()));
 			
 		papel.getFuncoes().stream().forEach(funcao -> {
-			grantedAuthorities.add(new SimpleGrantedAuthority(funcao.getName()));
+			grantedAuthorities.add(new SimpleGrantedAuthority(funcao.getNome()));
 		});
 		
 		return grantedAuthorities;

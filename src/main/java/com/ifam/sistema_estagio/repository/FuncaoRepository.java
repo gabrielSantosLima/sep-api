@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.ifam.sistema_estagio.entity.Funcao;
-import com.ifam.sistema_estagio.entity.Papel;
 
 @Repository
 public interface FuncaoRepository extends JpaRepository<Funcao, Integer>{

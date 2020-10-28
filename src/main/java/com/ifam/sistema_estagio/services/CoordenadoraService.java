@@ -25,7 +25,6 @@ public class CoordenadoraService extends GenericService<Coordenadora, Coordenado
 
 	public Coordenadora create(Coordenadora e, String papel) throws HibernateException {
 		e.setPassword(bCryptPassowrdEncoder.encode(e.getPassword()));
-		e.setPapel(papelRepository.findByName(papel).get());
 		return repository.save(e);
 	}
 

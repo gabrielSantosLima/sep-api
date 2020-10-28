@@ -27,7 +27,6 @@ public class AlunoService extends GenericService<Aluno, AlunoRepository>{
 
 	public Aluno create(Aluno e, String papel) throws HibernateException {
 		e.setPassword(bCryptPassowrdEncoder.encode(e.getPassword()));
-		e.setPapel(papelRepository.findByName(papel).get());
 		return repository.save(e);
 	}
 

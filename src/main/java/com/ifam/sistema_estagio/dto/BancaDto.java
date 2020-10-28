@@ -1,5 +1,6 @@
 package com.ifam.sistema_estagio.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -13,7 +14,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class BancaDto {
+public class BancaDto implements Serializable {
+
+	private String id;
 
 	private Date data;
 
@@ -24,6 +27,8 @@ public class BancaDto {
 	private Boolean banca_final;
 	
 	private String local;
+
+	private String titulo;
 
 	private Date horaInicio;
 

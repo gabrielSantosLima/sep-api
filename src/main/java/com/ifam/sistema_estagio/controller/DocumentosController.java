@@ -17,8 +17,6 @@ import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoEstagioFields;
 import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoCapaFields;
 import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoDefesaFields;
 import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoRelatorioFields;
-import com.ifam.sistema_estagio.services.AvaliadoresService;
-import com.ifam.sistema_estagio.services.BancaService;
 import com.ifam.sistema_estagio.services.DocumentosService;
 
 import net.sf.jasperreports.engine.JRException;
