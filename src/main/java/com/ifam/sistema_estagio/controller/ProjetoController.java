@@ -110,7 +110,6 @@ public class ProjetoController {
 				return ResponseEntity.badRequest().build();
 			}
 			
-			
 			return ResponseEntity.ok(projeto.get());
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();

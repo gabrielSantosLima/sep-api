@@ -9,6 +9,6 @@ public class PedidoFinalizadoNegadoListener implements ExecutionListener {
 
     @Override
     public void notify(DelegateExecution execution) throws Exception {
-
+        System.out.println("[Banca Negada] Uma foi foi negada! Id do processo: "+ execution.getProcessInstanceId());
     }
 }

@@ -14,12 +14,18 @@ public class EmailTextoService implements IEmailService{
 	private JavaMailSender emailSender;
 
 	@Override
-	public void send(EmailSimplesDto email) {
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(email.getTo());
-		message.setText(email.getMessage());
-		message.setSubject(email.getSubject());
+	public void send(EmailSimplesDto email) throws Exception{
+		try{
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setTo(email.getTo());
+			message.setText(email.getMessage());
+			message.setSubject(email.getSubject());
 
-		emailSender.send(message);
+			emailSender.send(message);
+
+			return;
+		}catch (Exception e) {
+			throw new Exception("[email-texto-service] Erro ao enviar e-mail: " + e.getMessage());
+		}
 	}
 }
