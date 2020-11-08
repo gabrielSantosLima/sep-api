@@ -15,24 +15,14 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class BancaDto implements Serializable {
-
 	private String id;
-
 	private Date data;
-
 	private TipoServico tipo;
-
 	private Curso curso;
-
 	private Boolean banca_final;
-	
 	private String local;
-
 	private String titulo;
-
 	private Date horaInicio;
-
 	private Date horaFinalizado;
-	
 	private List<UsuarioDto> participantes;
 }

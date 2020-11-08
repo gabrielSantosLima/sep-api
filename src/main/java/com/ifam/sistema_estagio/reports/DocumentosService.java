@@ -1,4 +1,4 @@
-package com.ifam.sistema_estagio.services;
+package com.ifam.sistema_estagio.reports;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -8,15 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.ifam.sistema_estagio.reports.fields.*;
 import org.springframework.stereotype.Service;
-
-import com.ifam.sistema_estagio.reports.AtaEstagioFields;
-import com.ifam.sistema_estagio.reports.AtaProjetoFields;
-import com.ifam.sistema_estagio.reports.CertificadoFields;
-import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoEstagioFields;
-import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoCapaFields;
-import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoDefesaFields;
-import com.ifam.sistema_estagio.reports.FichaDeAvaliacaoProjetoRelatorioFields;
 
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -36,8 +29,7 @@ public class DocumentosService {
 	private static final String REPORTS_PATH = "/src/main/resources/reports/";
 
 	private JasperReport loadTemplateAndCompile(String fileName) throws JRException {
-		InputStream jasperTemplate = DocumentosService.class
-				.getResourceAsStream(REPORTS_PATH + fileName + ".jrxml");
+		InputStream jasperTemplate = DocumentosService.class.getResourceAsStream(REPORTS_PATH + fileName + ".jrxml");
 
 		JasperReport report = JasperCompileManager.compileReport(jasperTemplate);
 

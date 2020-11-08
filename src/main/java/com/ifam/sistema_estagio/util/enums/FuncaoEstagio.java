@@ -2,9 +2,10 @@ package com.ifam.sistema_estagio.util.enums;
 
 public enum FuncaoEstagio {
 	
-	COORDENADOR(0),
-	COORDENADOR_ADJUNTO(1),
-	COLABORADOR(2);
+	DISCENTE(0),
+	COORDENADOR(1),
+	COORDENADOR_ADJUNTO(2),
+	COLABORADOR(3);
 	
 	private Integer valor;
 	

@@ -16,17 +16,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class UsuarioDto implements Serializable {
 	private String id;
-
 	private String matricula;
-
 	private String cpf;
-
 	private String nome;
-
 	private String email;
-
 	private FuncaoEstagio tipo;
-
 	private GrauAcademico grau;
-	
 }

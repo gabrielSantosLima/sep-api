@@ -10,10 +10,10 @@
     <bpmn:sequenceFlow id="Flow_0ywtmce" sourceRef="StartEvent_1" targetRef="mandar-email" />
     <bpmn:serviceTask id="mandar-email" name="Mandar e-mail para todos os partipantes" camunda:delegateExpression="${enviarEmailService}">
       <bpmn:incoming>Flow_0ywtmce</bpmn:incoming>
-      <bpmn:outgoing>Flow_1mf2m5t</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0a96enm</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="confirmacao" name="Todos Confirmam?">
-      <bpmn:incoming>Flow_1mf2m5t</bpmn:incoming>
+      <bpmn:incoming>Flow_1uj134l</bpmn:incoming>
       <bpmn:outgoing>Flow_0o6eca8</bpmn:outgoing>
       <bpmn:outgoing>Flow_0h5hwam</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -23,18 +23,18 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_0o6eca8</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_0o6eca8" name="${aprovado == false}" sourceRef="confirmacao" targetRef="cancelada">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aprovado == false}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_0o6eca8" name="${confirmado== false}" sourceRef="confirmacao" targetRef="cancelada">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmado== false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0h5hwam" name="${aprovado == true}" sourceRef="confirmacao" targetRef="notificacao-cood">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aprovado == true}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_0h5hwam" name="${confirmado== true}" sourceRef="confirmacao" targetRef="notificacao-cood">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${confirmado== true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:serviceTask id="notificacao-cood" name="Notificar coordenador(a) para aprovação" camunda:delegateExpression="${notiticarService}">
+    <bpmn:serviceTask id="notificacao-cood" name="Notificar coordenador(a) para aprovação" camunda:delegateExpression="${notificarCoordenacaoService}">
       <bpmn:incoming>Flow_0h5hwam</bpmn:incoming>
       <bpmn:outgoing>Flow_1j3ny8q</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:exclusiveGateway id="aprovacao" name="Aprovou?">
-      <bpmn:incoming>Flow_144a3xg</bpmn:incoming>
+      <bpmn:incoming>Flow_1b9jv14</bpmn:incoming>
       <bpmn:outgoing>Flow_094i1yo</bpmn:outgoing>
       <bpmn:outgoing>Flow_02x3w0q</bpmn:outgoing>
     </bpmn:exclusiveGateway>
@@ -44,8 +44,8 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_094i1yo</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_094i1yo" name="${avaliado == false}" sourceRef="aprovacao" targetRef="negada">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${avaliado == false}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_094i1yo" name="${aprovado== false}" sourceRef="aprovacao" targetRef="negada">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aprovado== false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:endEvent id="aprovada" name="Banca Aprovada">
       <bpmn:extensionElements>
@@ -53,110 +53,144 @@
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_02x3w0q</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_02x3w0q" name="${avaliado == true}" sourceRef="aprovacao" targetRef="aprovada">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${avaliado == true}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="Flow_02x3w0q" name="${aprovado== true}" sourceRef="aprovacao" targetRef="aprovada">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aprovado== true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_1mf2m5t" sourceRef="mandar-email" targetRef="confirmacao" />
     <bpmn:sequenceFlow id="Flow_1j3ny8q" sourceRef="notificacao-cood" targetRef="avaliar-pedido" />
-    <bpmn:sequenceFlow id="Flow_144a3xg" sourceRef="avaliar-pedido" targetRef="aprovacao" />
     <bpmn:userTask id="avaliar-pedido" name="Avaliar pedido" camunda:asyncAfter="true">
       <bpmn:extensionElements>
         <camunda:taskListener delegateExpression="${avaliarPedidoListener}" event="complete" />
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1j3ny8q</bpmn:incoming>
-      <bpmn:outgoing>Flow_144a3xg</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0q0vg61</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_0a96enm" sourceRef="mandar-email" targetRef="confirmar" />
+    <bpmn:sequenceFlow id="Flow_1uj134l" sourceRef="confirmar" targetRef="confirmacao" />
+    <bpmn:intermediateCatchEvent id="confirmar" name="Aguardar Confirmação">
+      <bpmn:incoming>Flow_0a96enm</bpmn:incoming>
+      <bpmn:outgoing>Flow_1uj134l</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1wf41rj" messageRef="Message_1paq8xy" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0q0vg61" sourceRef="avaliar-pedido" targetRef="aprovar" />
+    <bpmn:sequenceFlow id="Flow_1b9jv14" sourceRef="aprovar" targetRef="aprovacao" />
+    <bpmn:intermediateCatchEvent id="aprovar" name="Aprovar Banca&#10;">
+      <bpmn:incoming>Flow_0q0vg61</bpmn:incoming>
+      <bpmn:outgoing>Flow_1b9jv14</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1dn1s59" messageRef="Message_1xhs367" />
+    </bpmn:intermediateCatchEvent>
   </bpmn:process>
+  <bpmn:message id="Message_1paq8xy" name="confirmarBancaMessage" />
+  <bpmn:message id="Message_1xhs367" name="aprovarBancaMessage" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="solicitar-banca">
-      <bpmndi:BPMNEdge id="Flow_144a3xg_di" bpmnElement="Flow_144a3xg">
-        <di:waypoint x="670" y="280" />
-        <di:waypoint x="715" y="280" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1j3ny8q_di" bpmnElement="Flow_1j3ny8q">
-        <di:waypoint x="510" y="280" />
-        <di:waypoint x="570" y="280" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1mf2m5t_di" bpmnElement="Flow_1mf2m5t">
-        <di:waypoint x="380" y="140" />
-        <di:waypoint x="435" y="140" />
+        <di:waypoint x="630" y="280" />
+        <di:waypoint x="690" y="280" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_02x3w0q_di" bpmnElement="Flow_02x3w0q">
-        <di:waypoint x="740" y="305" />
-        <di:waypoint x="740" y="390" />
-        <di:waypoint x="852" y="390" />
+        <di:waypoint x="940" y="305" />
+        <di:waypoint x="940" y="390" />
+        <di:waypoint x="1052" y="390" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="746" y="345" width="68" height="27" />
+          <dc:Bounds x="945" y="345" width="70" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_094i1yo_di" bpmnElement="Flow_094i1yo">
-        <di:waypoint x="765" y="280" />
-        <di:waypoint x="852" y="280" />
+        <di:waypoint x="965" y="280" />
+        <di:waypoint x="1052" y="280" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="775" y="246" width="68" height="27" />
+          <dc:Bounds x="974" y="246" width="70" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0h5hwam_di" bpmnElement="Flow_0h5hwam">
-        <di:waypoint x="460" y="165" />
-        <di:waypoint x="460" y="240" />
+        <di:waypoint x="580" y="165" />
+        <di:waypoint x="580" y="240" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="463" y="186" width="73" height="27" />
+          <dc:Bounds x="601" y="186" width="78" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0o6eca8_di" bpmnElement="Flow_0o6eca8">
-        <di:waypoint x="485" y="140" />
-        <di:waypoint x="622" y="140" />
+        <di:waypoint x="605" y="140" />
+        <di:waypoint x="822" y="140" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="517" y="106" width="73" height="27" />
+          <dc:Bounds x="671" y="106" width="78" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0ywtmce_di" bpmnElement="Flow_0ywtmce">
         <di:waypoint x="218" y="140" />
-        <di:waypoint x="280" y="140" />
+        <di:waypoint x="260" y="140" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="Gateway_1kcq2gh_di" bpmnElement="confirmacao" isMarkerVisible="true">
-        <dc:Bounds x="435" y="115" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="430" y="78" width="60" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0a96enm_di" bpmnElement="Flow_0a96enm">
+        <di:waypoint x="360" y="140" />
+        <di:waypoint x="452" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1uj134l_di" bpmnElement="Flow_1uj134l">
+        <di:waypoint x="488" y="140" />
+        <di:waypoint x="555" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0q0vg61_di" bpmnElement="Flow_0q0vg61">
+        <di:waypoint x="790" y="280" />
+        <di:waypoint x="842" y="280" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1b9jv14_di" bpmnElement="Flow_1b9jv14">
+        <di:waypoint x="878" y="280" />
+        <di:waypoint x="915" y="280" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Event_0oyp7sf_di" bpmnElement="cancelada">
-        <dc:Bounds x="622" y="122" width="36" height="36" />
+        <dc:Bounds x="822" y="122" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="598" y="165" width="85" height="14" />
+          <dc:Bounds x="798" y="165" width="85" height="14" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0xqhetm_di" bpmnElement="notificacao-cood">
-        <dc:Bounds x="410" y="240" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_11p10iw_di" bpmnElement="aprovacao" isMarkerVisible="true">
-        <dc:Bounds x="715" y="255" width="50" height="50" />
+        <dc:Bounds x="915" y="255" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="717" y="225" width="47" height="14" />
+          <dc:Bounds x="917" y="225" width="47" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_0nfgrfw_di" bpmnElement="negada">
-        <dc:Bounds x="852" y="262" width="36" height="36" />
+        <dc:Bounds x="1052" y="262" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="835" y="305" width="71" height="14" />
+          <dc:Bounds x="1035" y="305" width="71" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_03kkbat_di" bpmnElement="aprovada">
-        <dc:Bounds x="852" y="372" width="36" height="36" />
+        <dc:Bounds x="1052" y="372" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="829" y="415" width="82" height="14" />
+          <dc:Bounds x="1029" y="415" width="82" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1y7ap0q_di" bpmnElement="avaliar-pedido">
-        <dc:Bounds x="570" y="240" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1n0fwkg_di" bpmnElement="mandar-email">
-        <dc:Bounds x="280" y="100" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_0xqhetm_di" bpmnElement="notificacao-cood">
+        <dc:Bounds x="530" y="240" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="182" y="122" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="157" y="165" width="87" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1n0fwkg_di" bpmnElement="mandar-email">
+        <dc:Bounds x="260" y="100" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1kcq2gh_di" bpmnElement="confirmacao" isMarkerVisible="true">
+        <dc:Bounds x="555" y="115" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="550" y="78" width="60" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1y7ap0q_di" bpmnElement="avaliar-pedido">
+        <dc:Bounds x="690" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1yw2tg3_di" bpmnElement="aprovar">
+        <dc:Bounds x="842" y="262" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="825" y="305" width="72" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1fj2du7_di" bpmnElement="confirmar">
+        <dc:Bounds x="452" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="440" y="165" width="63" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
