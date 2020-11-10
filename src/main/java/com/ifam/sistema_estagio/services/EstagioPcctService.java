@@ -14,7 +14,7 @@ import com.ifam.sistema_estagio.util.enums.TipoServico;
 public class EstagioPcctService extends GenericService<EstagioPCCT, EstagioPcctRepository>{
 	
 	public List<EstagioPCCT> getEstagiosOrProjeto(TipoServico tipo){
-		List<EstagioPCCT> estagiosPcct = this.list();
+		List<EstagioPCCT> estagiosPcct = this.listar();
 		
 		List<EstagioPCCT> result = estagiosPcct
 				.stream()

@@ -22,7 +22,7 @@ public class AtaService extends GenericService<Ata, AtaRepository>{
 	public Ata create(Ata ata, Banca banca) throws Exception {
 		ata.setBanca(banca);
 		
-		Ata createdAta = create(ata);
+		Ata createdAta = salvar(ata);
 		
 		return createdAta;
 	}

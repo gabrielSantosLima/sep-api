@@ -33,8 +33,8 @@ public abstract class Usuario {
 	@Column(nullable = false, name = "cpf")
 	private String cpf;
 
-	@Column(nullable = false, length = 200, name = "nome")
-	private String nome;
+	@Column(nullable = false, length = 200, name = "nome_completo")
+	private String nomeCompleto;
 
 	@Column(nullable = false, length = 100, name = "email")
 	private String email;

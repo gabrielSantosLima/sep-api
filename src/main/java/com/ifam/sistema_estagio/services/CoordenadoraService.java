@@ -31,4 +31,8 @@ public class CoordenadoraService extends GenericService<Coordenadora, Coordenado
 	public Optional<Coordenadora> findByUsername(String username) {
 		return repository.findByUsername(username);
 	}
+
+	public Optional<Coordenadora> findByNomeCompleto(String nomeCompleto) {
+		return repository.findByNomeCompleto(nomeCompleto);
+	}
 }

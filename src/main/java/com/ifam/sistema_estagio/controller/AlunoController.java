@@ -30,13 +30,13 @@ public class AlunoController {
 	private EstagioPcctService estagioService;
 
 	private Optional<EstagioPCCT> getEstagioPcctById(Integer id) {
-		return estagioService.findById(id);
+		return estagioService.encontrarPorId(id);
 	}
 
 	// List
 	@GetMapping(path = { "/", "" })
 	public List<Aluno> list() {
-		List<Aluno> alunos = service.list();
+		List<Aluno> alunos = service.listar();
 
 		return alunos;
 	}
@@ -53,7 +53,7 @@ public class AlunoController {
 
 			aluno.setEstagioPcct(estagioPcct.get());
 
-			Aluno createdAluno = service.create(aluno);
+			Aluno createdAluno = service.salvar(aluno);
 
 			return ResponseEntity.ok(createdAluno);
 		} catch (Exception e) {
@@ -77,7 +77,7 @@ public class AlunoController {
 				return ResponseEntity.badRequest().build();
 			}
 
-			service.update(idAluno, aluno);
+			service.atualizar(idAluno, aluno);
 
 			return ResponseEntity.ok(aluno);
 		} catch (Exception e) {
@@ -98,7 +98,7 @@ public class AlunoController {
 				return ResponseEntity.badRequest().build();
 			}
 			
-			service.delete(idAluno);
+			service.deletar(idAluno);
 
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
@@ -118,7 +118,7 @@ public class AlunoController {
 				return new Aluno();
 			}
 			
-			Optional<Aluno> foundAluno = service.findById(idAluno);
+			Optional<Aluno> foundAluno = service.encontrarPorId(idAluno);
 
 			if (!foundAluno.isPresent()) {
 				return new Aluno();

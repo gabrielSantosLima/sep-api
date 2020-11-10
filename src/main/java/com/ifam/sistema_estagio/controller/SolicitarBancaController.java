@@ -26,10 +26,7 @@ public class SolicitarBancaController {
 	}
 
 	@GetMapping("/confirmar-participacao/{idProcesso}/{idParticipante}")
-	public void confirmarParticipacao(
-			@PathVariable String idProcesso,
-			@PathVariable String idParticipante
-	){
+	public void confirmarParticipacao( @PathVariable String idProcesso,@PathVariable String idParticipante){
 		solicitarBancaProcess.confirmarParticipacao(idProcesso, idParticipante);
 	}
 

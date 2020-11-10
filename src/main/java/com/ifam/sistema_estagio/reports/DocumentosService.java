@@ -26,18 +26,28 @@ import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 @Service
 public class DocumentosService {
 
-	private static final String REPORTS_PATH = "/src/main/resources/reports/";
+	private static final String DIR_RELATORIOS = "/src/main/resources/reports/";
+	private static final String RELATORIO_CERTIFICADO = "certificado-banca";
+	private static final String RELATORIO_ATA_ESTAGIO = "ata-estagio";
+	private static final String RELATORIO_ATA_PROJETO = "ata-projeto";
+	private static final String RELATORIO_FICHA_ESTAGIO = "ficha-de-avaliacao-estagio";
+	private static final String RELATORIO_FICHA_PROJETO_CAPA = "ficha-de-avaliacao-projeto-capa";
+	private static final String RELATORIO_FICHA_PROJETO_RELATORIO = "ficha-de-avaliacao-projeto-relatorio";
+	private static final String RELATORIO_FICHA_PROJETO_DEFESA = "ficha-de-avaliacao-projeto-defesa";
+	private static final String IMAGEM_BRASAO = "brasaorepublica.png";
+	private static final String IMAGEM_CANTO = "imagem-canto.png";
+	private static final String IMAGEM_IFAM = "ifam.jpg";
 
-	private JasperReport loadTemplateAndCompile(String fileName) throws JRException {
-		InputStream jasperTemplate = DocumentosService.class.getResourceAsStream(REPORTS_PATH + fileName + ".jrxml");
+	private JasperReport carregarECompilarModelo(String fileName) throws JRException {
+		InputStream jasperTemplate = DocumentosService.class.getResourceAsStream(DIR_RELATORIOS + fileName + ".jrxml");
 
 		JasperReport report = JasperCompileManager.compileReport(jasperTemplate);
 
 		return report;
 	}
 
-	private String loadResource(String nameFile) {
-		String path = REPORTS_PATH + nameFile;
+	private String carregarRecursos(String nameFile) {
+		String path = DIR_RELATORIOS + nameFile;
 
 		File file = new File(path);
 
@@ -57,42 +67,43 @@ public class DocumentosService {
 		return JasperExportManager.exportReportToPdf(print);		
 	}
 
-	public byte[] generateCertificado(List<CertificadoFields> certificados)
+	public byte[] gerarCertificado(List<CertificadoFields> certificados)
 			throws JRException {
 
-		String image1 = loadResource("imagem-canto.png");
-		String image2 = loadResource("brasaorepublica.png");
-		String image3 = loadResource("ifam.jpg");
+		String image1 = carregarRecursos(IMAGEM_CANTO);
+		String image2 = carregarRecursos(IMAGEM_BRASAO);
+		String image3 = carregarRecursos(IMAGEM_IFAM);
 
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("image1", image1);
 		parameters.put("image2", image2);
 		parameters.put("image3", image3);
 
-		JasperReport report = loadTemplateAndCompile("certificado-banca");
+		JasperReport report = carregarECompilarModelo(RELATORIO_CERTIFICADO);
 
 		byte[] pdf = getPdf(getJasperPrint(report, parameters, certificados));
 
 		return pdf;
 	}
 
-	public byte[] generateFichaDeAvaliacaoEstagio(
+	public byte[] gerarFichaDeAvaliacaoEstagio(
 			List<FichaDeAvaliacaoEstagioFields> fichas) throws JRException {
 
-		JasperReport report = loadTemplateAndCompile("ficha-de-avaliacao-estagio");
+		JasperReport report = carregarECompilarModelo(RELATORIO_FICHA_ESTAGIO);
 
 		byte[] pdf = getPdf(getJasperPrint(report, null, fichas));
 
 		return pdf;
 	}
 
-	public byte[] generateFichaDeAvaliacaoProjeto(
+	public byte[] gerarFichaDeAvaliacaoProjeto(
 			List<FichaDeAvaliacaoProjetoRelatorioFields> relatorios,
 			List<FichaDeAvaliacaoProjetoDefesaFields> defesas,
-			List<FichaDeAvaliacaoProjetoCapaFields> capa) throws JRException {
-		JasperReport capaReport = loadTemplateAndCompile("ficha-de-avaliacao-projeto-capa");
-		JasperReport defesaReport = loadTemplateAndCompile("ficha-de-avaliacao-projeto-defesa");
-		JasperReport relatorioReport = loadTemplateAndCompile("ficha-de-avaliacao-projeto-relatorio");
+			List<FichaDeAvaliacaoProjetoCapaFields> capa
+	) throws JRException {
+		JasperReport capaReport = carregarECompilarModelo(RELATORIO_FICHA_PROJETO_CAPA);
+		JasperReport defesaReport = carregarECompilarModelo(RELATORIO_FICHA_PROJETO_DEFESA);
+		JasperReport relatorioReport = carregarECompilarModelo(RELATORIO_FICHA_PROJETO_RELATORIO);
 		
 		List<JasperPrint> prints = new ArrayList<>();
 		
@@ -112,16 +123,16 @@ public class DocumentosService {
 		return pdf;
 	}
 
-	public byte[] generateAtaEstagio(List<AtaEstagioFields> atas) throws JRException {
-		JasperReport report = loadTemplateAndCompile("ata-estagio");
+	public byte[] gerarAtaEstagio(List<AtaEstagioFields> atas) throws JRException {
+		JasperReport report = carregarECompilarModelo(RELATORIO_ATA_ESTAGIO);
 
 		byte[] pdf = getPdf(getJasperPrint(report, null, atas));
 
 		return pdf;
 	}
 
-	public byte[] generateAtaProjeto(List<AtaProjetoFields> atas) throws JRException {
-		JasperReport report = loadTemplateAndCompile("ata-projeto");
+	public byte[] gerarAtaProjeto(List<AtaProjetoFields> atas) throws JRException {
+		JasperReport report = carregarECompilarModelo(RELATORIO_ATA_PROJETO);
 
 		byte[] pdf = getPdf(getJasperPrint(report, null, atas));
 

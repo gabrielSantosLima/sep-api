@@ -1,14 +1,15 @@
 package com.ifam.sistema_estagio.reports.fields;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 public class FichaDeAvaliacaoEstagioFields {
-
 	private final String nota_conhecimentos;
 	private final String nota_organizacao;
 	private final String nota_atividades;
@@ -23,21 +24,4 @@ public class FichaDeAvaliacaoEstagioFields {
 	private final String nao_passou;
 	private final String data_emissao;
 	private final String funcao_avaliador;
-
-	public FichaDeAvaliacaoEstagioFields() {
-		this.nota_conhecimentos = " ";
-		this.nota_organizacao = " ";
-		this.nota_atividades = " ";
-		this.nota_apresentacao = " ";
-		this.soma = " ";
-		this.discente = " ";
-		this.curso = " ";
-		this.data_fim = " ";
-		this.funcao = " ";
-		this.avaliador = " ";
-		this.passou = " ";
-		this.nao_passou = " ";
-		this.data_emissao = " ";
-		this.funcao_avaliador = " ";
-	}
 }

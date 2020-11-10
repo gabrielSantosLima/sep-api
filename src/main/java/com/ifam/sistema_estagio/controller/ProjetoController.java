@@ -48,7 +48,7 @@ public class ProjetoController {
 	public ResponseEntity<EstagioPCCT> create(@RequestBody EstagioPCCT projeto) {
 
 		try {
-			Optional<Professor> professor = professorService.findById(projeto.getResponsavel().getId());
+			Optional<Professor> professor = professorService.encontrarPorId(projeto.getResponsavel().getId());
 			
 			if(!professor.isPresent()) {
 				return ResponseEntity.badRequest().build();				
@@ -56,7 +56,7 @@ public class ProjetoController {
 			
 			projeto.setResponsavel(professor.get());
 			
-			EstagioPCCT createdProjeto = service.create(projeto);
+			EstagioPCCT createdProjeto = service.salvar(projeto);
 
 			return ResponseEntity.ok(createdProjeto);
 		} catch (Exception e) {
@@ -74,7 +74,7 @@ public class ProjetoController {
 				return ResponseEntity.badRequest().build();
 			}
 
-			service.update(id, projeto);
+			service.atualizar(id, projeto);
 
 			return ResponseEntity.ok(projeto);
 		} catch (Exception e) {
@@ -89,7 +89,7 @@ public class ProjetoController {
 	public ResponseEntity<EstagioPCCT> delete(@PathVariable("id") Integer id) {
 
 		try {
-			service.delete(id);
+			service.deletar(id);
 
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
@@ -104,7 +104,7 @@ public class ProjetoController {
 	public ResponseEntity<EstagioPCCT> findById(@PathVariable("id") Integer id) {
 			
 		try {
-			Optional<EstagioPCCT> projeto = service.findById(id);
+			Optional<EstagioPCCT> projeto = service.encontrarPorId(id);
 			
 			if(!projeto.isPresent()) {
 				return ResponseEntity.badRequest().build();

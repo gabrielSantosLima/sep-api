@@ -31,7 +31,7 @@ public class AtaController {
 	private BancaService bancaService;
 
 	private Optional<Banca> getBancaById(Integer id) {
-		return bancaService.findById(id);
+		return bancaService.encontrarPorId(id);
 	}
 
 	// List all
@@ -77,7 +77,7 @@ public class AtaController {
 				return ResponseEntity.badRequest().build();
 			}
 
-			Ata updatedAta = service.update(idAta, ata);
+			Ata updatedAta = service.atualizar(idAta, ata);
 
 			return ResponseEntity.ok(updatedAta);
 		} catch (Exception e) {
@@ -93,7 +93,7 @@ public class AtaController {
 			@PathVariable("idAta") Integer idAta) {
 
 		try {
-			service.delete(idAta);
+			service.deletar(idAta);
 
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
@@ -114,7 +114,7 @@ public class AtaController {
 				return new Ata();
 			}
 
-			Ata ata = service.findById(idAta).get();
+			Ata ata = service.encontrarPorId(idAta).get();
 
 			if (id == ata.getBanca().getId()) {
 				return new Ata();

@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.ifam.sistema_estagio.entity.Funcao;
@@ -15,7 +16,7 @@ import com.ifam.sistema_estagio.repository.FuncaoRepository;
 import com.ifam.sistema_estagio.repository.PapelRepository;
 
 @Component
-@SuppressWarnings("unused")
+@Order(1)
 public class CarregarPapeisFuncoes implements ApplicationRunner{
 
 	@Autowired
@@ -26,26 +27,27 @@ public class CarregarPapeisFuncoes implements ApplicationRunner{
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+
 	}
 	
 	private Funcao criarFuncaoSeNaoExiste(String nome) {
-		Optional<Funcao> auth = funcaoRepository.findByNome(nome);
+		Optional<Funcao> funcao = funcaoRepository.findByNome(nome);
 	
-		if(auth.isPresent()) {
-			return auth.get();
+		if(funcao.isPresent()) {
+			return funcao.get();
 		}
 		
 		return funcaoRepository.save(new Funcao(nome));
 	}
 
-	private Papel criarPapelSeNaoExiste(String nome, List<Funcao> Funcao) {
-		Optional<Papel> Papel = papelRepository.findByNome(nome);
+	private Papel criarPapelSeNaoExiste(String nome, List<Funcao> funcao) {
+		Optional<Papel> papel = papelRepository.findByNome(nome);
 		
-		if(Papel.isPresent()) {
-			return Papel.get();
+		if(papel.isPresent()) {
+			return papel.get();
 		}
 		
-		return papelRepository.save(new Papel(nome, Funcao));
+		return papelRepository.save(new Papel(nome, funcao));
 	}
 
 }

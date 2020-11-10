@@ -53,62 +53,39 @@ public class SolicitarBancaProcess {
 
 	@Transactional
 	public void confirmarParticipacao(String idProcesso, String idParticipante){
-		List<String> participanteConfirmados = (List<String>) retornarVariavel(idProcesso,VAR_PARTICIPANTES_CONFIRMADOS);
+		List<String> participantesConfirmados = (List<String>) retornarVariavel(idProcesso,VAR_PARTICIPANTES_CONFIRMADOS);
 		Integer totalParticipantes = (Integer) retornarVariavel(idProcesso,VAR_TOTAL_PARTICIPANTES);
-		boolean jaConfirmado = participanteConfirmados.contains(idParticipante);
+		boolean jaConfirmado = participantesConfirmados.contains(idParticipante);
 
 		if(jaConfirmado) return;
 
-		participanteConfirmados.add(idParticipante);
+		participantesConfirmados.add(idParticipante);
 
-		mudarVariavel(idProcesso,VAR_PARTICIPANTES_CONFIRMADOS,participanteConfirmados);
-		mudarVariavel(idProcesso,VAR_TOTAL_PARTICIPANTES,participanteConfirmados.size());
+		mudarVariavel(idProcesso, VAR_PARTICIPANTES_CONFIRMADOS, participantesConfirmados);
+		mudarVariavel(idProcesso, VAR_TOTAL_PARTICIPANTES, participantesConfirmados.size());
 
-		if(totalParticipantes == participanteConfirmados.size()){
+		if(totalParticipantes == participantesConfirmados.size()){
 			removerVariable(idProcesso, VAR_PARTICIPANTES_CONFIRMADOS);
 			mudarVariavel(idProcesso, VAR_CONFIRMADO, true);
-			enviarMensagem(NOME_MENSAGEM_CONFIRMAR_PARTICIPACAO);
-			return;
+			enviarMensagem(NOME_MENSAGEM_CONFIRMAR_PARTICIPACAO, idProcesso);
 		}
 	}
 
 	@Transactional
-	public void verificarAprovacaoBanca(String idProcesso,RespostaAprovacaoBancaDto resposta) throws Exception {
-		Boolean naoFoiAprovado = !resposta.getAprovaBanca();
-
-		if(naoFoiAprovado){
-			negarBanca(idProcesso);
-			return;
-		}
-
-		BancaDto banca = (BancaDto) retornarVariavel(idProcesso, VAR_BANCA);
-		try{
-			aprovarBanca(idProcesso, banca);
-		}catch(Exception e){
-			throw new Exception(e);
-		}
+	public void verificarAprovacaoBanca(String idProcesso,RespostaAprovacaoBancaDto resposta){
+		Boolean foiAprovado = resposta.getAprovaBanca();
+		enviarResultadoBanca(idProcesso, foiAprovado);
 	}
 
-	@Transactional
-	private void aprovarBanca(String idProcesso, BancaDto bancaDto) throws Exception {
-		try{
-			bancaService.create(bancaDto);
-		}catch (Exception e){
-			throw new Exception(e);
-		}
-		mudarVariavel(idProcesso, VAR_APROVADO, true);
-		enviarMensagem(NOME_MENSAGEM_APROVAR_BANCA);
+	private void enviarResultadoBanca(String idProcesso, Boolean foiAprovado){
+		mudarVariavel(idProcesso, VAR_APROVADO, foiAprovado);
+		enviarMensagem(NOME_MENSAGEM_APROVAR_BANCA, idProcesso);
 	}
 
-	@Transactional
-	private void negarBanca(String idProcesso){
-		mudarVariavel(idProcesso, VAR_APROVADO, false);
-		enviarMensagem(NOME_MENSAGEM_APROVAR_BANCA);
-	}
-
-	private void enviarMensagem(String nomeMensagem){
+	private void enviarMensagem(String nomeMensagem, String idProcesso){
 		runtimeService.createMessageCorrelation(nomeMensagem)
-				.correlate();
+			.processDefinitionId(idProcesso)
+			.correlate();
 	}
 
 	private void mudarVariavel(String idProcesso, String nome, Object valor){
