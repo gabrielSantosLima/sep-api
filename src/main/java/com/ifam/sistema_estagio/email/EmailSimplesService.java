@@ -1,4 +1,4 @@
-package com.ifam.sistema_estagio.services.email;
+package com.ifam.sistema_estagio.email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ifam.sistema_estagio.dto.EmailSimplesDto;
 
 @Service
-public class EmailTextoService implements IEmailService{
+public class EmailSimplesService implements IEmailService{
 
 	@Autowired
 	private JavaMailSender emailSender;

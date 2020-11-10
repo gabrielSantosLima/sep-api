@@ -35,7 +35,11 @@ public class Coordenadora extends Usuario implements UsuarioLogavel{
 	@OneToMany(mappedBy = "coordenadora")
 	private List<Banca> bancas;
 
+	@OneToMany(mappedBy = "coordenadora")
+	private List<NoticacaoBancas> noticacaoBancas;
+
 	@ManyToOne
 	@JoinColumn(name = "papel_id")
 	private Papel papel;
+
 }

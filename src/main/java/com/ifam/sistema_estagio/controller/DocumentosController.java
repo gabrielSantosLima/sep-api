@@ -28,99 +28,58 @@ public class DocumentosController {
 	@Autowired
 	private DocumentosService service;
 
-	@GetMapping(path = "/certificado/{idBanca}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] gerarCerticados(@PathVariable Integer idBanca) {
+	@GetMapping(path = "/certificado/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] gerarCerticados(@PathVariable Integer id) {
+		byte pdf[] = null;
 		try {
-
-			// Exporta pdf
-			byte[] pdf = service.generateCertificado(new ArrayList<CertificadoFields>());
-
-			return pdf;
+			pdf = service.gerarCertificado(new ArrayList<CertificadoFields>());
 		} catch (Exception e) {
 			e.printStackTrace();
-
-			return null;
 		}
+		return pdf;
 	}
 
-	@GetMapping(path = "/professor/{id}/ficha-estagio/{idFicha}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] gerarFichaDeAvaliacaoEstagio(@PathVariable("id") Integer id,
-			@PathVariable("idFicha") Integer idFicha) {
+	@GetMapping(path = "/ficha-estagio/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] gerarFichaDeAvaliacaoEstagio(@PathVariable("id") Integer id) {
+		byte pdf[] = null;
 		try {
-			List<FichaDeAvaliacaoEstagioFields> fichas = new ArrayList<>();
-			fichas.add(new FichaDeAvaliacaoEstagioFields());
-			fichas.add(new FichaDeAvaliacaoEstagioFields());
-			fichas.add(new FichaDeAvaliacaoEstagioFields());
-
-			byte[] pdf = service.generateFichaDeAvaliacaoEstagio(fichas);
-
-			return pdf;
+			pdf = service.gerarFichaDeAvaliacaoEstagio(null); // TODO Buscar por ficha de estágio
 		} catch (JRException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return pdf;
 	}
 
-	@GetMapping(path = "/professor/{id}/ficha-projeto/{idFicha}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] gerarFichaDeAvaliacaoProjeto(@PathVariable("id") Integer id,
-			@PathVariable("idFicha") Integer idFicha) {
+	@GetMapping(path = "/ficha-projeto/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] gerarFichaDeAvaliacaoProjeto(@PathVariable("id") Integer id) {
+		byte pdf[] = null;
 		try {
-			List<FichaDeAvaliacaoProjetoCapaFields> capas = new ArrayList<>();
-			capas.add(new FichaDeAvaliacaoProjetoCapaFields());
-
-			List<FichaDeAvaliacaoProjetoRelatorioFields> relatorios = new ArrayList<>();
-			relatorios.add(new FichaDeAvaliacaoProjetoRelatorioFields());
-			relatorios.add(new FichaDeAvaliacaoProjetoRelatorioFields());
-			relatorios.add(new FichaDeAvaliacaoProjetoRelatorioFields());
-
-			List<FichaDeAvaliacaoProjetoDefesaFields> defesas = new ArrayList<>();
-			defesas.add(new FichaDeAvaliacaoProjetoDefesaFields());
-			defesas.add(new FichaDeAvaliacaoProjetoDefesaFields());
-			defesas.add(new FichaDeAvaliacaoProjetoDefesaFields());
-
-			byte[] pdf = service.generateFichaDeAvaliacaoProjeto(relatorios, defesas,
-					capas);
-
-			return pdf;
+			pdf = service.gerarFichaDeAvaliacaoProjeto(null, null, null);
 		} catch (JRException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return pdf;
 	}
 
-	@GetMapping(path = "/banca/{id}/ata-estagio/{idAta}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] geraAtaEstagio(@PathVariable("id") Integer id,
-			@PathVariable("idAta") Integer idAta) {
+	@GetMapping(path = "/ata-estagio/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] geraAtaEstagio(@PathVariable("id") Integer id) {
+		byte pdf[] = null;
 		try {
-			List<AtaEstagioFields> atas = new ArrayList<>();
-			atas.add(new AtaEstagioFields());
-			atas.add(new AtaEstagioFields());
-			atas.add(new AtaEstagioFields());
-
-			byte[] pdf = service.generateAtaEstagio(atas);
-
-			return pdf;
+			pdf = service.gerarAtaEstagio(null);
 		} catch (JRException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return pdf;
 	}
 
-	@GetMapping(path = "/banca/{id}/ata-projeto/{idAta}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] geraAtaProjeto(@PathVariable("id") Integer id,
-			@PathVariable("idAta") Integer idAta) {
+	@GetMapping(path = "/ata-projeto/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] geraAtaProjeto(@PathVariable("id") Integer id) {
+		byte pdf[] = null;
 		try {
-			List<AtaProjetoFields> atas = new ArrayList<>();
-			atas.add(new AtaProjetoFields());
-			atas.add(new AtaProjetoFields());
-			atas.add(new AtaProjetoFields());
-
-			byte[] pdf = service.generateAtaProjeto(atas);
-
-			return pdf;
+			pdf = service.gerarAtaProjeto(null);
 		} catch (JRException e) {
 			e.printStackTrace();
-			return null;
 		}
+		return pdf;
 	}
 }

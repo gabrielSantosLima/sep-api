@@ -59,7 +59,7 @@ public class AvaliadoresController {
 	public ResponseEntity<Avaliadores> delete(@PathVariable("id") Integer idBanca,
 			@PathVariable("idAvaliador") Integer idAvaliador) {
 		try {
-			service.delete(idAvaliador);
+			service.deletar(idAvaliador);
 
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {

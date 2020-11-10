@@ -45,7 +45,7 @@ public class EstagioController {
 	public ResponseEntity<EstagioPCCT> create(@RequestBody EstagioPCCT estagio) {
 
 		try {
-			EstagioPCCT createdEstagio = service.create(estagio);
+			EstagioPCCT createdEstagio = service.salvar(estagio);
 
 			return ResponseEntity.ok(createdEstagio);
 		} catch (Exception e) {
@@ -65,7 +65,7 @@ public class EstagioController {
 				return ResponseEntity.badRequest().build();
 			}
 
-			service.update(id, estagio);
+			service.atualizar(id, estagio);
 
 			return ResponseEntity.ok(estagio);
 		} catch (Exception e) {
@@ -81,7 +81,7 @@ public class EstagioController {
 	public ResponseEntity<EstagioPCCT> delete(@PathVariable("id") Integer id) {
 
 		try {
-			service.delete(id);
+			service.deletar(id);
 
 			return ResponseEntity.ok().build();
 		} catch (Exception e) {
@@ -95,7 +95,7 @@ public class EstagioController {
 	@GetMapping("/{id}")
 	public ResponseEntity<EstagioPCCT> findById(@PathVariable("id") Integer id) {
 		try {
-			Optional<EstagioPCCT> estagio = service.findById(id);
+			Optional<EstagioPCCT> estagio = service.encontrarPorId(id);
 			
 			if(!estagio.isPresent()) {
 				return ResponseEntity.badRequest().build();

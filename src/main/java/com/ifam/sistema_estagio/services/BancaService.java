@@ -26,8 +26,7 @@ public class BancaService extends GenericService<Banca, BancaRepository> {
 		return repository.findByEstagioPcct(estagioPcct);
 	}
 
-	@Transactional
-	public Banca create(BancaDto banca){
-		return new Banca();
+	public Banca salvar(BancaDto banca) throws Exception {
+		return null;
 	}
 }

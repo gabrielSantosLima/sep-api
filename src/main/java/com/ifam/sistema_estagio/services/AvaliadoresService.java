@@ -24,7 +24,7 @@ public class AvaliadoresService extends GenericService<Avaliadores, AvaliadoresR
 	private ProfessorService professorService;
 	
 	private Optional<Banca> getBancaById(Integer id) {
-		return bancaService.findById(id);
+		return bancaService.encontrarPorId(id);
 	}
 	
 	public List<Avaliadores> findByBancaId(Integer idBanca) throws Exception{
@@ -39,13 +39,13 @@ public class AvaliadoresService extends GenericService<Avaliadores, AvaliadoresR
 	
 	public Avaliadores createByIds(Integer idProfessor, Integer idBanca) throws Exception {
 		Optional<Banca> banca = getBancaById(idBanca);
-		Optional<Professor> professor = professorService.findById(idProfessor);
+		Optional<Professor> professor = professorService.encontrarPorId(idProfessor);
 		
 		if(!banca.isPresent() || !professor.isPresent()) {
 			throw new Exception("[avaliadores-service] Id inválido");
 		}
 		
-		Avaliadores createdAvaliador = this.create(new Avaliadores(
+		Avaliadores createdAvaliador = this.salvar(new Avaliadores(
 				professor.get(), 
 				banca.get())
 		);

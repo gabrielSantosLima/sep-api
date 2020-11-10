@@ -1,15 +1,12 @@
 package com.ifam.sistema_estagio.reports.fields;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@Builder
 public class AtaEstagioFields{
-
 	private String titulo;
 	private String media;
 	private String horaFinalizado;
@@ -22,19 +19,4 @@ public class AtaEstagioFields{
 	private String curso;
 	private String presidente;
 	private String mensagemChefe;
-
-	public AtaEstagioFields() {
-		this.titulo= " ";
-		this.media= " ";
-		this.horaFinalizado= " ";
-		this.data= " ";
-		this.coordenadora= " ";
-		this.mensagem= " ";
-		this.membro_1= " ";
-		this.membro_2= " ";
-		this.aluno= " ";
-		this.curso= " ";
-		this.presidente= " ";
-		this.mensagemChefe= " ";
-	}
 }

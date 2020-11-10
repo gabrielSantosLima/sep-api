@@ -4,7 +4,7 @@ import com.ifam.sistema_estagio.dto.BancaDto;
 import com.ifam.sistema_estagio.dto.EmailSimplesDto;
 import com.ifam.sistema_estagio.dto.UsuarioDto;
 import com.ifam.sistema_estagio.processes.SolicitarBancaProcess;
-import com.ifam.sistema_estagio.services.email.EmailTextoService;
+import com.ifam.sistema_estagio.email.EmailSimplesService;
 import com.ifam.sistema_estagio.util.FormatarData;
 import com.ifam.sistema_estagio.util.enums.Aplicacao;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
@@ -24,7 +24,7 @@ public class EnviarEmailDelegate implements JavaDelegate{
 	private final String NOME_SEM_AUTOR = "Sem definição";
 
 	@Autowired
-	private EmailTextoService emailService;
+	private EmailSimplesService emailService;
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
@@ -37,11 +37,11 @@ public class EnviarEmailDelegate implements JavaDelegate{
 				.findFirst();
 
 		String nomeAutor = autor.isPresent() ? autor.get().getNome() : NOME_SEM_AUTOR;
-		String dataFormatada = FormatarData.porMascaraPadraoData(banca.getData());
-		String horaFormatada = FormatarData.porMascaraPadraoHora(banca.getHoraInicio());
+		String dataFormatada = FormatarData.porMascaraDataPadrao(banca.getData());
+		String horaFormatada = FormatarData.porMascaraHoraPadrao(banca.getHoraInicio());
 		String tipo = banca.getTipo().getValor().toLowerCase();
 		String curso = banca.getCurso().getNomeCurso().toLowerCase();
-		String titulo = banca.getTitulo();
+		String titulo = banca.getEstagioPCCTDto().getTitulo();
 
 		participantes.forEach(participante -> {
 			enviarEmail(

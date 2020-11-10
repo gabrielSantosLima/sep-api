@@ -29,7 +29,7 @@ public class FichaDeAvaliacaoEstagioController {
 	private AtaService ataService;
 	
 	private Ata getAtaById(Integer id) {
-		return ataService.findById(id).get();
+		return ataService.encontrarPorId(id).get();
 	}
 	
 	@GetMapping(value = "/", consumes = "application/json", produces = "application/json")
@@ -51,7 +51,7 @@ public class FichaDeAvaliacaoEstagioController {
 		
 			ficha.setAta(ata);
 			
-			FichaDeAvaliacaoEstagio createdFicha = service.create(ficha);
+			FichaDeAvaliacaoEstagio createdFicha = service.salvar(ficha);
 			
 			return ResponseEntity.ok(createdFicha);
 		}catch(Exception e) {
@@ -70,7 +70,7 @@ public class FichaDeAvaliacaoEstagioController {
 				return ResponseEntity.badRequest().build();
 			}
 		
-			FichaDeAvaliacaoEstagio updatedFicha = service.update(idFicha, ficha);
+			FichaDeAvaliacaoEstagio updatedFicha = service.atualizar(idFicha, ficha);
 			
 			return ResponseEntity.ok(updatedFicha);
 		}catch(Exception e) {
@@ -84,13 +84,13 @@ public class FichaDeAvaliacaoEstagioController {
 		try{
 		
 			Ata ata = getAtaById(id);
-			FichaDeAvaliacaoEstagio ficha = service.findById(idFicha).get();
+			FichaDeAvaliacaoEstagio ficha = service.encontrarPorId(idFicha).get();
 		
 			if(!ficha.getAta().equals(ata)) {
 				return ResponseEntity.badRequest().build();
 			}
 		
-			service.delete(idFicha);
+			service.deletar(idFicha);
 			
 			return ResponseEntity.ok().build();
 		}catch(Exception e) {
