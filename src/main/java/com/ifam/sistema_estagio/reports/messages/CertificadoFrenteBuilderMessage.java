@@ -17,9 +17,9 @@ public class CertificadoFrenteBuilderMessage implements IBuilderMessage<List<Fre
     @Override
     public List<FrenteCertificadoFields> retornarMensagem(BancaDto o) {
         List<FrenteCertificadoFields> certificados = new ArrayList<>();
-        String autores = retornarNomeDiscentes(o);
-        String data = retornarData(o.getData());
-        String titulo = o.getEstagioPCCT().getTitulo();
+        String autores = Utils.retornarNomeDiscentes(o);
+        String data = Utils.retornarDataPadraoNomeCidade(o);
+        String titulo = Utils.retornarTitulo(o);
         String participantes = retornarNomeAvaliadores(o);
 
         o.getParticipantes().forEach(participante -> {
@@ -38,14 +38,14 @@ public class CertificadoFrenteBuilderMessage implements IBuilderMessage<List<Fre
     @Override
     public List<FrenteCertificadoFields> retornarMensagemParaPreencher(BancaDto o) {
         List<FrenteCertificadoFields> certificados = new ArrayList<>();
-        String autores = retornarNomeDiscentes(o);
-        String titulo = o.getEstagioPCCT().getTitulo();
+        String autores = Utils.retornarNomeDiscentes(o);
+        String titulo = Utils.retornarTitulo(o);
         String participantes = retornarNomeAvaliadores(o);
 
         o.getParticipantes().forEach(participante -> {
             certificados.add(FrenteCertificadoFields.builder()
                     .autores(autores)
-                    .data(" ")
+                    .data(CAMPO_VAZIO)
                     .titulo(titulo)
                     .participantes(participantes)
                     .build()
@@ -53,25 +53,6 @@ public class CertificadoFrenteBuilderMessage implements IBuilderMessage<List<Fre
         });
 
         return certificados;
-    }
-
-    private String retornarNomeDiscentes(BancaDto o){
-        String nomeDiscentes = "";
-        List<UsuarioDto> discentes = o.getParticipantes()
-                .stream()
-                .filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
-                .collect(Collectors.toList());
-
-        for(UsuarioDto discente: discentes) {
-            Boolean naeEUltimo = discentes.indexOf(discente) != discentes.size() - 1;
-            if(naeEUltimo){
-                nomeDiscentes += discente.getNome() + ",";
-                continue;
-            }
-            nomeDiscentes += discente.getNome();
-        };
-
-        return nomeDiscentes;
     }
 
     private String retornarNomeAvaliadores(BancaDto o){
@@ -86,10 +67,5 @@ public class CertificadoFrenteBuilderMessage implements IBuilderMessage<List<Fre
         };
 
         return nomeAvaliadores;
-    }
-
-    private String retornarData(Date data){
-        String dataFormatada = FormatarData.porMascaraDataPadraoNomeCidade(data);
-        return "Manaus(AM), "+ dataFormatada;
     }
 }

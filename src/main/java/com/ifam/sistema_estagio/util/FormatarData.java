@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FormatarData {
-    private static final String MASCARA_DATA_PADRAO_NOME_CIDADE = "dd 'de' MMMM 'de' yyyy";
+    private static final String MASCARA_DATA_PADRAO_NOME_CIDADE = "'Manaus(AM),' dd 'de' MMMM 'de' yyyy";
     private static final String MASCARA_DATA_PADRAO = "dd/MM/yyyy";
     private static final String MASCARA_HORA_PADRAO = "hh:mm";
 

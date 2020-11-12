@@ -19,40 +19,44 @@ public class FichaProjetoDefesaBuilderMessage implements IBuilderMessage<List<Fi
     public List<FichaDeAvaliacaoProjetoDefesaFields> retornarMensagem(BancaDto o) {
         List<FichaDeAvaliacaoProjetoDefesaFields> fichas = new ArrayList<>();
 
-        String autor = retornarNomeDiscentes(o);
-        String titulo = o.getEstagioPCCT().getTitulo();
-        String data = retornarData(o.getData());
+        String autor = Utils.retornarNomeDiscentes(o);
+        String titulo = Utils.retornarTitulo(o);
+        String data = Utils.retornarDataPadraoNomeCidade(o);
 
         o.getAta().getFichasDeProjeto().forEach(ficha -> {
-            String funcaoAvaliador = retornarFuncaoAvaliador(ficha.getAvaliador());
+            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
             String nomeAvaliador = ficha.getAvaliador().getNome();
 
-            Double nota_qualidade = ficha.getNotaSlide();
-            Double nota_conhecimento = ficha.getNotaAssunto();
-            Double nota_clareza = ficha.getNotaClareza();
-            Double nota_linguagem = ficha.getNotaLinguagem();
-            Double nota_tempo = ficha.getNotaTempo();
-            Double nota_resposta = ficha.getNotaRespostas();
+            Double notaQualidade = ficha.getNotaSlide();
+            Double notaConhecimento = ficha.getNotaAssunto();
+            Double notaClareza = ficha.getNotaClareza();
+            Double notaLinguagem = ficha.getNotaLinguagem();
+            Double notaTempo = ficha.getNotaTempo();
+            Double notaResposta = ficha.getNotaRespostas();
 
-            Double media = nota_clareza + nota_qualidade + nota_conhecimento + nota_linguagem + nota_tempo + nota_resposta;
+            Double soma = notaQualidade +
+                    notaConhecimento +
+                    notaClareza +
+                    notaLinguagem +
+                    notaTempo +
+                    notaResposta;
 
             fichas.add(FichaDeAvaliacaoProjetoDefesaFields.builder()
                     .autor(autor)
+                    .data(data)
+                    .titulo(titulo)
                     .avaliador(nomeAvaliador)
                     .funcao_avaliador(funcaoAvaliador)
-                    .data(data)
-                    .nota_clareza(nota_clareza.toString())
-                    .nota_conhecimento(nota_conhecimento.toString())
-                    .nota_linguagem(nota_linguagem.toString())
-                    .nota_qualidade(nota_qualidade.toString())
-                    .nota_resposta(nota_resposta.toString())
-                    .nota_tempo(nota_tempo.toString())
-                    .titulo(titulo)
-                    .total(media.toString())
+                    .nota_qualidade(notaQualidade.toString())
+                    .nota_conhecimento(notaConhecimento.toString())
+                    .nota_clareza(notaClareza.toString())
+                    .nota_linguagem(notaLinguagem.toString())
+                    .nota_tempo(notaTempo.toString())
+                    .nota_resposta(notaResposta.toString())
+                    .total(soma.toString())
                     .build()
             );
         });
-
         return fichas;
     }
 
@@ -60,12 +64,12 @@ public class FichaProjetoDefesaBuilderMessage implements IBuilderMessage<List<Fi
     public List<FichaDeAvaliacaoProjetoDefesaFields> retornarMensagemParaPreencher(BancaDto o) {
         List<FichaDeAvaliacaoProjetoDefesaFields> fichas = new ArrayList<>();
 
-        String autor = retornarNomeDiscentes(o);
-        String titulo = o.getEstagioPCCT().getTitulo();
-        String data = retornarData(o.getData());
+        String autor = Utils.retornarNomeDiscentes(o);
+        String titulo = Utils.retornarTitulo(o);
+        String data = Utils.retornarDataPadraoNomeCidade(o);
 
         o.getAta().getFichasDeProjeto().forEach(ficha -> {
-            String funcaoAvaliador = retornarFuncaoAvaliador(ficha.getAvaliador());
+            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
             String nomeAvaliador = ficha.getAvaliador().getNome();
 
             fichas.add(FichaDeAvaliacaoProjetoDefesaFields.builder()
@@ -73,47 +77,17 @@ public class FichaProjetoDefesaBuilderMessage implements IBuilderMessage<List<Fi
                     .avaliador(nomeAvaliador)
                     .funcao_avaliador(funcaoAvaliador)
                     .data(data)
-                    .nota_clareza(" ")
-                    .nota_conhecimento(" ")
-                    .nota_linguagem(" ")
-                    .nota_qualidade(" ")
-                    .nota_resposta(" ")
-                    .nota_tempo(" ")
+                    .nota_clareza(CAMPO_VAZIO)
+                    .nota_conhecimento(CAMPO_VAZIO)
+                    .nota_linguagem(CAMPO_VAZIO)
+                    .nota_qualidade(CAMPO_VAZIO)
+                    .nota_resposta(CAMPO_VAZIO)
+                    .nota_tempo(CAMPO_VAZIO)
                     .titulo(titulo)
-                    .total(" ")
+                    .total(CAMPO_VAZIO)
                     .build()
             );
         });
-
         return fichas;
-    }
-
-    private String retornarNomeDiscentes(BancaDto o){
-        String nomeDiscentes = "";
-
-        List<UsuarioDto> discentes = o.getParticipantes()
-                .stream()
-                .filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
-                .collect(Collectors.toList());
-
-        for(UsuarioDto discente: discentes) {
-            Boolean naeEUltimo = discentes.indexOf(discente) != discentes.size() - 1;
-            if(naeEUltimo){
-                nomeDiscentes += discente.getNome() + ",";
-                continue;
-            }
-            nomeDiscentes += discente.getNome();
-        };
-
-        return nomeDiscentes;
-    }
-
-    private String retornarFuncaoAvaliador(UsuarioDto usuario){
-        return usuario.getFuncao().name().toLowerCase();
-    }
-
-    private String retornarData(Date data){
-        String dataFormatada = FormatarData.porMascaraDataPadraoNomeCidade(data);
-        return "Manaus(AM), "+ dataFormatada;
     }
 }

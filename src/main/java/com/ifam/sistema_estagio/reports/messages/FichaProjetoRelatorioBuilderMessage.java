@@ -1,16 +1,10 @@
 package com.ifam.sistema_estagio.reports.messages;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
-import com.ifam.sistema_estagio.dto.UsuarioDto;
-import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoProjetoDefesaFields;
 import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoProjetoRelatorioFields;
-import com.ifam.sistema_estagio.util.FormatarData;
-import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FichaProjetoRelatorioBuilderMessage implements IBuilderMessage<List<FichaDeAvaliacaoProjetoRelatorioFields>, BancaDto> {
 
@@ -18,12 +12,12 @@ public class FichaProjetoRelatorioBuilderMessage implements IBuilderMessage<List
     public List<FichaDeAvaliacaoProjetoRelatorioFields> retornarMensagem(BancaDto o) {
         List<FichaDeAvaliacaoProjetoRelatorioFields> fichas = new ArrayList<>();
 
-        String autor = retornarNomeDiscentes(o);
-        String titulo = o.getEstagioPCCT().getTitulo();
-        String data = retornarData(o.getData());
+        String autor = Utils.retornarNomeDiscentes(o);
+        String titulo = Utils.retornarTitulo(o);
+        String data = Utils.retornarDataPadraoNomeCidade(o);
 
         o.getAta().getFichasDeProjeto().forEach(ficha -> {
-            String funcaoAvaliador = retornarFuncaoAvaliador(ficha.getAvaliador());
+            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
             String nomeAvaliador = ficha.getAvaliador().getNome();
 
             Double notaApresentacao = ficha.getNotaApresentacao();
@@ -34,7 +28,13 @@ public class FichaProjetoRelatorioBuilderMessage implements IBuilderMessage<List
             Double notaDiagramas = ficha.getNotaDiagramas();
             Double notaResultados = ficha.getNotaResultados();
 
-            Double media = notaApresentacao + notaABNT + notaMetodologia + notaConteudo + notaFund + notaDiagramas + notaResultados;
+            Double media = notaApresentacao +
+                    notaABNT +
+                    notaMetodologia +
+                    notaConteudo +
+                    notaFund +
+                    notaDiagramas +
+                    notaResultados;
 
             fichas.add(FichaDeAvaliacaoProjetoRelatorioFields.builder()
                     .autor(autor)
@@ -53,7 +53,6 @@ public class FichaProjetoRelatorioBuilderMessage implements IBuilderMessage<List
                     .build()
             );
         });
-
         return fichas;
     }
 
@@ -61,12 +60,12 @@ public class FichaProjetoRelatorioBuilderMessage implements IBuilderMessage<List
     public List<FichaDeAvaliacaoProjetoRelatorioFields> retornarMensagemParaPreencher(BancaDto o) {
         List<FichaDeAvaliacaoProjetoRelatorioFields> fichas = new ArrayList<>();
 
-        String autor = retornarNomeDiscentes(o);
-        String titulo = o.getEstagioPCCT().getTitulo();
-        String data = retornarData(o.getData());
+        String autor = Utils.retornarNomeDiscentes(o);
+        String titulo = Utils.retornarTitulo(o);
+        String data = Utils.retornarDataPadraoNomeCidade(o);
 
         o.getAta().getFichasDeProjeto().forEach(ficha -> {
-            String funcaoAvaliador = retornarFuncaoAvaliador(ficha.getAvaliador());
+            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
             String nomeAvaliador = ficha.getAvaliador().getNome();
 
             fichas.add(FichaDeAvaliacaoProjetoRelatorioFields.builder()
@@ -75,47 +74,17 @@ public class FichaProjetoRelatorioBuilderMessage implements IBuilderMessage<List
                     .funcao_avaliador(funcaoAvaliador)
                     .data(data)
                     .titulo(titulo)
-                    .nota_abnt(" ")
-                    .nota_apresentacao(" ")
-                    .nota_documentacao(" ")
-                    .nota_fundamentacao(" ")
-                    .nota_metodologia(" ")
-                    .nota_qualidade(" ")
-                    .nota_resultados(" ")
-                    .total(" ")
+                    .nota_abnt(CAMPO_VAZIO)
+                    .nota_apresentacao(CAMPO_VAZIO)
+                    .nota_documentacao(CAMPO_VAZIO)
+                    .nota_fundamentacao(CAMPO_VAZIO)
+                    .nota_metodologia(CAMPO_VAZIO)
+                    .nota_qualidade(CAMPO_VAZIO)
+                    .nota_resultados(CAMPO_VAZIO)
+                    .total(CAMPO_VAZIO)
                     .build()
             );
         });
-
         return fichas;
-    }
-
-    private String retornarNomeDiscentes(BancaDto o){
-        String nomeDiscentes = "";
-
-        List<UsuarioDto> discentes = o.getParticipantes()
-                .stream()
-                .filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
-                .collect(Collectors.toList());
-
-        for(UsuarioDto discente: discentes) {
-            Boolean naeEUltimo = discentes.indexOf(discente) != discentes.size() - 1;
-            if(naeEUltimo){
-                nomeDiscentes += discente.getNome() + ",";
-                continue;
-            }
-            nomeDiscentes += discente.getNome();
-        };
-
-        return nomeDiscentes;
-    }
-
-    private String retornarFuncaoAvaliador(UsuarioDto usuario){
-        return usuario.getFuncao().name().toLowerCase();
-    }
-
-    private String retornarData(Date data){
-        String dataFormatada = FormatarData.porMascaraDataPadraoNomeCidade(data);
-        return "Manaus(AM), "+ dataFormatada;
     }
 }
