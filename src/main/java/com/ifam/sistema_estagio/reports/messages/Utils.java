@@ -51,4 +51,64 @@ public class Utils {
     public static String retornarTipoBanca(BancaDto o){
         return o.getEstagioPCCT().getTipo().getValor();
     }
+
+    public static List<UsuarioDto> retornarAvaliadores(BancaDto o){
+        return o.getParticipantes()
+                .stream()
+                .filter(participante -> participante.getFuncao() != FuncaoEstagio.DISCENTE)
+                .collect(Collectors.toList());
+    }
+    public static UsuarioDto retornarOrientador(BancaDto o){
+        return o.getParticipantes()
+                .stream()
+                .filter(participante -> participante.getFuncao() == FuncaoEstagio.ORIENTADOR)
+                .findFirst()
+                .get();
+    }
+
+    public static UsuarioDto retornarCoordenador(BancaDto o){
+        return o.getParticipantes()
+                .stream()
+                .filter(participante -> participante.getFuncao() == FuncaoEstagio.COORDENADOR)
+                .findFirst()
+                .get();
+    }
+
+    public static String retornarNomeAvaliadoresComQuebraDeLinha(BancaDto o){
+        String nomeAvaliadores = "";
+        List<UsuarioDto> avaliadores = retornarAvaliadores(o);
+
+        for(UsuarioDto avaliador: avaliadores) {
+            nomeAvaliadores += avaliador.getNome() + " - " + avaliador.getFuncao().name().toLowerCase() + "<br>";
+        };
+
+        return nomeAvaliadores;
+    }
+
+    public static String retornarNomeAvaliadoresComVirgula(BancaDto o){
+        String nomeAvaliadores = "";
+        List<UsuarioDto> avaliadores = retornarAvaliadores(o);
+
+        for(UsuarioDto avaliador: avaliadores) {
+            Boolean naeEUltimo = avaliadores.indexOf(avaliador) != avaliadores.size() - 1;
+            if(naeEUltimo){
+                nomeAvaliadores += avaliador.getNome() + ",";
+                continue;
+            }
+            nomeAvaliadores += avaliador.getNome();
+        };
+
+        return nomeAvaliadores;
+    }
+
+    public static String retornarNomeEFuncaoAvaliadoresComVirgula(BancaDto o){
+        String nomeAvaliadores = "";
+        List<UsuarioDto> avaliadores = retornarAvaliadores(o);
+        for(UsuarioDto avaliador: avaliadores) {
+            Boolean naeEUltimo = avaliadores.indexOf(avaliador) != avaliadores.size() - 1;
+            nomeAvaliadores += avaliador.getNome() + "("+ retornarFuncaoAvaliador(avaliador) +")";
+            if(naeEUltimo) nomeAvaliadores += ",";
+        };
+        return nomeAvaliadores;
+    }
 }

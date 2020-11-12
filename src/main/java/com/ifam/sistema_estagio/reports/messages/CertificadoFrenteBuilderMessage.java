@@ -20,7 +20,7 @@ public class CertificadoFrenteBuilderMessage implements IBuilderMessage<List<Fre
         String autores = Utils.retornarNomeDiscentes(o);
         String data = Utils.retornarDataPadraoNomeCidade(o);
         String titulo = Utils.retornarTitulo(o);
-        String participantes = retornarNomeAvaliadores(o);
+        String participantes = Utils.retornarNomeAvaliadoresComQuebraDeLinha(o);
 
         o.getParticipantes().forEach(participante -> {
             certificados.add(FrenteCertificadoFields.builder()
@@ -40,7 +40,7 @@ public class CertificadoFrenteBuilderMessage implements IBuilderMessage<List<Fre
         List<FrenteCertificadoFields> certificados = new ArrayList<>();
         String autores = Utils.retornarNomeDiscentes(o);
         String titulo = Utils.retornarTitulo(o);
-        String participantes = retornarNomeAvaliadores(o);
+        String participantes = Utils.retornarNomeAvaliadoresComQuebraDeLinha(o);
 
         o.getParticipantes().forEach(participante -> {
             certificados.add(FrenteCertificadoFields.builder()
@@ -53,19 +53,5 @@ public class CertificadoFrenteBuilderMessage implements IBuilderMessage<List<Fre
         });
 
         return certificados;
-    }
-
-    private String retornarNomeAvaliadores(BancaDto o){
-        String nomeAvaliadores = "";
-        List<UsuarioDto> avaliadores = o.getParticipantes()
-                .stream()
-                .filter(participante -> participante.getFuncao() != FuncaoEstagio.DISCENTE)
-                .collect(Collectors.toList());
-
-        for(UsuarioDto avaliador: avaliadores) {
-            nomeAvaliadores += avaliador.getNome() + " - " + avaliador.getFuncao().name().toLowerCase() + "<br>";
-        };
-
-        return nomeAvaliadores;
     }
 }

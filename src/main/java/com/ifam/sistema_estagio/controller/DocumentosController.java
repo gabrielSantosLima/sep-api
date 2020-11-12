@@ -27,6 +27,7 @@ public class DocumentosController {
 	private FichaProjetoDefesaBuilderMessage fichaProjetoDefesaBuilderMessage = new FichaProjetoDefesaBuilderMessage();
 	private FichaProjetoRelatorioBuilderMessage fichaProjetoRelatorioBuilderMessage = new FichaProjetoRelatorioBuilderMessage();
 	private CertificadoFrenteBuilderMessage certificadoFrenteBuilderMessage = new CertificadoFrenteBuilderMessage();
+	private AtaEstagioBuilderMessage ataEstagioBuilderMessage = new AtaEstagioBuilderMessage();
 
 	@PostMapping(path = "/certificado", produces = MediaType.APPLICATION_PDF_VALUE)
 	public byte[] gerarCerticados(@RequestBody BancaDto banca) {
@@ -70,10 +71,11 @@ public class DocumentosController {
 	}
 
 	@PostMapping(path = "/ata-estagio", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] geraAtaEstagio() {
+	public byte[] geraAtaEstagio(@RequestBody BancaDto banca) {
 		byte pdf[] = null;
 		try {
-			pdf = service.gerarAtaEstagio(null);
+			List<AtaEstagioFields> atas = ataEstagioBuilderMessage.retornarMensagem(banca);
+			pdf = service.gerarAtaEstagio(atas);
 		} catch (JRException | IOException e) {
 			e.printStackTrace();
 		}
