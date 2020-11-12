@@ -23,6 +23,6 @@ public class BancaDto implements Serializable {
 	private String local;
 	private Date horaInicio;
 	private Date horaFinalizado;
-	private EstagioPCCTDto estagioPCCTDto;
+	private EstagioPCCTDto estagioPCCT;
 	private List<UsuarioDto> participantes;
 }

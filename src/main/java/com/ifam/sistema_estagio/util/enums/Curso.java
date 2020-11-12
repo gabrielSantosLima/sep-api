@@ -15,7 +15,12 @@ public enum Curso {
 		this.nomeCurso = nomeCurso;
 	}
 	
-	public String getNomeCurso() {
+	public String retornarNomeCurso() {
 		return nomeCurso;
+	}
+
+	public String retornarNomeCurso(ModalidadeCurso modalidadeCurso) {
+		String modalidadeFormatada = modalidadeCurso.name().toLowerCase();
+		return "Curso Técnico "+ modalidadeFormatada +" de "+ nomeCurso;
 	}
 }

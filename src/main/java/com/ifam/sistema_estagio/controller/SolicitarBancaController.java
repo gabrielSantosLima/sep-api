@@ -16,8 +16,10 @@ public class SolicitarBancaController {
 	private SolicitarBancaProcess solicitarBancaProcess;
 	
 	@PostMapping
-	public void iniciar(@RequestBody BancaDto banca) {
-		solicitarBancaProcess.iniciarProcesso(banca);
+	public String iniciar(@RequestBody BancaDto banca) {
+		String idProcesso = solicitarBancaProcess.iniciarProcesso(banca);
+
+		return idProcesso;
 	}
 
 	@GetMapping("/listar")

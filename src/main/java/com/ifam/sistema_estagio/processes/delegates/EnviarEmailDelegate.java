@@ -40,8 +40,8 @@ public class EnviarEmailDelegate implements JavaDelegate{
 		String dataFormatada = FormatarData.porMascaraDataPadrao(banca.getData());
 		String horaFormatada = FormatarData.porMascaraHoraPadrao(banca.getHoraInicio());
 		String tipo = banca.getTipo().getValor().toLowerCase();
-		String curso = banca.getCurso().getNomeCurso().toLowerCase();
-		String titulo = banca.getEstagioPCCTDto().getTitulo();
+		String curso = banca.getCurso().retornarNomeCurso().toLowerCase();
+		String titulo = banca.getEstagioPCCT().getTitulo();
 
 		participantes.forEach(participante -> {
 			enviarEmail(
@@ -86,7 +86,7 @@ public class EnviarEmailDelegate implements JavaDelegate{
 		email.setMessage(mensagem);
 
 		try{
-//			emailService.send(email);
+			emailService.send(email);
 		}catch (Exception e){
 			e.printStackTrace();
 		}

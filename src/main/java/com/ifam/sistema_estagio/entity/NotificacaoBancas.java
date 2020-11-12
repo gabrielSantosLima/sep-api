@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name="notificacao_bancas")
-public class NoticacaoBancas {
+public class NotificacaoBancas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
