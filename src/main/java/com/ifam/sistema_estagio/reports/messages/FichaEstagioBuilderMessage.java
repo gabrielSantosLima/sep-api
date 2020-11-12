@@ -12,7 +12,6 @@ import com.ifam.sistema_estagio.util.enums.TipoServico;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeAvaliacaoEstagioFields>, BancaDto>{
 
@@ -24,8 +23,8 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
     public List<FichaDeAvaliacaoEstagioFields> retornarMensagem(BancaDto o) {
         List<FichaDeAvaliacaoEstagioFields> fichas = new ArrayList<>();
 
-        String discente = retornarNomeDiscentes(o);
-        String curso = retornarCurso(o);
+        String discente = Utils.retornarNomeDiscentes(o);
+        String curso = Utils.retornarCurso(o);
         String anoFinalizacao = retornarAnoFinalizado(o);
         String funcaoDiscente = retornarFuncaoDiscentes(o);
         String dataEmissao = retornarDataEmissao();
@@ -44,7 +43,7 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
             String naoPassou = verificarSePassou(soma < MEDIA_APROVACAO);
 
             String avaliador = ficha.getAvaliador().getNome();
-            String funcaoAvaliador = retornarFuncaoAvaliador(ficha.getAvaliador());
+            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
 
             fichas.add(FichaDeAvaliacaoEstagioFields.builder()
                     .ano_finalizacao(anoFinalizacao)
@@ -71,8 +70,8 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
     public List<FichaDeAvaliacaoEstagioFields> retornarMensagemParaPreencher(BancaDto o) {
         List<FichaDeAvaliacaoEstagioFields> fichas = new ArrayList<>();
 
-        String discente = retornarNomeDiscentes(o);
-        String curso = retornarCurso(o);
+        String discente = Utils.retornarNomeDiscentes(o);
+        String curso = Utils.retornarCurso(o);
         String anoFinalizacao = retornarAnoFinalizado(o);
         String funcaoDiscente = retornarFuncaoDiscentes(o);
         String dataEmissao = retornarDataEmissao();
@@ -82,7 +81,7 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
             if (eDiscente) return;
 
             String avaliador = ficha.getAvaliador().getNome();
-            String funcaoAvaliador = retornarFuncaoAvaliador(ficha.getAvaliador());
+            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
 
             fichas.add(FichaDeAvaliacaoEstagioFields.builder()
                     .ano_finalizacao(anoFinalizacao)
@@ -92,13 +91,13 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
                     .discente(discente)
                     .funcao_avaliador(funcaoAvaliador)
                     .funcao_discente(funcaoDiscente)
-                    .nao_passou(" ")
-                    .nota_apresentacao(" ")
-                    .nota_atividades(" ")
-                    .nota_conhecimentos(" ")
-                    .nota_organizacao(" ")
-                    .passou(" ")
-                    .soma(" ")
+                    .nao_passou(CAMPO_VAZIO)
+                    .nota_apresentacao(CAMPO_VAZIO)
+                    .nota_atividades(CAMPO_VAZIO)
+                    .nota_conhecimentos(CAMPO_VAZIO)
+                    .nota_organizacao(CAMPO_VAZIO)
+                    .passou(CAMPO_VAZIO)
+                    .soma(CAMPO_VAZIO)
                     .build()
             );
         });
@@ -110,29 +109,6 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
         return FormatarData.porMascaraDataPadraoNomeCidade(new Date());
     }
 
-    private List<UsuarioDto> retornarDiscentes(BancaDto o){
-        return o.getParticipantes().stream()
-                .filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
-                .collect(Collectors.toList());
-    }
-
-    private String retornarNomeDiscentes(BancaDto o){
-        String nomeDiscentes = "";
-
-        List<UsuarioDto> discentes = retornarDiscentes(o);
-
-        for(UsuarioDto discente: discentes) {
-            Boolean naeEUltimo = discentes.indexOf(discente) != discentes.size() - 1;
-            if(naeEUltimo){
-                nomeDiscentes += discente.getNome() + ",";
-                continue;
-            }
-            nomeDiscentes += discente.getNome();
-        };
-
-        return nomeDiscentes;
-    }
-
     private String retornarFuncaoDiscentes(BancaDto o){
         return o.getEstagioPCCT().getTipo() == TipoServico.ESTAGIO?
                 FUNCAO_DISCENTE_ESTAGIO :
@@ -140,20 +116,12 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
     }
 
     private String retornarAnoFinalizado(BancaDto o){
-        return retornarDiscentes(o).get(0)
+        return Utils.retornarDiscentes(o).get(0)
                 .getAnoFinalizacao();
-    }
-
-    private String retornarFuncaoAvaliador(UsuarioDto usuario){
-        return usuario.getFuncao().name().toLowerCase();
-    }
-
-    private String retornarCurso(BancaDto o){
-        return o.getCurso().retornarNomeCurso(o.getEstagioPCCT().getModalidadeCurso());
     }
 
     private String verificarSePassou(Boolean verificao){
         if(verificao) return "X";
-        return " ";
+        return CAMPO_VAZIO;
     }
 }

@@ -17,9 +17,9 @@ public class FichaProjetoCapaBuilderMessage implements IBuilderMessage<List<Fich
     @Override
     public List<FichaDeAvaliacaoProjetoCapaFields> retornarMensagem(BancaDto o) {
         List<FichaDeAvaliacaoProjetoCapaFields> ficha = new ArrayList<>();
-
-        String autor = retornarNomeDiscentes(o);
-        String titulo = o.getEstagioPCCT().getTitulo();
+        String autor = Utils.retornarNomeDiscentes(o);
+        String titulo = Utils.retornarTitulo(o);
+        String data = Utils.retornarDataPadraoNomeCidade(o);
 
         String av1 = retornarNomeAvaliadorPorIndice(o, 0);
         String av2 = retornarNomeAvaliadorPorIndice(o, 1);
@@ -35,9 +35,7 @@ public class FichaProjetoCapaBuilderMessage implements IBuilderMessage<List<Fich
 
         Double mediaDefesa = (notaDefesaAv1 + notaDefesaAv2 + notaDefesaAv3) / 3;
         Double mediaRelatorio = (notaRelatorioAv1 + notaRelatorioAv2 + notaRelatorioAv3) / 3;
-
         Double media = (mediaDefesa + mediaRelatorio)/2;
-        String data = retornarData(o.getData());
 
         ficha.add(FichaDeAvaliacaoProjetoCapaFields.builder()
                 .autor(autor)
@@ -64,15 +62,14 @@ public class FichaProjetoCapaBuilderMessage implements IBuilderMessage<List<Fich
     @Override
     public List<FichaDeAvaliacaoProjetoCapaFields> retornarMensagemParaPreencher(BancaDto o) {
         List<FichaDeAvaliacaoProjetoCapaFields> ficha = new ArrayList<>();
-
-        String autor = retornarNomeDiscentes(o);
-        String titulo = o.getEstagioPCCT().getTitulo();
+        String autor = Utils.retornarNomeDiscentes(o);
+        String titulo = Utils.retornarTitulo(o);
+        String data = Utils.retornarDataPadraoNomeCidade(o);
 
         String av1 = retornarNomeAvaliadorPorIndice(o, 0);
         String av2 = retornarNomeAvaliadorPorIndice(o, 1);
         String av3 = retornarNomeAvaliadorPorIndice(o, 2);
 
-        String data = retornarData(o.getData());
 
         ficha.add(FichaDeAvaliacaoProjetoCapaFields.builder()
                 .autor(autor)
@@ -81,39 +78,19 @@ public class FichaProjetoCapaBuilderMessage implements IBuilderMessage<List<Fich
                 .av2(av2)
                 .av3(av3)
                 .data(data)
-                .media(" ")
-                .media_defesa(" ")
-                .media_relatorio(" ")
-                .nota_defesa_av1(" ")
-                .nota_defesa_av2(" ")
-                .nota_defesa_av3(" ")
-                .nota_relatorio_av1(" ")
-                .nota_relatorio_av2(" ")
-                .nota_relatorio_av3(" ")
+                .media(CAMPO_VAZIO)
+                .media_defesa(CAMPO_VAZIO)
+                .media_relatorio(CAMPO_VAZIO)
+                .nota_defesa_av1(CAMPO_VAZIO)
+                .nota_defesa_av2(CAMPO_VAZIO)
+                .nota_defesa_av3(CAMPO_VAZIO)
+                .nota_relatorio_av1(CAMPO_VAZIO)
+                .nota_relatorio_av2(CAMPO_VAZIO)
+                .nota_relatorio_av3(CAMPO_VAZIO)
                 .build()
         );
 
         return ficha;
-    }
-
-    private String retornarNomeDiscentes(BancaDto o){
-        String nomeDiscentes = "";
-
-        List<UsuarioDto> discentes = o.getParticipantes()
-                .stream()
-                .filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
-                .collect(Collectors.toList());
-
-        for(UsuarioDto discente: discentes) {
-            Boolean naeEUltimo = discentes.indexOf(discente) != discentes.size() - 1;
-            if(naeEUltimo){
-                nomeDiscentes += discente.getNome() + ",";
-                continue;
-            }
-            nomeDiscentes += discente.getNome();
-        };
-
-        return nomeDiscentes;
     }
 
     public String retornarNomeAvaliadorPorIndice(BancaDto o, Integer indice){
@@ -151,10 +128,5 @@ public class FichaProjetoCapaBuilderMessage implements IBuilderMessage<List<Fich
 
         Double soma = notaApresentacao + notaABNT + notaMetodologia + notaConteudo + notaFund + notaDiagramas + notaResultados;
         return soma;
-    }
-
-    private String retornarData(Date data){
-        String dataFormatada = FormatarData.porMascaraDataPadraoNomeCidade(data);
-        return "Manaus(AM), "+ dataFormatada;
     }
 }

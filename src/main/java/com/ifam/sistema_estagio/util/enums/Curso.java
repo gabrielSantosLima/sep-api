@@ -23,4 +23,9 @@ public enum Curso {
 		String modalidadeFormatada = modalidadeCurso.name().toLowerCase();
 		return "Curso Técnico "+ modalidadeFormatada +" de "+ nomeCurso;
 	}
+
+	public String retornarNomeTecnico(ModalidadeCurso modalidadeCurso) {
+		String modalidadeFormatada = modalidadeCurso.name().toLowerCase();
+		return "Técnico "+ modalidadeFormatada +" de "+ nomeCurso;
+	}
 }

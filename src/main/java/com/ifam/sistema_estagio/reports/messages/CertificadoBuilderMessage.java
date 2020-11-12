@@ -4,12 +4,9 @@ import com.ifam.sistema_estagio.dto.BancaDto;
 import com.ifam.sistema_estagio.dto.UsuarioDto;
 import com.ifam.sistema_estagio.reports.fields.CertificadoFields;
 import com.ifam.sistema_estagio.util.FormatarData;
-import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class CertificadoBuilderMessage implements IBuilderMessage<List<CertificadoFields>, BancaDto>{
 
@@ -18,12 +15,12 @@ public class CertificadoBuilderMessage implements IBuilderMessage<List<Certifica
     @Override
     public List<CertificadoFields> retornarMensagem(BancaDto o) {
         List<CertificadoFields> certificados = new ArrayList<>();
-        String nomeDiscentes = retornarNomeDiscentes(o);
-        String curso = retornarCurso(o);
-        String tipoBanca = retornarTipoBanca(o);
+        String nomeDiscentes = Utils.retornarNomeDiscentes(o);
+        String curso = Utils.retornarCurso(o);
+        String tipoBanca = Utils.retornarTipoBanca(o);
 
         o.getParticipantes().forEach(participante -> {
-            String data = retornarData(o.getData());
+            String data = FormatarData.porMascaraDataPadraoNomeCidade(o.getData());
             String mensagem = retornarMensagemCompleta(
                     participante,
                     nomeDiscentes,
@@ -44,12 +41,12 @@ public class CertificadoBuilderMessage implements IBuilderMessage<List<Certifica
     public List<CertificadoFields> retornarMensagemParaPreencher(BancaDto o) {
         List<CertificadoFields> certificados = new ArrayList<>();
 
-        String data = retornarData(o.getData());
+        String data = FormatarData.porMascaraDataPadraoNomeCidade(o.getData());
         String mensagem = retornarMensagemCompleta(
                 UsuarioDto.builder().build(),
-                "                            ",
-                "                            ",
-                "                            "
+                CAMPO_VAZIO,
+                CAMPO_VAZIO,
+                CAMPO_VAZIO
         );
 
         certificados.add(CertificadoFields.builder()
@@ -83,37 +80,5 @@ public class CertificadoBuilderMessage implements IBuilderMessage<List<Certifica
                 curso +
                 " do " +
                 NOME_IFAM;
-    }
-
-    private String retornarData(Date data){
-        String dataFormatada = FormatarData.porMascaraDataPadraoNomeCidade(data);
-        return "Manaus(AM), "+ dataFormatada;
-    }
-
-    private String retornarNomeDiscentes(BancaDto o){
-        String nomeDiscentes = "";
-        List<UsuarioDto> discentes = o.getParticipantes()
-                .stream()
-                .filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
-                .collect(Collectors.toList());
-
-        for(UsuarioDto discente: discentes) {
-            Boolean naeEUltimo = discentes.indexOf(discente) != discentes.size() - 1;
-            if(naeEUltimo){
-                nomeDiscentes += discente.getNome() + ",";
-                continue;
-            }
-            nomeDiscentes += discente.getNome();
-        };
-
-        return nomeDiscentes;
-    }
-
-    private String retornarCurso(BancaDto o){
-        return o.getCurso().retornarNomeCurso(o.getEstagioPCCT().getModalidadeCurso());
-    }
-
-    private String retornarTipoBanca(BancaDto o){
-        return o.getEstagioPCCT().getTipo().getValor();
     }
 }

@@ -4,14 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class FormatarData {
-    private static final String MASCARA_DATA_PADRAO_NOME_CIDADE = "dd 'de' MMMM 'de' yyyy";
+    private static final String MASCARA_DATA_PADRAO_NOME_CIDADE = "'Manaus(AM),' dd 'de' MMMM 'de' yyyy";
+    private static final String MASCARA_DATA_PADRAO_SEM_CIDADE = "dd 'de' MMMM 'de' yyyy";
     private static final String MASCARA_DATA_PADRAO = "dd/MM/yyyy";
     private static final String MASCARA_HORA_PADRAO = "hh:mm";
 
-    public static String porMascara(String mascara, Date data){
+    private static String porMascara(String mascara, Date data){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(mascara);
         String dataFormatada = simpleDateFormat.format(data);
-
         return dataFormatada;
     }
 
@@ -25,5 +25,9 @@ public class FormatarData {
 
     public static String porMascaraDataPadraoNomeCidade(Date data){
         return porMascara(MASCARA_DATA_PADRAO_NOME_CIDADE, data);
+    }
+
+    public static String porMascaraDataPadraoSemCidade(Date data){
+        return porMascara(MASCARA_DATA_PADRAO_SEM_CIDADE, data);
     }
 }

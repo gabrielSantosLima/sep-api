@@ -86,7 +86,6 @@
 			<scope>provided</scope>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
@@ -98,7 +97,7 @@
 			<artifactId>arial</artifactId>
 			<version>1</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}\src\main\resources\fonts\arial.jar</systemPath>
+			<systemPath>${project.basedir}\src\main\resources\fonts\Arial.jar</systemPath>
 		</dependency>
 
 		<dependency>
