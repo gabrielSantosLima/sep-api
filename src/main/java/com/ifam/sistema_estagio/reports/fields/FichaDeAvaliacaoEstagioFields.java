@@ -17,8 +17,8 @@ public class FichaDeAvaliacaoEstagioFields {
 	private final String soma;
 	private final String discente;
 	private final String curso;
-	private final String data_fim;
-	private final String funcao;
+	private final String ano_finalizacao;
+	private final String funcao_discente;
 	private final String avaliador;
 	private final String passou;
 	private final String nao_passou;

@@ -34,7 +34,7 @@ public class NotificarCoordenacaoDelegate implements JavaDelegate {
         Optional<UsuarioDto> coordenadoraDto = banca
                 .getParticipantes()
                 .stream()
-                .filter(participante -> participante.getTipo() == FuncaoEstagio.COORDENADOR)
+                .filter(participante -> participante.getFuncao() == FuncaoEstagio.COORDENADOR)
                 .findFirst();
 
         Boolean coordenadorNaoExiste = !coordenadoraDto.isPresent();

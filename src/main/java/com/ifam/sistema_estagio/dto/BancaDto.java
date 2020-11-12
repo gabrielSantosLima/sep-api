@@ -25,4 +25,5 @@ public class BancaDto implements Serializable {
 	private Date horaFinalizado;
 	private EstagioPCCTDto estagioPCCT;
 	private List<UsuarioDto> participantes;
+	private AtaDto ata;
 }

@@ -33,7 +33,7 @@ public class EnviarEmailDelegate implements JavaDelegate{
 		List<UsuarioDto> participantes = banca.getParticipantes();
 
 		Optional<UsuarioDto> autor = participantes.stream()
-				.filter(participante -> participante.getTipo() == FuncaoEstagio.DISCENTE)
+				.filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
 				.findFirst();
 
 		String nomeAutor = autor.isPresent() ? autor.get().getNome() : NOME_SEM_AUTOR;

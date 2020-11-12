@@ -30,13 +30,44 @@ public class CertificadoBuilderMessage implements IBuilderMessage<List<Certifica
                     curso,
                     tipoBanca
             );
-            certificados.add(new CertificadoFields(data, mensagem));
+
+            certificados.add(CertificadoFields.builder()
+                    .data(data)
+                    .mensagem(mensagem)
+                    .build()
+            );
         });
         return certificados;
     }
 
-    private String retornarMensagemCompleta(UsuarioDto o,String nomeDiscentes,String curso, String tipoBanca){
-        String papel = o.getTipo().toString().toLowerCase();
+    @Override
+    public List<CertificadoFields> retornarMensagemParaPreencher(BancaDto o) {
+        List<CertificadoFields> certificados = new ArrayList<>();
+
+        String data = retornarData(o.getData());
+        String mensagem = retornarMensagemCompleta(
+                UsuarioDto.builder().build(),
+                "                            ",
+                "                            ",
+                "                            "
+        );
+
+        certificados.add(CertificadoFields.builder()
+                .data(data)
+                .mensagem(mensagem)
+                .build()
+        );
+
+        return certificados;
+    }
+
+    private String retornarMensagemCompleta(
+            UsuarioDto o,
+            String nomeDiscentes,
+            String curso,
+            String tipoBanca
+    ){
+        String papel = o.getFuncao().toString().toLowerCase();
         String nomeCompleto = o.getNome();
         return "Certificamos para os devidos fins de direito que o(a) Prof.<b>"+
                 nomeCompleto +
@@ -55,7 +86,7 @@ public class CertificadoBuilderMessage implements IBuilderMessage<List<Certifica
     }
 
     private String retornarData(Date data){
-        String dataFormatada = FormatarData.porMascara("dd 'de' MMMM 'de' yyyy", data);
+        String dataFormatada = FormatarData.porMascaraDataPadraoNomeCidade(data);
         return "Manaus(AM), "+ dataFormatada;
     }
 
@@ -63,7 +94,7 @@ public class CertificadoBuilderMessage implements IBuilderMessage<List<Certifica
         String nomeDiscentes = "";
         List<UsuarioDto> discentes = o.getParticipantes()
                 .stream()
-                .filter(participante -> participante.getTipo() == FuncaoEstagio.DISCENTE)
+                .filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
                 .collect(Collectors.toList());
 
         for(UsuarioDto discente: discentes) {

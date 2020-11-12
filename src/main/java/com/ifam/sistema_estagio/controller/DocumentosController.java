@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
+import com.ifam.sistema_estagio.entity.FichaDeAvaliacaoEstagio;
 import com.ifam.sistema_estagio.reports.messages.CertificadoBuilderMessage;
+import com.ifam.sistema_estagio.reports.messages.FichaEstagioBuilderMessage;
 import com.ifam.sistema_estagio.reports.messages.IBuilderMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -32,9 +34,10 @@ public class DocumentosController {
 	private DocumentosService service;
 
 	private CertificadoBuilderMessage certificadoBuilderMessage = new CertificadoBuilderMessage();
+	private FichaEstagioBuilderMessage fichaEstagioBuilderMessage = new FichaEstagioBuilderMessage();
 
-	@PostMapping(path = "/certificado/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] gerarCerticados(@RequestBody BancaDto banca, @PathVariable Integer id) {
+	@PostMapping(path = "/certificado", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] gerarCerticados(@RequestBody BancaDto banca) {
 		byte[] pdf = {};
 		try {
 			List<CertificadoFields> certificados = certificadoBuilderMessage.retornarMensagem(banca);
@@ -45,19 +48,20 @@ public class DocumentosController {
 		return pdf;
 	}
 
-	@PostMapping(path = "/ficha-estagio/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] gerarFichaDeAvaliacaoEstagio(@PathVariable("id") Integer id) {
+	@PostMapping(path = "/ficha-estagio", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] gerarFichaDeAvaliacaoEstagio(@RequestBody BancaDto banca) {
 		byte pdf[] = null;
 		try {
-			pdf = service.gerarFichaDeAvaliacaoEstagio(null);
+			List<FichaDeAvaliacaoEstagioFields> fichas = fichaEstagioBuilderMessage.retornarMensagem(banca);
+			pdf = service.gerarFichaDeAvaliacaoEstagio(fichas);
 		} catch (JRException | IOException e) {
 			e.printStackTrace();
 		}
 		return pdf;
 	}
 
-	@PostMapping(path = "/ficha-projeto/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] gerarFichaDeAvaliacaoProjeto(@PathVariable("id") Integer id) {
+	@PostMapping(path = "/ficha-projeto", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] gerarFichaDeAvaliacaoProjeto() {
 		byte pdf[] = null;
 		try {
 			pdf = service.gerarFichaDeAvaliacaoProjeto(null, null, null);
@@ -67,8 +71,8 @@ public class DocumentosController {
 		return pdf;
 	}
 
-	@PostMapping(path = "/ata-estagio/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] geraAtaEstagio(@PathVariable("id") Integer id) {
+	@PostMapping(path = "/ata-estagio", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] geraAtaEstagio() {
 		byte pdf[] = null;
 		try {
 			pdf = service.gerarAtaEstagio(null);
@@ -78,8 +82,8 @@ public class DocumentosController {
 		return pdf;
 	}
 
-	@PostMapping(path = "/ata-projeto/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] geraAtaProjeto(@PathVariable("id") Integer id) {
+	@PostMapping(path = "/ata-projeto", produces = MediaType.APPLICATION_PDF_VALUE)
+	public byte[] geraAtaProjeto() {
 		byte pdf[] = null;
 		try {
 			pdf = service.gerarAtaProjeto(null);

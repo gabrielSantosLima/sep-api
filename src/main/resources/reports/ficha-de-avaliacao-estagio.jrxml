@@ -12,8 +12,8 @@
 	<field name="soma" class="java.lang.String"/>
 	<field name="discente" class="java.lang.String"/>
 	<field name="curso" class="java.lang.String"/>
-	<field name="data_fim" class="java.lang.String"/>
-	<field name="funcao" class="java.lang.String"/>
+	<field name="ano_finalizacao" class="java.lang.String"/>
+	<field name="funcao_discente" class="java.lang.String"/>
 	<field name="avaliador" class="java.lang.String"/>
 	<field name="passou" class="java.lang.String"/>
 	<field name="nao_passou" class="java.lang.String"/>
@@ -72,7 +72,7 @@
 						<font fontName="Arial" size="12"/>
 						<paragraph leftIndent="8"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{data_fim}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{ano_finalizacao}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="0" y="80" width="328" height="30" uuid="3c383f7e-8aa4-48ad-99c0-5012cb50f153">
@@ -221,7 +221,7 @@
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="12"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{funcao}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{funcao_discente}]]></textFieldExpression>
 				</textField>
 				<textField>
 					<reportElement x="268" y="140" width="243" height="39" uuid="d89cc15f-9030-4657-881b-d71fa601f015"/>

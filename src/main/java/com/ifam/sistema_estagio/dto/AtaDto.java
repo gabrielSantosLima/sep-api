@@ -7,14 +7,16 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
 public class AtaDto implements Serializable {
-    private Integer mediaTotal;
+    private Double mediaTotal;
     private String descricao;
     private TipoServico tipo;
     private BancaDto banca;
+    private List<FichaAvaliacaoEstagioDto> fichasDeEstagio;
 }
