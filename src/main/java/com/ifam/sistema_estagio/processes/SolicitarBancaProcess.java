@@ -4,8 +4,10 @@ import java.util.*;
 
 import com.ifam.sistema_estagio.dto.RespostaAprovacaoBancaDto;
 import com.ifam.sistema_estagio.services.BancaService;
+import com.ifam.sistema_estagio.util.ManipularNumerosHexadecimais;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
+import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,8 +21,8 @@ public class SolicitarBancaProcess {
 	private final String NOME_MENSAGEM_CONFIRMAR_PARTICIPACAO = "confirmarBancaMessage";
 	private final String NOME_MENSAGEM_APROVAR_BANCA = "aprovarBancaMessage";
 	public static final String VAR_BANCA = "banca";
-	private final String VAR_APROVADO = "avaliado";
-	private final String VAR_CONFIRMADO = "aprovado";
+	private final String VAR_APROVADO = "aprovado";
+	private final String VAR_CONFIRMADO = "confirmado";
 	private final String VAR_TOTAL_PARTICIPANTES = "totalParticipantes";
 	private final String VAR_PARTICIPANTES_CONFIRMADOS = "participantesConfirmados";
 
@@ -34,8 +36,16 @@ public class SolicitarBancaProcess {
 	private BancaService bancaService;
 
 	@Transactional
-	public void iniciarProcesso(BancaDto banca) {
+	public String iniciarProcesso(BancaDto banca) {
 		Map<String, Object> variables = new HashMap<>();
+
+		String idBanca = ManipularNumerosHexadecimais.numeroAleatorio();
+
+		banca.setId(idBanca);
+		banca.getParticipantes().forEach(participante -> {
+			String idParticipante = ManipularNumerosHexadecimais.numeroAleatorio();
+			participante.setId(idParticipante);
+		});
 
 		variables.put(VAR_BANCA, banca);
 		variables.put(VAR_TOTAL_PARTICIPANTES, banca.getParticipantes().size());
@@ -43,7 +53,8 @@ public class SolicitarBancaProcess {
 		variables.put(VAR_CONFIRMADO, false);
 		variables.put(VAR_APROVADO, false);
 
-		runtimeService.startProcessInstanceByKey(ID_PROCESSO, variables);
+		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ID_PROCESSO, variables);
+		return processInstance.getId();
 	}
 
 	@Transactional
@@ -62,7 +73,6 @@ public class SolicitarBancaProcess {
 		participantesConfirmados.add(idParticipante);
 
 		mudarVariavel(idProcesso, VAR_PARTICIPANTES_CONFIRMADOS, participantesConfirmados);
-		mudarVariavel(idProcesso, VAR_TOTAL_PARTICIPANTES, participantesConfirmados.size());
 
 		if(totalParticipantes == participantesConfirmados.size()){
 			removerVariable(idProcesso, VAR_PARTICIPANTES_CONFIRMADOS);
@@ -84,8 +94,8 @@ public class SolicitarBancaProcess {
 
 	private void enviarMensagem(String nomeMensagem, String idProcesso){
 		runtimeService.createMessageCorrelation(nomeMensagem)
-			.processDefinitionId(idProcesso)
-			.correlate();
+				.processInstanceId(idProcesso)
+				.correlate();
 	}
 
 	private void mudarVariavel(String idProcesso, String nome, Object valor){

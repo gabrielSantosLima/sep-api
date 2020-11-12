@@ -1,10 +1,9 @@
 package com.ifam.sistema_estagio.processes.delegates;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
-import com.ifam.sistema_estagio.dto.NotificacaoBancasDto;
 import com.ifam.sistema_estagio.dto.UsuarioDto;
 import com.ifam.sistema_estagio.entity.Coordenadora;
-import com.ifam.sistema_estagio.entity.NoticacaoBancas;
+import com.ifam.sistema_estagio.entity.NotificacaoBancas;
 import com.ifam.sistema_estagio.processes.SolicitarBancaProcess;
 import com.ifam.sistema_estagio.services.CoordenadoraService;
 import com.ifam.sistema_estagio.services.NoticacaoBancasService;
@@ -15,9 +14,7 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Service("notificarCoordenacaoService")
@@ -37,21 +34,24 @@ public class NotificarCoordenacaoDelegate implements JavaDelegate {
         Optional<UsuarioDto> coordenadoraDto = banca
                 .getParticipantes()
                 .stream()
-                .filter(participante -> participante.getTipo() == FuncaoEstagio.COORDENADOR)
+                .filter(participante -> participante.getFuncao() == FuncaoEstagio.COORDENADOR)
                 .findFirst();
 
         Boolean coordenadorNaoExiste = !coordenadoraDto.isPresent();
 
-        if(coordenadorNaoExiste) return;
+        if(coordenadorNaoExiste) throw new Exception("[notificação-banca] Sem coordenador(a) de banca");
 
         String nomeCompleto = coordenadoraDto.get().getNome();
         Optional<Coordenadora> coordenadora = coordenadoraService.findByNomeCompleto(nomeCompleto);
 
+        Boolean coordenadorNaoEncontrado = !coordenadora.isPresent();
+
+        if(coordenadorNaoEncontrado) throw new Exception("[notificação-banca] Coordenadora não existe.");
+
         String dataNotificacao = FormatarData.porMascaraDataPadrao(new Date());
 
-        // Envia notificação para o/a coordenador(a) da banca
         noticacaoBancasService.salvar(
-                new NoticacaoBancas(
+                new NotificacaoBancas(
                     null,
                     dataNotificacao,
                     idProcesso,

@@ -1,8 +1,6 @@
 package com.ifam.sistema_estagio.reports;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,73 +24,78 @@ import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 @Service
 public class DocumentosService {
 
-	private static final String DIR_RELATORIOS = "/src/main/resources/reports/";
-	private static final String RELATORIO_CERTIFICADO = "certificado-banca";
-	private static final String RELATORIO_ATA_ESTAGIO = "ata-estagio";
-	private static final String RELATORIO_ATA_PROJETO = "ata-projeto";
-	private static final String RELATORIO_FICHA_ESTAGIO = "ficha-de-avaliacao-estagio";
-	private static final String RELATORIO_FICHA_PROJETO_CAPA = "ficha-de-avaliacao-projeto-capa";
-	private static final String RELATORIO_FICHA_PROJETO_RELATORIO = "ficha-de-avaliacao-projeto-relatorio";
-	private static final String RELATORIO_FICHA_PROJETO_DEFESA = "ficha-de-avaliacao-projeto-defesa";
+	private static final String DIR_RELATORIOS = "src/main/resources/reports/";
+	private static final String RELATORIO_CERTIFICADO = "certificado-banca.jrxml";
+	private static final String RELATORIO_CERTIFICADO_FRENTE = "frente-certificado-banca.jrxml";
+	private static final String RELATORIO_ATA_ESTAGIO = "ata-estagio.jrxml";
+	private static final String RELATORIO_ATA_PROJETO = "ata-projeto.jrxml";
+	private static final String RELATORIO_FICHA_ESTAGIO = "ficha-de-avaliacao-estagio.jrxml";
+	private static final String RELATORIO_FICHA_PROJETO_CAPA = "ficha-de-avaliacao-projeto-capa.jrxml";
+	private static final String RELATORIO_FICHA_PROJETO_RELATORIO = "ficha-de-avaliacao-projeto-relatorio.jrxml";
+	private static final String RELATORIO_FICHA_PROJETO_DEFESA = "ficha-de-avaliacao-projeto-defesa.jrxml";
 	private static final String IMAGEM_BRASAO = "brasaorepublica.png";
 	private static final String IMAGEM_CANTO = "imagem-canto.png";
 	private static final String IMAGEM_IFAM = "ifam.jpg";
+	private static final String IMAGEM_IFAM_LIVRO_REGISTRO = "livro-registro.jpg";
 
-	private JasperReport carregarECompilarModelo(String fileName) throws JRException {
-		InputStream jasperTemplate = DocumentosService.class.getResourceAsStream(DIR_RELATORIOS + fileName + ".jrxml");
-
-		JasperReport report = JasperCompileManager.compileReport(jasperTemplate);
-
-		return report;
+	private JasperReport compilarRelatorio(String nomeArquivo) throws JRException, IOException {
+		InputStream jasperTemplate = new FileInputStream(DIR_RELATORIOS + nomeArquivo);
+		return JasperCompileManager.compileReport(jasperTemplate);
 	}
 
-	private String carregarRecursos(String nameFile) {
-		String path = DIR_RELATORIOS + nameFile;
-
-		File file = new File(path);
-
+	private String carregarRecursosDeImagem(String nomeArquivo) {
+		String caminho = DIR_RELATORIOS + nomeArquivo;
+		File file = new File(caminho);
 		return file.getAbsolutePath();
 	}
 
-	private JasperPrint getJasperPrint(JasperReport report, Map<String, Object> parameters,
-			List<?> list) throws JRException {
-
-		JasperPrint print = JasperFillManager.fillReport(report, parameters,
-				new JRBeanCollectionDataSource(list));
-		
-		return print;
+	private JasperPrint retornarJasperPrint(JasperReport report, Map<String, Object> parameters, List<?> list) throws JRException {
+		return JasperFillManager.fillReport(report, parameters, new JRBeanCollectionDataSource(list));
 	}
 	
-	private byte[] getPdf(JasperPrint print) throws JRException {
+	private byte[] gerarPdf(JasperPrint print) throws JRException {
 		return JasperExportManager.exportReportToPdf(print);		
 	}
 
-	public byte[] gerarCertificado(List<CertificadoFields> certificados)
-			throws JRException {
-
-		String image1 = carregarRecursos(IMAGEM_CANTO);
-		String image2 = carregarRecursos(IMAGEM_BRASAO);
-		String image3 = carregarRecursos(IMAGEM_IFAM);
+	public byte[] gerarCertificado(List<CertificadoFields> certificados, List<FrenteCertificadoFields> certificadosFrente)
+			throws JRException, IOException {
+		String image = carregarRecursosDeImagem(IMAGEM_IFAM_LIVRO_REGISTRO);
+		String image1 = carregarRecursosDeImagem(IMAGEM_CANTO);
+		String image2 = carregarRecursosDeImagem(IMAGEM_BRASAO);
+		String image3 = carregarRecursosDeImagem(IMAGEM_IFAM);
 
 		Map<String, Object> parameters = new HashMap<String, Object>();
 		parameters.put("image1", image1);
 		parameters.put("image2", image2);
 		parameters.put("image3", image3);
 
-		JasperReport report = carregarECompilarModelo(RELATORIO_CERTIFICADO);
+		Map<String, Object> parametersFrente = new HashMap<String, Object>();
+		parametersFrente.put("image", image);
 
-		byte[] pdf = getPdf(getJasperPrint(report, parameters, certificados));
+		List<JasperPrint> prints = new ArrayList<>();
 
+		JasperReport reportVerso = compilarRelatorio(RELATORIO_CERTIFICADO);
+		JasperReport reportFrente = compilarRelatorio(RELATORIO_CERTIFICADO_FRENTE);
+
+		prints.add(retornarJasperPrint(reportVerso, parameters, certificados));
+		prints.add(retornarJasperPrint(reportFrente, parametersFrente, certificadosFrente));
+
+		JRPdfExporter exporter = new JRPdfExporter();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		exporter.setExporterInput(SimpleExporterInput.getInstance(prints));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
+		exporter.setConfiguration(new SimplePdfExporterConfiguration());
+		exporter.exportReport();
+
+		byte[] pdf = out.toByteArray();
 		return pdf;
 	}
 
 	public byte[] gerarFichaDeAvaliacaoEstagio(
-			List<FichaDeAvaliacaoEstagioFields> fichas) throws JRException {
-
-		JasperReport report = carregarECompilarModelo(RELATORIO_FICHA_ESTAGIO);
-
-		byte[] pdf = getPdf(getJasperPrint(report, null, fichas));
-
+			List<FichaDeAvaliacaoEstagioFields> fichas) throws JRException, IOException {
+		JasperReport report = compilarRelatorio(RELATORIO_FICHA_ESTAGIO);
+		JasperPrint print = retornarJasperPrint(report, null, fichas);
+		byte[] pdf = gerarPdf(print);
 		return pdf;
 	}
 
@@ -100,16 +103,16 @@ public class DocumentosService {
 			List<FichaDeAvaliacaoProjetoRelatorioFields> relatorios,
 			List<FichaDeAvaliacaoProjetoDefesaFields> defesas,
 			List<FichaDeAvaliacaoProjetoCapaFields> capa
-	) throws JRException {
-		JasperReport capaReport = carregarECompilarModelo(RELATORIO_FICHA_PROJETO_CAPA);
-		JasperReport defesaReport = carregarECompilarModelo(RELATORIO_FICHA_PROJETO_DEFESA);
-		JasperReport relatorioReport = carregarECompilarModelo(RELATORIO_FICHA_PROJETO_RELATORIO);
+	) throws JRException, IOException {
+		JasperReport capaReport = compilarRelatorio(RELATORIO_FICHA_PROJETO_CAPA);
+		JasperReport defesaReport = compilarRelatorio(RELATORIO_FICHA_PROJETO_DEFESA);
+		JasperReport relatorioReport = compilarRelatorio(RELATORIO_FICHA_PROJETO_RELATORIO);
 		
 		List<JasperPrint> prints = new ArrayList<>();
 		
-		prints.add(getJasperPrint(capaReport, null, capa));
-		prints.add(getJasperPrint(defesaReport, null, defesas));
-		prints.add(getJasperPrint(relatorioReport, null, relatorios));
+		prints.add(retornarJasperPrint(capaReport, null, capa));
+		prints.add(retornarJasperPrint(defesaReport, null, defesas));
+		prints.add(retornarJasperPrint(relatorioReport, null, relatorios));
 		
 		JRPdfExporter exporter = new JRPdfExporter();
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -123,19 +126,17 @@ public class DocumentosService {
 		return pdf;
 	}
 
-	public byte[] gerarAtaEstagio(List<AtaEstagioFields> atas) throws JRException {
-		JasperReport report = carregarECompilarModelo(RELATORIO_ATA_ESTAGIO);
-
-		byte[] pdf = getPdf(getJasperPrint(report, null, atas));
-
+	public byte[] gerarAtaEstagio(List<AtaEstagioFields> atas) throws JRException, IOException {
+		JasperReport report = compilarRelatorio(RELATORIO_ATA_ESTAGIO);
+		JasperPrint print = retornarJasperPrint(report, null, atas);
+		byte[] pdf = gerarPdf(print);
 		return pdf;
 	}
 
-	public byte[] gerarAtaProjeto(List<AtaProjetoFields> atas) throws JRException {
-		JasperReport report = carregarECompilarModelo(RELATORIO_ATA_PROJETO);
-
-		byte[] pdf = getPdf(getJasperPrint(report, null, atas));
-
+	public byte[] gerarAtaProjeto(List<AtaProjetoFields> atas) throws JRException, IOException {
+		JasperReport report = compilarRelatorio(RELATORIO_ATA_PROJETO);
+		JasperPrint print = retornarJasperPrint(report, null, atas);
+		byte[] pdf = gerarPdf(print);
 		return pdf;
 	}
 }

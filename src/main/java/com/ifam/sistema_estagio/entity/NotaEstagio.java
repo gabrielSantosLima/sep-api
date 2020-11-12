@@ -16,14 +16,14 @@ import lombok.Setter;
 public class NotaEstagio {
 	
 	@Column(name = "nota_conhecimento")
-	private Integer notaConhecimento;
+	private Double notaConhecimento;
 
 	@Column(name = "nota_organizacao")
-	private Integer notaOrganizacao;
+	private Double notaOrganizacao;
 	
 	@Column(name = "nota_atividades")
-	private Integer notaAtividades;
+	private Double notaAtividades;
 	
 	@Column(name = "nota_apresentacao")
-	private Integer notaApresentacao;
+	private Double notaApresentacao;
 }

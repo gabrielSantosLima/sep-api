@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.13.0.final using JasperReports Library version 6.13.0-46ada4d1be8f3c5985fd0b6146f3ed44caed6f05  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="frente-certificado-banca" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8455e406-3e7f-495f-9c5a-46247f710b60">
-	<queryString>
-		<![CDATA[]]>
-	</queryString>
-	<field name="titulo" class="java.lang.String">
-		<fieldDescription><![CDATA[Título do trabalho: ""]]></fieldDescription>
-	</field>
-	<field name="autores" class="java.lang.String">
-		<fieldDescription><![CDATA[Alunos]]></fieldDescription>
-	</field>
+	<parameter name="image" class="java.lang.String"/>
+	<field name="titulo" class="java.lang.String" />
+	<field name="autores" class="java.lang.String" />
 	<field name="data" class="java.lang.String"/>
 	<field name="participantes" class="java.lang.String"/>
 	<background>
@@ -100,7 +94,7 @@
 			</textField>
 			<image>
 				<reportElement x="510" y="270" width="280" height="270" uuid="39699bcd-08b5-4bc6-8246-580a7b0473ef"/>
-				<imageExpression><![CDATA["C:/Users/jaugu/OneDrive/Área de Trabalho/Gabriel/Arquivos - Sistema de Estágio/Documentação/Documentos de Estágio e PCCT/Partes/Certificados/livro-registro.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{image}]]></imageExpression>
 			</image>
 		</band>
 	</detail>

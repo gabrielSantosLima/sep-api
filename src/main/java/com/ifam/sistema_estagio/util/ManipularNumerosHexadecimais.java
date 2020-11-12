@@ -4,20 +4,27 @@ import java.util.Random;
 
 public class ManipularNumerosHexadecimais {
 
-    private final static Integer MAX_HEX_LENGTH = 20;
+    private final static Integer TAMANHO_HEX_MAX = 20;
     private final static Integer PESO_PRIMEIRO_NUMERO = 100;
     private final static Integer PESO_SEGUNDO_NUMERO = 50;
 
-    public static String numeroAleatorio(){
+    public static String numeroAleatorio(Integer tamanhoMax){
         Random random = new Random();
-
         Double numero1 = random.nextDouble() * PESO_PRIMEIRO_NUMERO;
         Double numero2 = random.nextDouble() * PESO_SEGUNDO_NUMERO;
+        String hex = Double.toHexString(numero1) + Double.toHexString(numero2);
 
-        String hex = Double.toHexString(numero1) + "-" + Double.toHexString(numero2);
+        if(hex.length() < tamanhoMax) return numeroAleatorio(tamanhoMax);
 
-        if(hex.length() < MAX_HEX_LENGTH) return numeroAleatorio();
+        String hexSubstring = hex.substring(0, tamanhoMax);
+        StringBuilder hexFinal = new StringBuilder(hexSubstring);
+        hexFinal.setCharAt(tamanhoMax / 2, '-');
 
-        return hex.substring(0, MAX_HEX_LENGTH);
+        return hexFinal.toString();
     }
+
+    public static String numeroAleatorio(){
+        return numeroAleatorio(TAMANHO_HEX_MAX);
+    }
+
 }
