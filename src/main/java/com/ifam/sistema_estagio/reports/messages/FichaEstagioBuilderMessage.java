@@ -110,21 +110,16 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
         return FormatarData.porMascaraDataPadraoNomeCidade(new Date());
     }
 
-    private List<UsuarioDto> retornarDiscentes(AtaDto o){
-        List<FichaAvaliacaoEstagioDto> fichas = o.getFichasDeEstagio()
-                .stream()
-                .filter(fichaAvaliacaoEstagioDto -> fichaAvaliacaoEstagioDto.getAvaliador().getFuncao() == FuncaoEstagio.DISCENTE)
-                .collect(Collectors.toList());
-
-        return fichas.stream()
-                .map(ficha -> ficha.getAvaliador())
+    private List<UsuarioDto> retornarDiscentes(BancaDto o){
+        return o.getParticipantes().stream()
+                .filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
                 .collect(Collectors.toList());
     }
 
     private String retornarNomeDiscentes(BancaDto o){
         String nomeDiscentes = "";
 
-        List<UsuarioDto> discentes = retornarDiscentes(o.getAta());
+        List<UsuarioDto> discentes = retornarDiscentes(o);
 
         for(UsuarioDto discente: discentes) {
             Boolean naeEUltimo = discentes.indexOf(discente) != discentes.size() - 1;
@@ -145,7 +140,7 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
     }
 
     private String retornarAnoFinalizado(BancaDto o){
-        return retornarDiscentes(o.getAta()).get(0)
+        return retornarDiscentes(o).get(0)
                 .getAnoFinalizacao();
     }
 

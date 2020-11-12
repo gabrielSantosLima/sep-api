@@ -19,4 +19,5 @@ public class AtaDto implements Serializable {
     private TipoServico tipo;
     private BancaDto banca;
     private List<FichaAvaliacaoEstagioDto> fichasDeEstagio;
+    private List<FichaAvaliacaoProjetoDto> fichasDeProjeto;
 }

@@ -4,9 +4,6 @@
 	<parameter name="image1" class="java.lang.String"/>
 	<parameter name="image2" class="java.lang.String"/>
 	<parameter name="image3" class="java.lang.String"/>
-	<queryString>
-		<![CDATA[]]>
-	</queryString>
 	<field name="data" class="java.lang.String"/>
 	<field name="mensagem" class="java.lang.String"/>
 	<background>
@@ -30,7 +27,7 @@
 				<imageExpression><![CDATA[$P{image2}]]></imageExpression>
 			</image>
 			<staticText>
-				<reportElement x="130" y="0" width="459" height="90" uuid="0c5e927d-e523-4dac-a35c-0d8cdfcb56a9"/>
+				<reportElement x="130" y="10" width="459" height="90" uuid="0c5e927d-e523-4dac-a35c-0d8cdfcb56a9"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="12" isBold="true" isItalic="false"/>
 				</textElement>
@@ -64,7 +61,7 @@ COORDENAÇÃO DO CURSO DE INFORMÁTICA
 		<band height="143" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<textField>
-				<reportElement x="0" y="0" width="802" height="135" uuid="8200e674-69e1-4e6a-9eff-8a4dbaa684f9">
+				<reportElement x="0" y="0" width="760" height="135" uuid="8200e674-69e1-4e6a-9eff-8a4dbaa684f9">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7887b8fb-6f7e-44fa-9c53-04228f11f27f"/>
 					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
 				</reportElement>

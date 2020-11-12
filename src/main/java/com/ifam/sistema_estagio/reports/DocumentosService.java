@@ -26,6 +26,7 @@ public class DocumentosService {
 
 	private static final String DIR_RELATORIOS = "src/main/resources/reports/";
 	private static final String RELATORIO_CERTIFICADO = "certificado-banca.jrxml";
+	private static final String RELATORIO_CERTIFICADO_FRENTE = "frente-certificado-banca.jrxml";
 	private static final String RELATORIO_ATA_ESTAGIO = "ata-estagio.jrxml";
 	private static final String RELATORIO_ATA_PROJETO = "ata-projeto.jrxml";
 	private static final String RELATORIO_FICHA_ESTAGIO = "ficha-de-avaliacao-estagio.jrxml";
@@ -35,6 +36,7 @@ public class DocumentosService {
 	private static final String IMAGEM_BRASAO = "brasaorepublica.png";
 	private static final String IMAGEM_CANTO = "imagem-canto.png";
 	private static final String IMAGEM_IFAM = "ifam.jpg";
+	private static final String IMAGEM_IFAM_LIVRO_REGISTRO = "livro-registro.jpg";
 
 	private JasperReport compilarRelatorio(String nomeArquivo) throws JRException, IOException {
 		InputStream jasperTemplate = new FileInputStream(DIR_RELATORIOS + nomeArquivo);
@@ -55,8 +57,9 @@ public class DocumentosService {
 		return JasperExportManager.exportReportToPdf(print);		
 	}
 
-	public byte[] gerarCertificado(List<CertificadoFields> certificados)
+	public byte[] gerarCertificado(List<CertificadoFields> certificados, List<FrenteCertificadoFields> certificadosFrente)
 			throws JRException, IOException {
+		String image = carregarRecursosDeImagem(IMAGEM_IFAM_LIVRO_REGISTRO);
 		String image1 = carregarRecursosDeImagem(IMAGEM_CANTO);
 		String image2 = carregarRecursosDeImagem(IMAGEM_BRASAO);
 		String image3 = carregarRecursosDeImagem(IMAGEM_IFAM);
@@ -66,9 +69,25 @@ public class DocumentosService {
 		parameters.put("image2", image2);
 		parameters.put("image3", image3);
 
-		JasperReport report = compilarRelatorio(RELATORIO_CERTIFICADO);
-		JasperPrint print = retornarJasperPrint(report, parameters, certificados);
-		byte[] pdf = gerarPdf(print);
+		Map<String, Object> parametersFrente = new HashMap<String, Object>();
+		parametersFrente.put("image", image);
+
+		List<JasperPrint> prints = new ArrayList<>();
+
+		JasperReport reportVerso = compilarRelatorio(RELATORIO_CERTIFICADO);
+		JasperReport reportFrente = compilarRelatorio(RELATORIO_CERTIFICADO_FRENTE);
+
+		prints.add(retornarJasperPrint(reportVerso, parameters, certificados));
+		prints.add(retornarJasperPrint(reportFrente, parametersFrente, certificadosFrente));
+
+		JRPdfExporter exporter = new JRPdfExporter();
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+		exporter.setExporterInput(SimpleExporterInput.getInstance(prints));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
+		exporter.setConfiguration(new SimplePdfExporterConfiguration());
+		exporter.exportReport();
+
+		byte[] pdf = out.toByteArray();
 		return pdf;
 	}
 
