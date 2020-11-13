@@ -23,6 +23,7 @@ public class UsuarioDto implements Serializable {
 	private String nome;
 	private String email;
 	private Curso curso;
+	private String turma;
 	private ModalidadeCurso modalidadeCurso;
 	private String anoFinalizacao;
 	private FuncaoEstagio funcao;

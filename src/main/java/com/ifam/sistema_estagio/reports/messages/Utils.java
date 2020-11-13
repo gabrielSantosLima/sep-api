@@ -106,7 +106,7 @@ public class Utils {
         List<UsuarioDto> avaliadores = retornarAvaliadores(o);
         for(UsuarioDto avaliador: avaliadores) {
             Boolean naeEUltimo = avaliadores.indexOf(avaliador) != avaliadores.size() - 1;
-            nomeAvaliadores += avaliador.getNome() + "("+ retornarFuncaoAvaliador(avaliador) +")";
+            nomeAvaliadores += avaliador.getNome() + " ("+ retornarFuncaoAvaliador(avaliador) +") ";
             if(naeEUltimo) nomeAvaliadores += ",";
         };
         return nomeAvaliadores;

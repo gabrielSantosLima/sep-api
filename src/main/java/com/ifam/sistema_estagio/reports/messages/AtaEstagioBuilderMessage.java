@@ -54,7 +54,7 @@ public class AtaEstagioBuilderMessage implements IBuilderMessage<List<AtaEstagio
     }
 
     private String retornarMensagemCabecalho(UsuarioDto discente){
-        return "<b>Ata de defesa</b> do Relatório Final de Estágio do(a) discente <b>" +
+        return "<b>Ata de Defesa</b> do Relatório de Estágio do(a) discente <b>" +
                 discente.getNome() +
                 "</b>, do " +
                 discente.getCurso().retornarNomeCurso(discente.getModalidadeCurso()) +
@@ -64,18 +64,18 @@ public class AtaEstagioBuilderMessage implements IBuilderMessage<List<AtaEstagio
     private String retornarMensagemCompleta(BancaDto o, UsuarioDto discente){
         return "Aos <b>" +
                 FormatarData.porMascaraDataPadraoSemCidade(o.getData()) +
-                "</b>, " +
+                "</b>, <b>" +
                 FormatarData.porMascaraHoraPadrao(o.getHoraInicio()) +
                 "-" +
                 FormatarData.porMascaraHoraPadrao(o.getHoraFinalizado()) +
-                ", no <b>" +
+                "</b>, no <b>" +
                 o.getEstagioPCCT().getLocal() +
                 "</b> do IFAM/Campus Manaus Centro, realizou-se a Defesa Pública do Relatório de Estágio" +
                 " Supervisionado do(a) discente <b>" +
                 discente.getNome() +
                 "</b>, sendo que a composição da Banca Examinadora contou com os seguintes membros " +
                 Utils.retornarNomeEFuncaoAvaliadoresComVirgula(o) + "." +
-                "O presidente da banca deu início aos trabalhos, seguindo a metodologia apropriada ao ato." +
+                " O presidente da banca deu início aos trabalhos, seguindo a metodologia apropriada ao ato." +
                 " Após a apresentação, a Banca Examinadora se reuniu para deliberação, divulgando o resultado de" +
                 " sua avaliação nos seguintes termos: o Relatório De Estágio Supervisionado de <b>" +
                 discente.getNome() +
