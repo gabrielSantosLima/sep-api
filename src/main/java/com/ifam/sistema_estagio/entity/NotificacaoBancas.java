@@ -1,17 +1,13 @@
 package com.ifam.sistema_estagio.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
+@Builder
 @Table(name="notificacao_bancas")
 public class NotificacaoBancas {
 

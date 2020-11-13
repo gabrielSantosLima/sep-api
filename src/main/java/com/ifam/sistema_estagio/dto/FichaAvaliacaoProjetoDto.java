@@ -1,5 +1,6 @@
 package com.ifam.sistema_estagio.dto;
 
+import com.ifam.sistema_estagio.entity.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import java.io.Serializable;
 @Setter
 @Builder
 @AllArgsConstructor
-public class FichaAvaliacaoProjetoDto implements Serializable {
+public class FichaAvaliacaoProjetoDto implements Serializable, IObjetoDto<FichaDeAvaliacaoProjeto> {
     private Double media;
 
     private Double notaSlide;
@@ -30,4 +31,30 @@ public class FichaAvaliacaoProjetoDto implements Serializable {
     private Double notaResultados;
 
     private UsuarioDto avaliador;
+    private AtaDto ata;
+
+    @Override
+    public FichaDeAvaliacaoProjeto construirEntidade() {
+        return FichaDeAvaliacaoProjeto.builder()
+                .ata(ata.construirEntidade())
+                .notaDefesa(NotaProjetoDefesa.builder()
+                        .notaAssunto(notaAssunto)
+                        .notaClareza(notaClareza)
+                        .notaLinguagem(notaLinguagem)
+                        .notaRespostas(notaRespostas)
+                        .notaSlide(notaSlide)
+                        .notaTempo(notaTempo)
+                        .build())
+                .notaTrabalho(NotaProjetoTrabalho.builder()
+                        .notaABNT(notaABNT)
+                        .notaApresentacao(notaApresentacao)
+                        .notaConteudo(notaConteudo)
+                        .notaDiagramas(notaDiagramas)
+                        .notaFund(notaFund)
+                        .notaMetodologia(notaMetodologia)
+                        .notaResultados(notaResultados)
+                        .build())
+                .professor(avaliador.construirProfessor())
+                .build();
+    }
 }

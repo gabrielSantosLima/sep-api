@@ -1,5 +1,6 @@
 package com.ifam.sistema_estagio.entity;
 
+import java.io.File;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -15,12 +16,10 @@ import javax.persistence.TemporalType;
 import com.ifam.sistema_estagio.util.enums.Curso;
 import com.ifam.sistema_estagio.util.enums.ModalidadeCurso;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
+@Builder
 @Getter
 @Setter
 @AllArgsConstructor
@@ -36,12 +35,15 @@ public class Aluno extends Usuario implements UsuarioLogavel{
 	@Enumerated(EnumType.STRING)
 	private Curso curso;
 
+	@Column(nullable = false, name = "turma")
+	private String turma;
+
 	@Column(nullable = false, name = "modalidade_curso")
 	@Enumerated(EnumType.STRING)
 	private ModalidadeCurso modalidadeCurso;
 
 	@Column(nullable = true, name = "anexo")
-	private byte[] anexo;
+	private File anexo;
 	
 	//Estágio ou projeto
 	@ManyToOne

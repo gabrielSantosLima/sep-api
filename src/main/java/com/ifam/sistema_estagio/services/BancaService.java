@@ -25,8 +25,4 @@ public class BancaService extends GenericService<Banca, BancaRepository> {
 	public List<Banca> findByEstagioPcct(EstagioPCCT estagioPcct) {
 		return repository.findByEstagioPcct(estagioPcct);
 	}
-
-	public Banca salvar(BancaDto banca) throws Exception {
-		return null;
-	}
 }

@@ -20,7 +20,7 @@ public class PedidoFinalizadoAprovadoListener implements ExecutionListener {
         System.out.println("[Banca Aprovada] Uma foi foi aprovada! Id do processo: "+ execution.getProcessInstanceId());
         BancaDto banca = (BancaDto) execution.getVariable(SolicitarBancaProcess.VAR_BANCA);
         try{
-            bancaService.salvar(banca);
+            bancaService.salvar(banca.construirEntidade());
         }catch(Exception e){
             throw new Exception(e);
         }

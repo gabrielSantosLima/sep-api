@@ -32,7 +32,7 @@ public class FormatarData {
         return porMascara(MASCARA_DATA_PADRAO_SEM_CIDADE, data);
     }
 
-    public static String porMascaraAno(Date data){
+    public static String paraAno(Date data){
         return porMascara(MASCARA_ANO, data);
     }
 }

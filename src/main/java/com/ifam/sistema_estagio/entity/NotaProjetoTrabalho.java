@@ -3,36 +3,32 @@ package com.ifam.sistema_estagio.entity;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Embeddable
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class NotaProjetoTrabalho {
 
 	@Column(name = "nota_apresentacao")
-	private Integer notaApresentacao;
+	private Double notaApresentacao;
 
 	@Column(name = "nota_abnt")
-	private Integer notaABNT;
+	private Double notaABNT;
 
 	@Column(name = "nota_metodologia")
-	private Integer notaMetodologia;
+	private Double notaMetodologia;
 
 	@Column(name = "nota_conteudo")
-	private Integer notaConteudo;
+	private Double notaConteudo;
 
 	@Column(name = "nota_Fund")
-	private Integer notaFund;
+	private Double notaFund;
 
 	@Column(name = "nota_diagramas")
-	private Integer notaDiagramas;
+	private Double notaDiagramas;
 	
 	@Column(name = "nota_resultados")
-	private Integer notaResultados;
+	private Double notaResultados;
 }
