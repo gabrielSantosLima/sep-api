@@ -17,7 +17,7 @@
 	<detail>
 		<band height="445" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="60" width="549" height="90" uuid="ef7b933e-08e6-49ac-871f-9b3c60408425">
+				<reportElement x="0" y="60" width="549" height="79" uuid="ef7b933e-08e6-49ac-871f-9b3c60408425">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
@@ -25,20 +25,20 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement markup="html">
-					<font fontName="Times New Roman" size="11"/>
+					<font size="11" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.5" firstLineIndent="0" leftIndent="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{mensagem}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="150" width="250" height="30" uuid="86b7a4fc-a96c-482f-8b60-4707bfbc4280">
+				<reportElement x="0" y="146" width="250" height="30" uuid="86b7a4fc-a96c-482f-8b60-4707bfbc4280">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Times New Roman"/>
+					<font isPdfEmbedded="true"/>
 					<paragraph leftIndent="30"/>
 				</textElement>
 				<text><![CDATA[(  ) Aprovação do Relatório Final de Estágio.
@@ -52,7 +52,7 @@
 					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
 				</reportElement>
 				<textElement>
-					<font fontName="Times New Roman"/>
+					<font isPdfEmbedded="true"/>
 					<paragraph firstLineIndent="8"/>
 				</textElement>
 				<text><![CDATA[Sendo que foi atribuída a Média Final de .................. pontos. A sessão foi encerrada às ...................... horas. ]]></text>
@@ -62,7 +62,7 @@
 					<property name="com.jaspersoft.studio.unit.width" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Times New Roman" isBold="true"/>
+					<font isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[ALTERAÇÕES PROPOSTAS PELA BANCA]]></text>
 			</staticText>
@@ -71,22 +71,22 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement>
-					<paragraph leftIndent="8"/>
+					<paragraph lineSpacing="1_1_2" leftIndent="8"/>
 				</textElement>
 				<text><![CDATA[................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="390" y="410" width="160" height="30" uuid="05cf8695-c468-42db-bd07-6a15a4ad9ab5"/>
+				<reportElement x="340" y="410" width="200" height="30" uuid="05cf8695-c468-42db-bd07-6a15a4ad9ab5"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{data}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="30" y="330" width="489" height="80" uuid="3fc34f4f-c54d-4ae5-af69-1ff36dfa55dc">
+				<reportElement x="20" y="330" width="529" height="80" uuid="3fc34f4f-c54d-4ae5-af69-1ff36dfa55dc">
 					<property name="com.jaspersoft.studio.unit.firstLineIndent" value="px"/>
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Justified" markup="html">
-					<font fontName="Times New Roman" size="11"/>
+					<font size="11" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.5" firstLineIndent="0" leftIndent="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{mensagemChefe}]]></textFieldExpression>
@@ -94,22 +94,22 @@
 			<textField>
 				<reportElement x="280" y="0" width="269" height="60" uuid="3e8f2b33-a8ba-48d6-b1b0-ab566a5dd80f"/>
 				<textElement markup="html">
-					<font fontName="Times New Roman" size="11"/>
+					<font size="11" isPdfEmbedded="true"/>
 					<paragraph lineSpacing="1_1_2" lineSpacingSize="1.5"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{titulo}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="370" y="170" width="66" height="20" uuid="d09729d0-ef92-4aca-b99a-2141103e2cc9"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Times New Roman&#xD;&#xA;" size="8"/>
+				<reportElement x="400" y="170" width="59" height="20" uuid="d09729d0-ef92-4aca-b99a-2141103e2cc9"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="11" isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{horaFinalizado}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="180" y="173" width="55" height="14" uuid="2c8c467a-35c3-49c4-ad12-856155d6f05c"/>
-				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="Times New Roman&#xD;&#xA;" size="8"/>
+				<reportElement x="190" y="176" width="59" height="14" uuid="2c8c467a-35c3-49c4-ad12-856155d6f05c"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font size="11" isBold="true" isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{media}]]></textFieldExpression>
 			</textField>
@@ -132,7 +132,7 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Times New Roman" size="10"/>
+					<font size="10" isPdfEmbedded="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[Membro (a) 1:]]></text>
@@ -143,7 +143,7 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Times New Roman" size="10"/>
+					<font size="10" isPdfEmbedded="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[Membro (a) 2:]]></text>
@@ -164,7 +164,7 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Times New Roman" size="10"/>
+					<font size="10" isPdfEmbedded="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<text><![CDATA[Discente:]]></text>
@@ -184,7 +184,7 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Top">
-					<font fontName="Times New Roman"/>
+					<font isPdfEmbedded="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{membro_1}]]></textFieldExpression>
@@ -195,7 +195,7 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Top">
-					<font fontName="Times New Roman"/>
+					<font isPdfEmbedded="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{membro_2}]]></textFieldExpression>
@@ -206,7 +206,7 @@
 					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Top">
-					<font fontName="Times New Roman"/>
+					<font isPdfEmbedded="true"/>
 					<paragraph leftIndent="3"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{aluno}]]></textFieldExpression>
@@ -214,21 +214,21 @@
 			<textField>
 				<reportElement x="170" y="223" width="228" height="20" uuid="50207e50-479b-4996-b074-a04e38a9df2a"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="Times New Roman"/>
+					<font isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{coordenadora}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="170" y="243" width="228" height="23" uuid="23556347-869b-43e3-af55-6aa954a8e8d3"/>
 				<textElement textAlignment="Center">
-					<font fontName="Times New Roman"/>
+					<font isPdfEmbedded="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{curso}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="156" y="54" width="242" height="20" uuid="b975880e-4505-40d9-bb11-7d5b1ed0e217"/>
 				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="Times New Roman" size="10"/>
+					<font size="10" isPdfEmbedded="true"/>
 				</textElement>
 				<text><![CDATA[Professor (a) Orientador (a)/Presidente]]></text>
 			</staticText>

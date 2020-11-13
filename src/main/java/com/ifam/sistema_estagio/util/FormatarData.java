@@ -8,6 +8,7 @@ public class FormatarData {
     private static final String MASCARA_DATA_PADRAO_SEM_CIDADE = "dd 'de' MMMM 'de' yyyy";
     private static final String MASCARA_DATA_PADRAO = "dd/MM/yyyy";
     private static final String MASCARA_HORA_PADRAO = "hh:mm";
+    private static final String MASCARA_ANO = "yyyy";
 
     private static String porMascara(String mascara, Date data){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(mascara);
@@ -29,5 +30,9 @@ public class FormatarData {
 
     public static String porMascaraDataPadraoSemCidade(Date data){
         return porMascara(MASCARA_DATA_PADRAO_SEM_CIDADE, data);
+    }
+
+    public static String porMascaraAno(Date data){
+        return porMascara(MASCARA_ANO, data);
     }
 }
