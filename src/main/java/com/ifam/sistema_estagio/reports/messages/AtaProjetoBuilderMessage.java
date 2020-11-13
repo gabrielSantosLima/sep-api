@@ -1,10 +1,8 @@
 package com.ifam.sistema_estagio.reports.messages;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
-import com.ifam.sistema_estagio.dto.FichaAvaliacaoEstagioDto;
 import com.ifam.sistema_estagio.dto.FichaAvaliacaoProjetoDto;
 import com.ifam.sistema_estagio.dto.UsuarioDto;
-import com.ifam.sistema_estagio.reports.fields.AtaEstagioFields;
 import com.ifam.sistema_estagio.reports.fields.AtaProjetoFields;
 import com.ifam.sistema_estagio.util.FormatarData;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
@@ -65,7 +63,7 @@ public class AtaProjetoBuilderMessage implements IBuilderMessage<List<AtaProjeto
                 "</b>, para juntos avaliarem o projeto do aluno(a), da turma <b>" +
                 discente.getTurma() +
                 " do ano de <b>" +
-                FormatarData.porMascaraAno(o.getData()) +
+                FormatarData.paraAno(o.getData()) +
                 "</b>, que teve como professor(a) orientador(a) <b>" +
                 Utils.retornarOrientador(o).getNome() +
                 "</b>. O(A) aluno(a) " +

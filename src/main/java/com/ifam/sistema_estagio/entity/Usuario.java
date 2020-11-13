@@ -11,10 +11,7 @@ import javax.persistence.MappedSuperclass;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 import com.ifam.sistema_estagio.util.enums.GrauAcademico;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @MappedSuperclass
 @Getter

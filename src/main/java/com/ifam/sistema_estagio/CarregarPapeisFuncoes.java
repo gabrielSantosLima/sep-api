@@ -1,4 +1,4 @@
-package com.ifam.sistema_estagio.loads;
+package com.ifam.sistema_estagio;
 
 import org.springframework.boot.ApplicationArguments;
 

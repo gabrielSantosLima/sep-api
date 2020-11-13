@@ -15,14 +15,12 @@ import javax.persistence.Table;
 
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "ata")

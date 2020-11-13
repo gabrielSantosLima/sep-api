@@ -1,6 +1,7 @@
 package com.ifam.sistema_estagio.processes.delegates;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
+import com.ifam.sistema_estagio.dto.NotificacaoBancasDto;
 import com.ifam.sistema_estagio.dto.UsuarioDto;
 import com.ifam.sistema_estagio.entity.Coordenadora;
 import com.ifam.sistema_estagio.entity.NotificacaoBancas;
@@ -50,12 +51,11 @@ public class NotificarCoordenacaoDelegate implements JavaDelegate {
 
         String dataNotificacao = FormatarData.porMascaraDataPadrao(new Date());
 
-        noticacaoBancasService.salvar(
-                new NotificacaoBancas(
-                    null,
-                    dataNotificacao,
-                    idProcesso,
-                    coordenadora.get()
-        ));
+        noticacaoBancasService.salvar(NotificacaoBancas.builder()
+                .dataNotificacao(dataNotificacao)
+                .idProcesso(idProcesso)
+                .coordenadora(coordenadora.get())
+                .build()
+        );
     }
 }
