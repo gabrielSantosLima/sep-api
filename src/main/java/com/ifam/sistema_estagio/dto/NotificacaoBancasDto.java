@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Setter
 @Builder
 @AllArgsConstructor
-public class NotificacaoBancasDto implements Serializable, IObjetoDto<NotificacaoBancas>{
+public class NotificacaoBancasDto implements IObjetoDto<NotificacaoBancas>{
     private String dataNotificacao;
     private String idProcesso;
     private UsuarioDto coordenadora;

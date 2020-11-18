@@ -39,9 +39,6 @@ public class SolicitarBancaProcess {
 	public String iniciarProcesso(BancaDto banca) {
 		Map<String, Object> variables = new HashMap<>();
 
-		String idBanca = ManipularNumerosHexadecimais.numeroAleatorio();
-
-		banca.setId(idBanca);
 		banca.getParticipantes().forEach(participante -> {
 			String idParticipante = ManipularNumerosHexadecimais.numeroAleatorio();
 			participante.setId(idParticipante);

@@ -20,8 +20,7 @@ import java.util.Date;
 @Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor
-public class UsuarioDto implements Serializable, IObjetoUsuarioDto {
+public class UsuarioDto implements IObjetoUsuarioDto {
 	private String id;
 	private String matricula;
 	private String cpf;

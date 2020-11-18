@@ -3,7 +3,6 @@ package com.ifam.sistema_estagio.dto;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import com.ifam.sistema_estagio.entity.Banca;
 import com.ifam.sistema_estagio.entity.Coordenadora;
@@ -11,17 +10,14 @@ import com.ifam.sistema_estagio.util.enums.Curso;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BancaDto implements Serializable, IObjetoDto<Banca>{
-	private String id;
+public class BancaDto implements Serializable,IObjetoDto<Banca>{
 	private Date data;
 	private TipoServico tipo;
 	private Curso curso;

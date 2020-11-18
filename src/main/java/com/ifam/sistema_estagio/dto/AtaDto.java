@@ -10,7 +10,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 @Setter
 @Builder
 @AllArgsConstructor
-public class AtaDto implements Serializable, IObjetoDto<Ata>{
+public class AtaDto implements IObjetoDto<Ata>{
     private Double mediaTotal;
     private String descricao;
     private TipoServico tipo;
@@ -37,7 +36,7 @@ public class AtaDto implements Serializable, IObjetoDto<Ata>{
                 .collect(Collectors.toList());
 
         return Ata.builder()
-                .banca(banca.construirEntidade())
+//                .banca(banca.construirEntidade())
                 .descricao(descricao)
                 .fichasEstagio(fichaDeAvaliacaoEstagios)
                 .fichasProjeto(fichaDeAvaliacaoProjetos)

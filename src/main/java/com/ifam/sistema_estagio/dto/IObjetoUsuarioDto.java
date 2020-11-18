@@ -5,7 +5,9 @@ import com.ifam.sistema_estagio.entity.Aluno;
 import com.ifam.sistema_estagio.entity.Coordenadora;
 import com.ifam.sistema_estagio.entity.Professor;
 
-public interface IObjetoUsuarioDto{
+import java.io.Serializable;
+
+public interface IObjetoUsuarioDto extends Serializable {
     Aluno construirAluno();
     Professor construirProfessor();
     Coordenadora construirCoordenadora();

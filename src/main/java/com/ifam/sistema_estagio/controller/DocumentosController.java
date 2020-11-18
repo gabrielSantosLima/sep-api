@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import com.ifam.sistema_estagio.reports.DocumentosService;
+import com.ifam.sistema_estagio.reports.DocumentosManager;
 
 import net.sf.jasperreports.engine.JRException;
 
@@ -19,7 +19,7 @@ import net.sf.jasperreports.engine.JRException;
 public class DocumentosController {
 
 	@Autowired
-	private DocumentosService service;
+	private DocumentosManager service;
 
 	private CertificadoBuilderMessage certificadoBuilderMessage = new CertificadoBuilderMessage();
 	private FichaEstagioBuilderMessage fichaEstagioBuilderMessage = new FichaEstagioBuilderMessage();

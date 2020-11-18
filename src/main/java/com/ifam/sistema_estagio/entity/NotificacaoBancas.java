@@ -21,6 +21,9 @@ public class NotificacaoBancas {
     @Column(nullable = false, name = "id_processo")
     private String idProcesso;
 
+    @Column(nullable = false, name = "ja_visualizado")
+    private Boolean jaVisualizado;
+
     @ManyToOne
     @JoinColumn(name = "coordenadora_id")
     private Coordenadora coordenadora;

@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Setter
 @Builder
 @AllArgsConstructor
-public class FichaAvaliacaoProjetoDto implements Serializable, IObjetoDto<FichaDeAvaliacaoProjeto> {
+public class FichaAvaliacaoProjetoDto implements IObjetoDto<FichaDeAvaliacaoProjeto> {
     private Double media;
 
     private Double notaSlide;
