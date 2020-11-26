@@ -1,11 +1,6 @@
 package com.ifam.sistema_estagio.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import javax.persistence.Embedded;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.*;
 
@@ -14,14 +9,15 @@ import lombok.*;
 @Setter
 @Builder
 @Table(name = "ficha_de_avaliacao_projeto")
-public class FichaDeAvaliacaoProjeto extends FichaDeAvaliacao{
-	
-	//Avaliador
+public class FichaDeAvaliacaoProjeto{
+	@Id
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	private Integer id;
+
 	@ManyToOne
 	@JoinColumn(name = "professor_id", nullable = false)
 	private Professor professor;
 	
-	//Ata a qual pertence
 	@ManyToOne
 	@JoinColumn(name = "ata_id", nullable = false)
 	private Ata ata;

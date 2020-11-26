@@ -19,7 +19,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public abstract class Usuario {
-
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
@@ -43,14 +42,4 @@ public abstract class Usuario {
 	@Column(nullable = true, name = "grau")
 	@Enumerated(EnumType.STRING)
 	private GrauAcademico grau;
-		
-	@Column(nullable = true, name = "username")
-	private String username;
-
-	@Column(nullable = true, name = "password")
-	private String password;
-
-	@Column(nullable = true, name = "password_confirm")
-	private String passwordConfirm;
-
 }

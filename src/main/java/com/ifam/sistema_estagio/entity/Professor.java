@@ -17,25 +17,17 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 @Table(name = "professor")
-public class Professor extends Usuario implements UsuarioLogavel {
+public class Professor extends Usuario{
 
-	// Avaliadores da banca
 	@OneToMany(mappedBy = "professor")
 	private List<Avaliadores> avaliadores;
 
-	// Fichas de avaliação de estágios
 	@OneToMany(mappedBy = "professor")
 	private List<FichaDeAvaliacaoEstagio> fichaEstagios;
 
-	// Fichas de avaliação de projetos
 	@OneToMany(mappedBy = "professor")
 	private List<FichaDeAvaliacaoProjeto> fichaProjeto;
 
-	// Projetos ou estágios
 	@OneToMany(mappedBy = "responsavel")
 	private List<EstagioPCCT> estagiosPcct;
-
-	@ManyToOne
-	@JoinColumn(name = "papel_id")
-	private Papel papel;
 }

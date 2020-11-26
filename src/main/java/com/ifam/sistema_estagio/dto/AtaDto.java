@@ -36,11 +36,11 @@ public class AtaDto implements IObjetoDto<Ata>{
                 .collect(Collectors.toList());
 
         return Ata.builder()
-//                .banca(banca.construirEntidade())
+                .banca(banca.construirEntidade())
                 .descricao(descricao)
                 .fichasEstagio(fichaDeAvaliacaoEstagios)
                 .fichasProjeto(fichaDeAvaliacaoProjetos)
-                .mediaTotal(0)
+                .mediaTotal(mediaTotal)
                 .tipo(tipo)
                 .build();
     }

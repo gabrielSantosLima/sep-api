@@ -8,6 +8,5 @@ import java.util.List;
 
 @Repository
 public interface NotificacaoBancasRepository extends JpaRepository<NotificacaoBancas, Integer> {
-
     List<NotificacaoBancas> findByJaVisualizado(Boolean jaVisualizado);
 }

@@ -47,9 +47,6 @@ public class Banca {
 	@Column(nullable = false, name = "curso")
 	@Enumerated(EnumType.STRING)
 	private Curso curso;
-
-	@Column(nullable = false, name = "banca_final")
-	private Boolean banca_final;
 	
 	@Column(nullable = false, name = "local")
 	private String local;
@@ -62,20 +59,16 @@ public class Banca {
 	@Temporal(TemporalType.DATE)
 	private Date horaFinalizado;
 
-	//Ata
 	@OneToOne
 	private Ata ata;
 	
-	//Avaliadores da banca
 	@OneToMany(mappedBy = "banca")
 	private List<Avaliadores> avaliadores;
 
-	//Coordenadora
 	@ManyToOne
 	@JoinColumn(name = "coordenadora_id")
 	private Coordenadora coordenadora;
 
-	//Estágio ou projeto que pertence
 	@ManyToOne
 	@JoinColumn(name = "estagio_pcct_id")
 	private EstagioPCCT estagioPcct;

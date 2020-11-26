@@ -6,6 +6,4 @@ import com.ifam.sistema_estagio.entity.Papel;
 import com.ifam.sistema_estagio.repository.PapelRepository;
 
 @Service
-public class PapelService extends GenericService<Papel, PapelRepository>{
-
-}
+public class PapelService extends GenericService<Papel, PapelRepository>{}

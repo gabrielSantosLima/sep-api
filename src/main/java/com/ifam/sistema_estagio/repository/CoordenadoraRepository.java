@@ -10,7 +10,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
 public interface CoordenadoraRepository extends JpaRepository<Coordenadora, Integer>{
-	
-	Optional<Coordenadora> findByUsername(String username);
 	Optional<Coordenadora> findByNomeCompleto(String nomeCompleto);
 }

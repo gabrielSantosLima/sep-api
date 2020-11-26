@@ -47,8 +47,8 @@ class ChavePrimaria implements Serializable{
 	private static final long serialVersionUID = 7552172921230408228L;
 
 	@Column(name = "professor_id")
-	private Long professorId;
+	private Integer professorId;
 
 	@Column(name = "banca_id")
-	private Long bancaId;
+	private Integer bancaId;
 }

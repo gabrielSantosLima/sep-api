@@ -27,10 +27,9 @@ public class UsuarioDto implements IObjetoUsuarioDto {
 	private String nome;
 	private String email;
 	private Curso curso;
-	private File anexo;
 	private String turma;
 	private ModalidadeCurso modalidadeCurso;
-	private Date anoFinalizacao;
+	private Date dataConclusao;
 	private FuncaoEstagio funcao;
 	private GrauAcademico grau;
 	private EstagioPCCTDto estagioPcct;
@@ -38,29 +37,24 @@ public class UsuarioDto implements IObjetoUsuarioDto {
 	@Override
 	public Aluno construirAluno() {
 		Aluno aluno = Aluno.builder()
-				.anexo(anexo)
 				.curso(curso)
-				.dataConclusao(anoFinalizacao)
+				.dataConclusao(dataConclusao)
 				.estagioPcct(estagioPcct.construirEntidade())
 				.modalidadeCurso(modalidadeCurso)
 				.turma(turma)
 				.build();
-
 		aluno.setCpf(cpf);
 		aluno.setNomeCompleto(nome);
 		aluno.setMatricula(matricula);
 		aluno.setEmail(email);
 		aluno.setTipo(funcao);
 		aluno.setGrau(grau);
-
 		return aluno;
 	}
 
 	@Override
 	public Professor construirProfessor() {
-		Professor professor = Professor.builder()
-				.build();
-
+		Professor professor = Professor.builder().build();
 		professor.setCpf(cpf);
 		professor.setNomeCompleto(nome);
 		professor.setMatricula(matricula);
@@ -73,9 +67,7 @@ public class UsuarioDto implements IObjetoUsuarioDto {
 
 	@Override
 	public Coordenadora construirCoordenadora() {
-		Coordenadora coordenadora = Coordenadora.builder()
-				.build();
-
+		Coordenadora coordenadora = Coordenadora.builder().build();
 		coordenadora.setCpf(cpf);
 		coordenadora.setNomeCompleto(nome);
 		coordenadora.setMatricula(matricula);

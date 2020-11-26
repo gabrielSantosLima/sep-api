@@ -6,6 +6,4 @@ import com.ifam.sistema_estagio.entity.Funcao;
 import com.ifam.sistema_estagio.repository.FuncaoRepository;
 
 @Service
-public class FuncaoService extends GenericService<Funcao, FuncaoRepository>{
-
-}
+public class FuncaoService extends GenericService<Funcao, FuncaoRepository>{}

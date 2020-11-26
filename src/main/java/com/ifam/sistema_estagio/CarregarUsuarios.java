@@ -9,8 +9,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(1)
 public class CarregarUsuarios implements ApplicationRunner{
-
-
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 

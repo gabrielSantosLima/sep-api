@@ -31,7 +31,7 @@ public class Ata {
 	private Integer id;
 
 	@Column(name = "media_total")
-	private Integer mediaTotal;
+	private Double mediaTotal;
 
 	@Column(name = "descricao")
 	private String descricao;
@@ -40,15 +40,12 @@ public class Ata {
 	@Enumerated(EnumType.STRING)
 	private TipoServico tipo;
 
-	//Fichas de estágio - Opcional
 	@OneToMany(mappedBy = "ata")
 	private List<FichaDeAvaliacaoEstagio> fichasEstagio;
 
-	//Fichas de projeto - Opcional
 	@OneToMany(mappedBy = "ata")
 	private List<FichaDeAvaliacaoProjeto> fichasProjeto;
 	
-	//Banca correspondente
 	@OneToOne
 	private Banca banca;
 }

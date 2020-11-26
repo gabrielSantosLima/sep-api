@@ -28,7 +28,7 @@ public class EstagioPCCTDto implements IObjetoDto<EstagioPCCT>{
 
     @Override
     public EstagioPCCT construirEntidade() {
-        Professor orientador = participantes.stream()
+        Professor responsavel = participantes.stream()
                 .filter(participante -> participante.getFuncao() == FuncaoEstagio.ORIENTADOR)
                 .findFirst()
                 .get()
@@ -41,7 +41,7 @@ public class EstagioPCCTDto implements IObjetoDto<EstagioPCCT>{
                 .descricao(descricao)
                 .tipo(tipo)
                 .titulo(titulo)
-                .responsavel(orientador)
+                .responsavel(responsavel)
                 .build();
     }
 }

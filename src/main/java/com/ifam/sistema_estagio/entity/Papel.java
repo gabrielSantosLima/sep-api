@@ -30,15 +30,6 @@ public class Papel {
 	
 	@Column(name = "nome")
 	private String nome;
-
-	@OneToMany(mappedBy = "papel")
-	private List<Aluno> alunos;
-	
-	@OneToMany(mappedBy = "papel")
-	private List<Professor> professores;
-	
-	@OneToMany(mappedBy = "papel")
-	private List<Coordenadora> coodernadoras;
 	
 	@ManyToMany
 	@JoinTable(

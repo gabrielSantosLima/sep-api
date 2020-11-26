@@ -14,7 +14,6 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 public class FichaAvaliacaoEstagioDto implements IObjetoDto<FichaDeAvaliacaoEstagio> {
-    private Double media;
     private Double notaConhecimento;
     private Double notaOrganizacao;
     private Double notaAtividades;
@@ -26,13 +25,14 @@ public class FichaAvaliacaoEstagioDto implements IObjetoDto<FichaDeAvaliacaoEsta
     public FichaDeAvaliacaoEstagio construirEntidade() {
         return FichaDeAvaliacaoEstagio.builder()
                 .ata(ata.construirEntidade())
+                .professor(avaliador.construirProfessor())
                 .nota(NotaEstagio.builder()
                         .notaApresentacao(notaApresentacao)
                         .notaAtividades(notaAtividades)
                         .notaConhecimento(notaConhecimento)
                         .notaOrganizacao(notaOrganizacao)
-                        .build())
-                .professor(avaliador.construirProfessor())
+                        .build()
+                )
                 .build();
     }
 }

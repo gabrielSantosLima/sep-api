@@ -49,5 +49,4 @@ public class CarregarPapeisFuncoes implements ApplicationRunner{
 		
 		return papelRepository.save(new Papel(nome, funcao));
 	}
-
 }

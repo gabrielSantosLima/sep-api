@@ -45,9 +45,8 @@ public class BancaDto implements Serializable,IObjetoDto<Banca>{
 				.horaFinalizado(horaFinalizado)
 				.horaInicio(horaInicio)
 				.ata(ata.construirEntidade())
-				.estagioPcct(estagioPCCT.construirEntidade())
 				.coordenadora(coordenadora)
-				.banca_final(banca_final)
+				.estagioPcct(estagioPCCT.construirEntidade())
 				.build();
 	}
 }

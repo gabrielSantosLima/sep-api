@@ -1,6 +1,7 @@
 package com.ifam.sistema_estagio.entity;
 
 
+import java.io.File;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ifam.sistema_estagio.util.enums.ModalidadeCurso;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 import lombok.*;
@@ -47,14 +49,19 @@ public class EstagioPCCT {
 	private String descricao;
 
 	@Column(nullable = false, name = "tipo")
-	@Enumerated(EnumType.ORDINAL)
+	@Enumerated(EnumType.STRING)
 	private TipoServico tipo;
+
+	@Column(nullable = false, name = "modalidade")
+	@Enumerated(EnumType.STRING)
+	private ModalidadeCurso modalidadeCurso;
+
+	@Column(nullable = true, name = "anexo")
+	private File anexo;
 	
-	//Bancas
-	@OneToMany
+	@OneToMany(mappedBy = "estagioPcct")
 	private List<Banca> bancas;
 
-	//Alunos
 	@OneToMany(mappedBy = "estagioPcct")
 	private List<Aluno> alunos;
 	
