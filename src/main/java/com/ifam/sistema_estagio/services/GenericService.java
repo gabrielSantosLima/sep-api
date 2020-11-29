@@ -20,7 +20,7 @@ public class GenericService<E, R extends JpaRepository>{
 	}
 
 	@Transactional
-	public E atualizar(Integer id, E newE) throws Exception {
+	public E atualizar(String id, E newE) throws Exception {
 		if(newE == null) throw new Exception("[service] Entidade nula!");
 		if(!existe(id)) throw new Exception("[service] Entidade não existe!");
 
@@ -29,7 +29,7 @@ public class GenericService<E, R extends JpaRepository>{
 	}
 
 	@Transactional
-	public void deletar(Integer id) throws Exception {
+	public void deletar(String id) throws Exception {
 		if(!existe(id)) throw new Exception("[service] Entidade não existe!");
 		repository.deleteById(id);
 	}
@@ -38,11 +38,11 @@ public class GenericService<E, R extends JpaRepository>{
 		return repository.findAll();
 	}
 
-	public Optional<E> encontrarPorId(Integer id) {
+	public Optional<E> encontrarPorId(String id) {
 		return repository.findById(id);
 	}
 
-	public boolean existe(Integer id) {
+	public boolean existe(String id) {
 		return repository.existsById(id);
 	}
 }

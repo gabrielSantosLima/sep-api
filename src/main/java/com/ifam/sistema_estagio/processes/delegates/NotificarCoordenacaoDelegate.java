@@ -48,8 +48,8 @@ public class NotificarCoordenacaoDelegate implements JavaDelegate {
 
         if(coordenadorNaoExiste) throw new Exception("[notificação-banca] Sem coordenador(a) de banca");
 
-        String nomeCompleto = coordenadoraDto.get().getNome();
-        Optional<Coordenadora> coordenadora = coordenadoraService.findByNomeCompleto(nomeCompleto);
+        String nome = coordenadoraDto.get().getNome();
+        Optional<Coordenadora> coordenadora = coordenadoraService.findByNome(nome);
 
         Boolean coordenadorNaoEncontrado = !coordenadora.isPresent();
 

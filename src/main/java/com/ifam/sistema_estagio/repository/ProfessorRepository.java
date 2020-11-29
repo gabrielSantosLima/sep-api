@@ -7,4 +7,4 @@ import com.ifam.sistema_estagio.entity.Professor;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface ProfessorRepository extends JpaRepository<Professor, Integer>{}
+public interface ProfessorRepository extends JpaRepository<Professor, String>{}

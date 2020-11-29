@@ -1,7 +1,5 @@
 package com.ifam.sistema_estagio.util.enums;
 
-import java.util.Arrays;
-
 public enum Curso {
 	INF("Informática"),
 	IQUI("Química"),
@@ -11,7 +9,7 @@ public enum Curso {
 	
 	private String nomeCurso;
 	
-	Curso(String nomeCurso ){
+	Curso(String nomeCurso){
 		this.nomeCurso = nomeCurso;
 	}
 	

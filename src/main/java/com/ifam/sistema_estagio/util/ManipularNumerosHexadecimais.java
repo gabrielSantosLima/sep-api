@@ -1,5 +1,6 @@
 package com.ifam.sistema_estagio.util;
 
+import java.util.Date;
 import java.util.Random;
 
 public class ManipularNumerosHexadecimais {
@@ -20,7 +21,7 @@ public class ManipularNumerosHexadecimais {
         StringBuilder hexFinal = new StringBuilder(hexSubstring);
         hexFinal.setCharAt(tamanhoMax / 2, '-');
 
-        return hexFinal.toString();
+        return hexFinal.toString() + FormatarData.paraAno(new Date());
     }
 
     public static String numeroAleatorio(){

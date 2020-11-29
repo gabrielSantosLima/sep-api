@@ -1,6 +1,5 @@
 package com.ifam.sistema_estagio.entity;
 
-import java.io.File;
 import java.util.Date;
 
 import javax.persistence.Column;

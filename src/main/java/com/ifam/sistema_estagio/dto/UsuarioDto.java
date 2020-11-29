@@ -1,6 +1,5 @@
 package com.ifam.sistema_estagio.dto;
 
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.ifam.sistema_estagio.entity.Aluno;
 import com.ifam.sistema_estagio.entity.Coordenadora;
 import com.ifam.sistema_estagio.entity.Professor;
@@ -10,10 +9,7 @@ import com.ifam.sistema_estagio.util.enums.GrauAcademico;
 
 import com.ifam.sistema_estagio.util.enums.ModalidadeCurso;
 import lombok.*;
-import org.springframework.boot.jackson.JsonComponent;
 
-import java.io.File;
-import java.io.Serializable;
 import java.util.Date;
 
 @Getter
@@ -44,7 +40,7 @@ public class UsuarioDto implements IObjetoUsuarioDto {
 				.turma(turma)
 				.build();
 		aluno.setCpf(cpf);
-		aluno.setNomeCompleto(nome);
+		aluno.setNome(nome);
 		aluno.setMatricula(matricula);
 		aluno.setEmail(email);
 		aluno.setTipo(funcao);
@@ -56,7 +52,7 @@ public class UsuarioDto implements IObjetoUsuarioDto {
 	public Professor construirProfessor() {
 		Professor professor = Professor.builder().build();
 		professor.setCpf(cpf);
-		professor.setNomeCompleto(nome);
+		professor.setNome(nome);
 		professor.setMatricula(matricula);
 		professor.setEmail(email);
 		professor.setTipo(funcao);
@@ -69,7 +65,7 @@ public class UsuarioDto implements IObjetoUsuarioDto {
 	public Coordenadora construirCoordenadora() {
 		Coordenadora coordenadora = Coordenadora.builder().build();
 		coordenadora.setCpf(cpf);
-		coordenadora.setNomeCompleto(nome);
+		coordenadora.setNome(nome);
 		coordenadora.setMatricula(matricula);
 		coordenadora.setEmail(email);
 		coordenadora.setTipo(funcao);

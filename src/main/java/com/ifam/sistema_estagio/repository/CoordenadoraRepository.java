@@ -9,6 +9,6 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface CoordenadoraRepository extends JpaRepository<Coordenadora, Integer>{
-	Optional<Coordenadora> findByNomeCompleto(String nomeCompleto);
+public interface CoordenadoraRepository extends JpaRepository<Coordenadora, String>{
+	Optional<Coordenadora> findByNome(String nome);
 }

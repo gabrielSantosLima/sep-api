@@ -15,10 +15,12 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.ifam.sistema_estagio.config.HexIdGenerator;
 import com.ifam.sistema_estagio.util.enums.ModalidadeCurso;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
@@ -28,10 +30,15 @@ import lombok.*;
 @Builder
 @Table(name = "estagio_pcct")
 public class EstagioPCCT {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(generator = HexIdGenerator.nome)
+	@GenericGenerator(
+			name = HexIdGenerator.nome,
+			strategy = "com.ifam.sistema_estagio.config.HexIdGenerator"
+	)
+	@Column(length = 24)
+	private String id;
 	
 	@Column(nullable = false, name = "titulo")
 	private String titulo;

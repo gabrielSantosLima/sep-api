@@ -9,6 +9,6 @@ import com.ifam.sistema_estagio.entity.Aluno;
 import com.ifam.sistema_estagio.entity.EstagioPCCT;
 
 @Repository
-public interface AlunoRepository extends JpaRepository<Aluno, Integer>{
+public interface AlunoRepository extends JpaRepository<Aluno, String>{
 	List<Aluno> findByEstagioPcct(EstagioPCCT estagioPcct);
 }

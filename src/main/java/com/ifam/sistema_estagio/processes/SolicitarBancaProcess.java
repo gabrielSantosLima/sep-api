@@ -5,12 +5,12 @@ import java.util.*;
 import com.ifam.sistema_estagio.dto.RespostaAprovacaoBancaDto;
 import com.ifam.sistema_estagio.services.BancaService;
 import com.ifam.sistema_estagio.util.ManipularNumerosHexadecimais;
+import lombok.val;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
 
@@ -35,13 +35,16 @@ public class SolicitarBancaProcess {
 	@Autowired
 	private BancaService bancaService;
 
-	@Transactional
-	public String iniciarProcesso(BancaDto banca) {
-		Map<String, Object> variables = new HashMap<>();
+	public Map<String, Object> iniciarProcesso(BancaDto banca) throws Exception {
+		val variables = new HashMap<String, Object>();
+		val response = new HashMap<String, Object>();
+
+		if(banca == null) throw new Exception("Banca inválida");
 
 		banca.getParticipantes().forEach(participante -> {
 			String idParticipante = ManipularNumerosHexadecimais.numeroAleatorio();
 			participante.setId(idParticipante);
+			response.put(participante.getNome(), idParticipante);
 		});
 
 		variables.put(VAR_BANCA, banca);
@@ -51,19 +54,26 @@ public class SolicitarBancaProcess {
 		variables.put(VAR_APROVADO, false);
 
 		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ID_PROCESSO, variables);
-		return processInstance.getId();
+
+		response.put("idProcesso", processInstance.getId());
+
+		return response;
 	}
 
-	@Transactional
-	public long listarProcessos(){
+	public long listarQuantidadeDeProcessos(){
 		return taskService.createTaskQuery().processDefinitionKey(ID_PROCESSO).count();
 	}
 
-	@Transactional
+	public BancaDto listarBancaPorProcesso(String idProcesso) throws Exception {
+		if(idProcesso.isEmpty()) throw new Exception("Id de processo inválido");
+		val banca =  (BancaDto) retornarVariavel(idProcesso, VAR_BANCA);
+		return banca;
+	}
+
 	public void confirmarParticipacao(String idProcesso, String idParticipante){
-		List<String> participantesConfirmados = (List<String>) retornarVariavel(idProcesso,VAR_PARTICIPANTES_CONFIRMADOS);
-		Integer totalParticipantes = (Integer) retornarVariavel(idProcesso,VAR_TOTAL_PARTICIPANTES);
-		boolean jaConfirmado = participantesConfirmados.contains(idParticipante);
+		val participantesConfirmados = (List<String>) retornarVariavel(idProcesso,VAR_PARTICIPANTES_CONFIRMADOS);
+		val totalParticipantes = (Integer) retornarVariavel(idProcesso,VAR_TOTAL_PARTICIPANTES);
+		val jaConfirmado = participantesConfirmados.contains(idParticipante);
 
 		if(jaConfirmado) return;
 
@@ -78,9 +88,8 @@ public class SolicitarBancaProcess {
 		}
 	}
 
-	@Transactional
 	public void verificarAprovacaoBanca(String idProcesso,RespostaAprovacaoBancaDto resposta){
-		Boolean foiAprovado = resposta.getAprovaBanca();
+		val foiAprovado = resposta.getAprovaBanca();
 		enviarResultadoBanca(idProcesso, foiAprovado);
 	}
 

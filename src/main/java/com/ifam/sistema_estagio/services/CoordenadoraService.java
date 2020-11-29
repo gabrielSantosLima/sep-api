@@ -14,7 +14,7 @@ public class CoordenadoraService extends GenericService<Coordenadora, Coordenado
 	@Autowired
 	private CoordenadoraRepository repository;
 
-	public Optional<Coordenadora> findByNomeCompleto(String nomeCompleto) {
-		return repository.findByNomeCompleto(nomeCompleto);
+	public Optional<Coordenadora> findByNome(String nome) {
+		return repository.findByNome(nome);
 	}
 }

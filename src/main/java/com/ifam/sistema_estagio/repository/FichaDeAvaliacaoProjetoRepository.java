@@ -10,7 +10,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface FichaDeAvaliacaoProjetoRepository extends JpaRepository<FichaDeAvaliacaoProjeto, Integer>{
+public interface FichaDeAvaliacaoProjetoRepository extends JpaRepository<FichaDeAvaliacaoProjeto, String>{
 
 	List<FichaDeAvaliacaoProjeto> findByAta(Ata ata);
 	
