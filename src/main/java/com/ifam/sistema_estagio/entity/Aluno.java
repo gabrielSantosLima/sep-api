@@ -1,6 +1,5 @@
 package com.ifam.sistema_estagio.entity;
 
-import java.io.File;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -25,7 +24,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "aluno")
-public class Aluno extends Usuario implements UsuarioLogavel{
+public class Aluno extends Usuario{
 
 	@Column(nullable = false, name = "data_conclusao")
 	@Temporal(TemporalType.TIMESTAMP)
@@ -41,16 +40,9 @@ public class Aluno extends Usuario implements UsuarioLogavel{
 	@Column(nullable = false, name = "modalidade_curso")
 	@Enumerated(EnumType.STRING)
 	private ModalidadeCurso modalidadeCurso;
-
-	@Column(nullable = true, name = "anexo")
-	private File anexo;
 	
 	//Estágio ou projeto
 	@ManyToOne
 	@JoinColumn(name = "estagioPcct_id")
 	private EstagioPCCT estagioPcct;
-	
-	@ManyToOne
-	@JoinColumn(name = "papel_id")
-	private Papel papel;
 }

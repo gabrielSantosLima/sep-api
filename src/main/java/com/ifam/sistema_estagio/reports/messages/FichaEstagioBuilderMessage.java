@@ -116,8 +116,7 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
     }
 
     private String retornarAnoFinalizado(BancaDto o){
-        Date data = Utils.retornarDiscentes(o).get(0).getAnoFinalizacao();
-
+        Date data = Utils.retornarDiscentes(o).get(0).getDataConclusao();
         return FormatarData.paraAno(data);
     }
 

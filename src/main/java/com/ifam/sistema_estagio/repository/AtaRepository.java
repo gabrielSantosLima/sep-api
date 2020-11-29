@@ -9,7 +9,7 @@ import com.ifam.sistema_estagio.entity.Ata;
 import com.ifam.sistema_estagio.entity.Banca;
 
 @Repository
-public interface AtaRepository extends JpaRepository<Ata, Integer>{
+public interface AtaRepository extends JpaRepository<Ata, String>{
 	
 	List<Ata> findByBanca(Banca banca); 
 }

@@ -1,43 +1,41 @@
 package com.ifam.sistema_estagio.controller;
 
 import java.io.IOException;
-import java.util.List;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
-import com.ifam.sistema_estagio.reports.fields.*;
 import com.ifam.sistema_estagio.reports.messages.*;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import com.ifam.sistema_estagio.reports.DocumentosService;
+import com.ifam.sistema_estagio.reports.DocumentosManager;
 
 import net.sf.jasperreports.engine.JRException;
 
 @RestController
 @RequestMapping("/documentos")
+@SuppressWarnings("unused")
 public class DocumentosController {
-
 	@Autowired
-	private DocumentosService service;
+	private DocumentosManager documentosManager;
 
-	private CertificadoBuilderMessage certificadoBuilderMessage = new CertificadoBuilderMessage();
-	private FichaEstagioBuilderMessage fichaEstagioBuilderMessage = new FichaEstagioBuilderMessage();
-	private FichaProjetoCapaBuilderMessage fichaProjetoCapaBuilderMessage = new FichaProjetoCapaBuilderMessage();
-	private FichaProjetoDefesaBuilderMessage fichaProjetoDefesaBuilderMessage = new FichaProjetoDefesaBuilderMessage();
-	private FichaProjetoRelatorioBuilderMessage fichaProjetoRelatorioBuilderMessage = new FichaProjetoRelatorioBuilderMessage();
-	private CertificadoFrenteBuilderMessage certificadoFrenteBuilderMessage = new CertificadoFrenteBuilderMessage();
-	private AtaEstagioBuilderMessage ataEstagioBuilderMessage = new AtaEstagioBuilderMessage();
-	private AtaProjetoBuilderMessage ataProjetoBuilderMessage = new AtaProjetoBuilderMessage();
+	private final CertificadoBuilderMessage certificadoBuilderMessage = new CertificadoBuilderMessage();
+	private final FichaEstagioBuilderMessage fichaEstagioBuilderMessage = new FichaEstagioBuilderMessage();
+	private final FichaProjetoCapaBuilderMessage fichaProjetoCapaBuilderMessage = new FichaProjetoCapaBuilderMessage();
+	private final FichaProjetoDefesaBuilderMessage fichaProjetoDefesaBuilderMessage = new FichaProjetoDefesaBuilderMessage();
+	private final FichaProjetoRelatorioBuilderMessage fichaProjetoRelatorioBuilderMessage = new FichaProjetoRelatorioBuilderMessage();
+	private final CertificadoFrenteBuilderMessage certificadoFrenteBuilderMessage = new CertificadoFrenteBuilderMessage();
+	private final AtaEstagioBuilderMessage ataEstagioBuilderMessage = new AtaEstagioBuilderMessage();
+	private final AtaProjetoBuilderMessage ataProjetoBuilderMessage = new AtaProjetoBuilderMessage();
 
 	@PostMapping(path = "/certificado", produces = MediaType.APPLICATION_PDF_VALUE)
-	public byte[] gerarCerticados(@RequestBody BancaDto banca) {
+	public byte[] gerarCertificados(@RequestBody BancaDto banca) {
 		byte[] pdf = {};
 		try {
-			List<CertificadoFields> certificados = certificadoBuilderMessage.retornarMensagem(banca);
-			List<FrenteCertificadoFields> certificadosFrente = certificadoFrenteBuilderMessage.retornarMensagem(banca);
-
-			pdf = service.gerarCertificado(certificados, certificadosFrente);
+			val certificados = certificadoBuilderMessage.retornarMensagem(banca);
+			val certificadosFrente = certificadoFrenteBuilderMessage.retornarMensagem(banca);
+			pdf = documentosManager.gerarCertificado(certificados, certificadosFrente);
 		} catch (JRException | IOException e) {
 			e.printStackTrace();
 		}
@@ -48,8 +46,8 @@ public class DocumentosController {
 	public byte[] gerarFichaDeAvaliacaoEstagio(@RequestBody BancaDto banca) {
 		byte pdf[] = null;
 		try {
-			List<FichaDeAvaliacaoEstagioFields> fichas = fichaEstagioBuilderMessage.retornarMensagem(banca);
-			pdf = service.gerarFichaDeAvaliacaoEstagio(fichas);
+			val fichas = fichaEstagioBuilderMessage.retornarMensagem(banca);
+			pdf = documentosManager.gerarFichaDeAvaliacaoEstagio(fichas);
 		} catch (JRException | IOException e) {
 			e.printStackTrace();
 		}
@@ -60,11 +58,10 @@ public class DocumentosController {
 	public byte[] gerarFichaDeAvaliacaoProjeto(@RequestBody BancaDto banca) {
 		byte pdf[] = null;
 		try {
-			List<FichaDeAvaliacaoProjetoCapaFields> capas = fichaProjetoCapaBuilderMessage.retornarMensagem(banca);
-			List<FichaDeAvaliacaoProjetoDefesaFields> defesas = fichaProjetoDefesaBuilderMessage.retornarMensagem(banca);
-			List<FichaDeAvaliacaoProjetoRelatorioFields> relatorios = fichaProjetoRelatorioBuilderMessage.retornarMensagem(banca);
-
-			pdf = service.gerarFichaDeAvaliacaoProjeto(relatorios, defesas, capas);
+			val capas = fichaProjetoCapaBuilderMessage.retornarMensagem(banca);
+			val defesas = fichaProjetoDefesaBuilderMessage.retornarMensagem(banca);
+			val relatorios = fichaProjetoRelatorioBuilderMessage.retornarMensagem(banca);
+			pdf = documentosManager.gerarFichaDeAvaliacaoProjeto(relatorios, defesas, capas);
 		} catch (JRException | IOException e) {
 			e.printStackTrace();
 		}
@@ -75,8 +72,8 @@ public class DocumentosController {
 	public byte[] geraAtaEstagio(@RequestBody BancaDto banca) {
 		byte pdf[] = null;
 		try {
-			List<AtaEstagioFields> atas = ataEstagioBuilderMessage.retornarMensagem(banca);
-			pdf = service.gerarAtaEstagio(atas);
+			val atas = ataEstagioBuilderMessage.retornarMensagem(banca);
+			pdf = documentosManager.gerarAtaEstagio(atas);
 		} catch (JRException | IOException e) {
 			e.printStackTrace();
 		}
@@ -87,8 +84,8 @@ public class DocumentosController {
 	public byte[] geraAtaProjeto(@RequestBody BancaDto banca) {
 		byte pdf[] = null;
 		try {
-			List<AtaProjetoFields> atas = ataProjetoBuilderMessage.retornarMensagem(banca);
-			pdf = service.gerarAtaProjeto(atas);
+			val atas = ataProjetoBuilderMessage.retornarMensagem(banca);
+			pdf = documentosManager.gerarAtaProjeto(atas);
 		} catch (JRException | IOException e) {
 			e.printStackTrace();
 		}

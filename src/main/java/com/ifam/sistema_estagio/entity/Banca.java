@@ -3,25 +3,14 @@ package com.ifam.sistema_estagio.entity;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import javax.persistence.*;
 
+import com.ifam.sistema_estagio.config.HexIdGenerator;
 import com.ifam.sistema_estagio.util.enums.Curso;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
@@ -33,8 +22,13 @@ import lombok.*;
 public class Banca {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(generator = HexIdGenerator.nome)
+	@GenericGenerator(
+			name = HexIdGenerator.nome,
+			strategy = "com.ifam.sistema_estagio.config.HexIdGenerator"
+	)
+	@Column(length = 24)
+	private String id;
 
 	@Column(nullable = false, name = "data")
 	@Temporal(TemporalType.DATE)
@@ -47,9 +41,6 @@ public class Banca {
 	@Column(nullable = false, name = "curso")
 	@Enumerated(EnumType.STRING)
 	private Curso curso;
-
-	@Column(nullable = false, name = "banca_final")
-	private Boolean banca_final;
 	
 	@Column(nullable = false, name = "local")
 	private String local;
@@ -62,20 +53,16 @@ public class Banca {
 	@Temporal(TemporalType.DATE)
 	private Date horaFinalizado;
 
-	//Ata
 	@OneToOne
 	private Ata ata;
 	
-	//Avaliadores da banca
-	@OneToMany(mappedBy = "banca")
-	private List<Avaliadores> avaliadores;
+	@ManyToMany
+	private List<Professor> avaliadores;
 
-	//Coordenadora
 	@ManyToOne
 	@JoinColumn(name = "coordenadora_id")
 	private Coordenadora coordenadora;
 
-	//Estágio ou projeto que pertence
 	@ManyToOne
 	@JoinColumn(name = "estagio_pcct_id")
 	private EstagioPCCT estagioPcct;

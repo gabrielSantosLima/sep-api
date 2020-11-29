@@ -9,7 +9,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 @Repository
-public interface PapelRepository extends JpaRepository<Papel, Integer>{
+public interface PapelRepository extends JpaRepository<Papel, String>{
 	
 	Optional<Papel> findByNome(String nome); 
 }

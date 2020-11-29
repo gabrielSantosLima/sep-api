@@ -14,9 +14,9 @@ public class FichaDeAvaliacaoEstagioService
 	extends GenericService<FichaDeAvaliacaoEstagio, FichaDeAvaliacaoEstagioRepository>{
 
 	@Autowired
-	private FichaDeAvaliacaoEstagioRepository repository;
-	
+	private FichaDeAvaliacaoEstagioRepository fichaDeAvaliacaoEstagioRepository;
+
 	public List<FichaDeAvaliacaoEstagio> findByAta(Ata ata){
-		return repository.findByAta(ata);
+		return fichaDeAvaliacaoEstagioRepository.findByAta(ata);
 	}
 }

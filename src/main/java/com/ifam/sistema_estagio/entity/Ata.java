@@ -13,9 +13,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.ifam.sistema_estagio.config.HexIdGenerator;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
@@ -27,11 +29,16 @@ import lombok.*;
 public class Ata {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	@GeneratedValue(generator = HexIdGenerator.nome)
+	@GenericGenerator(
+			name = HexIdGenerator.nome,
+			strategy = "com.ifam.sistema_estagio.config.HexIdGenerator"
+	)
+	@Column(length = 24)
+	private String id;
 
 	@Column(name = "media_total")
-	private Integer mediaTotal;
+	private Double mediaTotal;
 
 	@Column(name = "descricao")
 	private String descricao;
@@ -40,15 +47,12 @@ public class Ata {
 	@Enumerated(EnumType.STRING)
 	private TipoServico tipo;
 
-	//Fichas de estágio - Opcional
 	@OneToMany(mappedBy = "ata")
 	private List<FichaDeAvaliacaoEstagio> fichasEstagio;
 
-	//Fichas de projeto - Opcional
 	@OneToMany(mappedBy = "ata")
 	private List<FichaDeAvaliacaoProjeto> fichasProjeto;
 	
-	//Banca correspondente
 	@OneToOne
 	private Banca banca;
 }

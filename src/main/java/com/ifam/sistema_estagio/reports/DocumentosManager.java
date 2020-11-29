@@ -22,7 +22,7 @@ import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
 import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
 
 @Service
-public class DocumentosService {
+public class DocumentosManager {
 
 	private static final String DIR_RELATORIOS = "src/main/resources/reports/";
 	private static final String RELATORIO_CERTIFICADO = "certificado-banca.jrxml";

@@ -10,13 +10,11 @@ import com.ifam.sistema_estagio.util.enums.Aplicacao;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.val;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service("enviarEmailService")
 public class EnviarEmailDelegate implements JavaDelegate{
@@ -28,20 +26,20 @@ public class EnviarEmailDelegate implements JavaDelegate{
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
-		String idInstance = execution.getProcessInstanceId();
-		BancaDto banca = (BancaDto) execution.getVariable(SolicitarBancaProcess.VAR_BANCA);
-		List<UsuarioDto> participantes = banca.getParticipantes();
+		val idInstance = execution.getProcessInstanceId();
+		val banca = (BancaDto) execution.getVariable(SolicitarBancaProcess.VAR_BANCA);
+		val participantes = banca.getParticipantes();
 
-		Optional<UsuarioDto> autor = participantes.stream()
+		val autor = participantes.stream()
 				.filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
 				.findFirst();
 
-		String nomeAutor = autor.isPresent() ? autor.get().getNome() : NOME_SEM_AUTOR;
-		String dataFormatada = FormatarData.porMascaraDataPadrao(banca.getData());
-		String horaFormatada = FormatarData.porMascaraHoraPadrao(banca.getHoraInicio());
-		String tipo = banca.getTipo().getValor().toLowerCase();
-		String curso = banca.getCurso().retornarNomeCurso().toLowerCase();
-		String titulo = banca.getEstagioPCCT().getTitulo();
+		val nomeAutor = autor.isPresent() ? autor.get().getNome() : NOME_SEM_AUTOR;
+		val dataFormatada = FormatarData.porMascaraDataPadrao(banca.getData());
+		val horaFormatada = FormatarData.porMascaraHoraPadrao(banca.getHoraInicio());
+		val tipo = banca.getTipo().getValor().toLowerCase();
+		val curso = banca.getCurso().retornarNomeCurso().toLowerCase();
+		val titulo = banca.getEstagioPCCT().getTitulo();
 
 		participantes.forEach(participante -> {
 			enviarEmail(
@@ -68,7 +66,7 @@ public class EnviarEmailDelegate implements JavaDelegate{
 			String hora
 	){
 		EmailSimplesDto email = new EmailSimplesDto();
-		String mensagem = getMensagemBanca(
+		val mensagem = getMensagemBanca(
 			new MensagemBanca(
 					nomeAutor,
 					idProcesso,

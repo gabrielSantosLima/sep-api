@@ -10,9 +10,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.ifam.sistema_estagio.config.HexIdGenerator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
@@ -20,10 +22,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @Table(name = "funcoes")
 public class Funcao {
-	
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(generator = HexIdGenerator.nome)
+	@GenericGenerator(
+			name = HexIdGenerator.nome,
+			strategy = "com.ifam.sistema_estagio.config.HexIdGenerator"
+	)
+	@Column(length = 24)
+	private String id;
 	
 	@Column(name = "nome")
 	private String nome;

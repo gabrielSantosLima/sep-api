@@ -1,12 +1,10 @@
 package com.ifam.sistema_estagio.entity;
 
-import javax.persistence.Embedded;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.ifam.sistema_estagio.config.HexIdGenerator;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
@@ -14,14 +12,21 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Table(name = "ficha_de_avaliacao_estagio")
-public class FichaDeAvaliacaoEstagio extends FichaDeAvaliacao{
+public class FichaDeAvaliacaoEstagio{
 
-	//Avaliador
+	@Id
+	@GeneratedValue(generator = HexIdGenerator.nome)
+	@GenericGenerator(
+			name = HexIdGenerator.nome,
+			strategy = "com.ifam.sistema_estagio.config.HexIdGenerator"
+	)
+	@Column(length = 24)
+	private String id;
+
 	@ManyToOne
 	@JoinColumn(name = "professor_id", nullable = false)
 	private Professor professor;
 	
-	//Ata a qual pertence
 	@ManyToOne
 	@JoinColumn(name = "ata_id", nullable = true)
 	private Ata ata;

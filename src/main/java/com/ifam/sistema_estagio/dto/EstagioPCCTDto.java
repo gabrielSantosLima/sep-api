@@ -1,7 +1,5 @@
 package com.ifam.sistema_estagio.dto;
 
-import com.ifam.sistema_estagio.entity.Aluno;
-import com.ifam.sistema_estagio.entity.Coordenadora;
 import com.ifam.sistema_estagio.entity.EstagioPCCT;
 import com.ifam.sistema_estagio.entity.Professor;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
@@ -12,16 +10,13 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.io.Serializable;
-import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
-public class EstagioPCCTDto implements Serializable, IObjetoDto<EstagioPCCT>{
+public class EstagioPCCTDto implements IObjetoDto<EstagioPCCT>{
     private String titulo;
     private Integer cargaHoraria;
     private Boolean concluido;
@@ -29,11 +24,11 @@ public class EstagioPCCTDto implements Serializable, IObjetoDto<EstagioPCCT>{
     private String descricao;
     private TipoServico tipo;
     private ModalidadeCurso modalidadeCurso;
-    private List<UsuarioDto> usuarios;
+    private List<UsuarioDto> participantes;
 
     @Override
     public EstagioPCCT construirEntidade() {
-        Professor orientador = usuarios.stream()
+        Professor responsavel = participantes.stream()
                 .filter(participante -> participante.getFuncao() == FuncaoEstagio.ORIENTADOR)
                 .findFirst()
                 .get()
@@ -46,7 +41,7 @@ public class EstagioPCCTDto implements Serializable, IObjetoDto<EstagioPCCT>{
                 .descricao(descricao)
                 .tipo(tipo)
                 .titulo(titulo)
-                .responsavel(orientador)
+                .responsavel(responsavel)
                 .build();
     }
 }
