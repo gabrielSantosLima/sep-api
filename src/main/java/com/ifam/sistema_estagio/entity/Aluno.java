@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ifam.sistema_estagio.util.enums.Curso;
 import com.ifam.sistema_estagio.util.enums.ModalidadeCurso;
 
@@ -40,8 +41,8 @@ public class Aluno extends Usuario{
 	@Column(nullable = false, name = "modalidade_curso")
 	@Enumerated(EnumType.STRING)
 	private ModalidadeCurso modalidadeCurso;
-	
-	//Estágio ou projeto
+
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "estagioPcct_id")
 	private EstagioPCCT estagioPcct;

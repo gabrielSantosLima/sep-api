@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ifam.sistema_estagio.config.HexIdGenerator;
 import com.ifam.sistema_estagio.util.enums.ModalidadeCurso;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
@@ -65,14 +67,16 @@ public class EstagioPCCT {
 
 	@Column(nullable = true, name = "anexo")
 	private File anexo;
-	
+
+	@JsonBackReference
 	@OneToMany(mappedBy = "estagioPcct")
 	private List<Banca> bancas;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "estagioPcct")
 	private List<Aluno> alunos;
-	
-	//Reponsável
+
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "responsavel_id")
 	private Professor responsavel;

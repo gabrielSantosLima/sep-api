@@ -2,13 +2,11 @@ package com.ifam.sistema_estagio.entity;
 
 import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 @Entity
@@ -19,10 +17,12 @@ import lombok.*;
 @Builder
 @Table(name = "coordenadora")
 public class Coordenadora extends Usuario{
-	//Bancas
+
+	@JsonBackReference
 	@OneToMany(mappedBy = "coordenadora")
 	private List<Banca> bancas;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "coordenadora")
 	private List<NotificacaoBancas> notificacoesBancas;
 }

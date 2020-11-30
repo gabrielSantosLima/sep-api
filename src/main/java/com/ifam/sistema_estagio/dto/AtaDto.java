@@ -1,7 +1,6 @@
 package com.ifam.sistema_estagio.dto;
 
 import com.ifam.sistema_estagio.entity.Ata;
-import com.ifam.sistema_estagio.entity.Banca;
 import com.ifam.sistema_estagio.entity.FichaDeAvaliacaoEstagio;
 import com.ifam.sistema_estagio.entity.FichaDeAvaliacaoProjeto;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
@@ -18,6 +17,7 @@ import java.util.stream.Collectors;
 @Builder
 @AllArgsConstructor
 public class AtaDto implements IObjetoDto<Ata>{
+    private String id;
     private Double mediaTotal;
     private String descricao;
     private TipoServico tipo;
@@ -36,6 +36,7 @@ public class AtaDto implements IObjetoDto<Ata>{
                 .collect(Collectors.toList());
 
         return Ata.builder()
+                .id(id)
                 .banca(banca.construirEntidade())
                 .descricao(descricao)
                 .fichasEstagio(fichaDeAvaliacaoEstagios)

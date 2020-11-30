@@ -3,6 +3,7 @@ package com.ifam.sistema_estagio.services;
 import java.util.Optional;
 import java.util.List;
 
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -23,8 +24,7 @@ public class GenericService<E, R extends JpaRepository>{
 	public E atualizar(String id, E newE) throws Exception {
 		if(newE == null) throw new Exception("[service] Entidade nula!");
 		if(!existe(id)) throw new Exception("[service] Entidade não existe!");
-
-		E updatedE = (E) repository.save(newE);
+		val updatedE = (E) repository.save(newE);
 		return updatedE;
 	}
 

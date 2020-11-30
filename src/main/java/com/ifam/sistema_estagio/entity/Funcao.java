@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.ifam.sistema_estagio.config.HexIdGenerator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,7 @@ public class Funcao {
 	@Column(name = "nome")
 	private String nome;
 
+	@JsonBackReference
 	@ManyToMany(mappedBy = "funcoes")
 	private List<Papel> papeis;
 	

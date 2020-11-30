@@ -2,6 +2,7 @@ package com.ifam.sistema_estagio.services;
 
 import com.ifam.sistema_estagio.util.enums.Curso;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,9 +17,17 @@ public class EstagioPcctService extends GenericService<EstagioPCCT, EstagioPcctR
 	@Autowired
 	private EstagioPcctRepository estagioPcctRepository;
 
-	public List<EstagioPCCT> listarPorCursoETipo(Curso curso, TipoServico tipo) throws Exception {
+	public List<EstagioPCCT> listar(TipoServico tipo) {
 		if(tipo == null) return listar();
-		if(curso == null) return estagioPcctRepository.findByTipo(tipo);
-		return estagioPcctRepository.findByCursoAndTipo(curso,tipo);
+		return estagioPcctRepository.findByTipo(tipo);
+	}
+
+	public EstagioPCCT concluirEstagio(String idEstagio) throws Exception {
+		val estagioPcct = encontrarPorId(idEstagio);
+		val estagioPcctNaoExiste = !estagioPcct.isPresent();
+		if(estagioPcctNaoExiste) throw new Exception("Estágio não existe");
+		if(estagioPcct.get().getConcluido()) return estagioPcct.get();
+		estagioPcct.get().setConcluido(true);
+		return atualizar(idEstagio, estagioPcct.get());
 	}
 }

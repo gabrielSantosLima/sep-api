@@ -17,7 +17,7 @@ public class NotificacaoBancasController {
     @Autowired
     private NoticacaoBancasService noticacaoBancasService;
 
-    @GetMapping("/{idCoordenadora}")
+    @GetMapping("/coordenadora/{idCoordenadora}")
     public ResponseEntity<List<NotificacaoBancas>> listarBancasNovas(@PathVariable String idCoordenadora){
         try{
             val notificacoes = noticacaoBancasService.listarBancasAdicionadas(idCoordenadora);
@@ -27,13 +27,35 @@ public class NotificacaoBancasController {
         }
     }
 
-    @PostMapping("/{id}")
-    public ResponseEntity<Boolean> visualizarNotificacao(@PathVariable String id){
+    @GetMapping("/{idNotificacao}")
+    public ResponseEntity<NotificacaoBancas> encontrarPorId(@PathVariable String idNotificacao){
         try {
-            boolean foiVisualizado = noticacaoBancasService.visualizarNotificacao(id);
+            val notificacao = noticacaoBancasService.encontrarPorId(idNotificacao);
+            val notificacaoNaoExiste = !notificacao.isPresent();
+            if(notificacaoNaoExiste) return ResponseEntity.ok().build();
+            return ResponseEntity.ok(notificacao.get());
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @PostMapping("/visualizar/{idNotificacao}")
+    public ResponseEntity<Boolean> visualizarNotificacao(@PathVariable String idNotificacao){
+        try {
+            boolean foiVisualizado = noticacaoBancasService.visualizarNotificacao(idNotificacao);
             return ResponseEntity.ok(foiVisualizado);
         }catch (Exception e) {
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @DeleteMapping("/{idNotificacao}")
+    public ResponseEntity<Boolean> deletar(@PathVariable String idNotificacao){
+        try {
+            noticacaoBancasService.deletar(idNotificacao);
+            return ResponseEntity.ok(true);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(false);
         }
     }
 }

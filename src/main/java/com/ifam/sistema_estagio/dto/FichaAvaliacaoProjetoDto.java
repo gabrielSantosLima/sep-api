@@ -13,6 +13,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 public class FichaAvaliacaoProjetoDto implements IObjetoDto<FichaDeAvaliacaoProjeto> {
+    private String id;
     private Double notaSlide;
     private Double notaAssunto;
     private Double notaClareza;
@@ -32,6 +33,7 @@ public class FichaAvaliacaoProjetoDto implements IObjetoDto<FichaDeAvaliacaoProj
     @Override
     public FichaDeAvaliacaoProjeto construirEntidade() {
         return FichaDeAvaliacaoProjeto.builder()
+                .id(id)
                 .ata(ata.construirEntidade())
                 .professor(avaliador.construirProfessor())
                 .notaDefesa(NotaProjetoDefesa.builder()

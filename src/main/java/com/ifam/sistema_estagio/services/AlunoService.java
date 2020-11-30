@@ -6,16 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ifam.sistema_estagio.entity.Aluno;
-import com.ifam.sistema_estagio.entity.EstagioPCCT;
 import com.ifam.sistema_estagio.repository.AlunoRepository;
 
 @Service
 public class AlunoService extends GenericService<Aluno, AlunoRepository>{
 	
 	@Autowired
-	private AlunoRepository repository;
+	private AlunoRepository alunoRepository;
 
-	public List<Aluno> findByEstagioPcct(EstagioPCCT estagioPcct){
-		return repository.findByEstagioPcct(estagioPcct);
+	public List<Aluno> encontrarPorNome(String nome){
+		return alunoRepository.findByNomeContainingIgnoreCase(nome);
 	}
 }

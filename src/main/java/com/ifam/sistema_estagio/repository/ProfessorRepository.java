@@ -6,5 +6,9 @@ import com.ifam.sistema_estagio.entity.Professor;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 @Repository
-public interface ProfessorRepository extends JpaRepository<Professor, String>{}
+public interface ProfessorRepository extends JpaRepository<Professor, String>{
+    List<Professor> findByNomeContainingIgnoreCase(String nome);
+}

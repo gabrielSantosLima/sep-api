@@ -40,13 +40,16 @@ public class CarregarPapeisFuncoes implements ApplicationRunner{
 		return funcaoRepository.save(new Funcao(nome));
 	}
 
-	private Papel criarPapelSeNaoExiste(String nome, List<Funcao> funcao) {
+	private Papel criarPapelSeNaoExiste(String nome, List<Funcao> funcoes) {
 		Optional<Papel> papel = papelRepository.findByNome(nome);
 		
 		if(papel.isPresent()) {
 			return papel.get();
 		}
 		
-		return papelRepository.save(new Papel(nome, funcao));
+		return papelRepository.save(Papel.builder()
+				.funcoes(funcoes)
+				.nome(nome)
+				.build());
 	}
 }
