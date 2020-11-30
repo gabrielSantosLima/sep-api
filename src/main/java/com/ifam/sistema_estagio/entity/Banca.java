@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ifam.sistema_estagio.config.HexIdGenerator;
 import com.ifam.sistema_estagio.util.enums.Curso;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
@@ -53,16 +55,20 @@ public class Banca {
 	@Temporal(TemporalType.DATE)
 	private Date horaFinalizado;
 
+	@JsonManagedReference
 	@OneToOne
 	private Ata ata;
-	
+
+	@JsonBackReference
 	@ManyToMany
 	private List<Professor> avaliadores;
 
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "coordenadora_id")
 	private Coordenadora coordenadora;
 
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "estagio_pcct_id")
 	private EstagioPCCT estagioPcct;

@@ -9,6 +9,7 @@ import org.springframework.boot.ApplicationRunner;
 
 import java.util.*;
 
+//@Component
 public class CarregarEntidadesTeste implements ApplicationRunner{
 
 	@Autowired
@@ -43,6 +44,22 @@ public class CarregarEntidadesTeste implements ApplicationRunner{
 		aluno.setTipo(FuncaoEstagio.DISCENTE);
 
 		Aluno alunoCriado = criarAluno(aluno);
+
+		Aluno outroAluno =  Aluno.builder()
+				.turma("IINF31B")
+				.modalidadeCurso(ModalidadeCurso.INTEGRADO)
+				.curso(Curso.IMEC)
+				.dataConclusao(new Date())
+				.build();
+
+		outroAluno.setNome("Neila Batista Xavier");
+		outroAluno.setEmail("teste.lima@gmail.com");
+		outroAluno.setGrau(GrauAcademico.ENSINO_MEDIO);
+		outroAluno.setCpf("XXX.XXX.XXX-XX");
+		outroAluno.setMatricula("2018324100");
+		outroAluno.setTipo(FuncaoEstagio.DISCENTE);
+
+		Aluno outroAlunoCriado = criarAluno(outroAluno);
 
 		Coordenadora coordenadora = Coordenadora.builder().build();
 		coordenadora.setNome("Neila Batista Xavier");
@@ -91,7 +108,7 @@ public class CarregarEntidadesTeste implements ApplicationRunner{
 				.responsavel(professorCriado)
 				.titulo("Estágio no departamento")
 				.tipo(TipoServico.ESTAGIO)
-				.alunos(null)
+				.alunos(Arrays.asList(alunoCriado, outroAlunoCriado))
 				.descricao("Concertar o mesmo computador")
 				.local("Lab V")
 				.concluido(false)

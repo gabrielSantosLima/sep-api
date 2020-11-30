@@ -39,38 +39,40 @@ public class UsuarioDto implements IObjetoUsuarioDto {
 				.modalidadeCurso(modalidadeCurso)
 				.turma(turma)
 				.build();
+		aluno.setId(id);
 		aluno.setCpf(cpf);
 		aluno.setNome(nome);
 		aluno.setMatricula(matricula);
 		aluno.setEmail(email);
 		aluno.setTipo(funcao);
 		aluno.setGrau(grau);
+		aluno.setCurso(curso);
 		return aluno;
 	}
 
 	@Override
 	public Professor construirProfessor() {
 		Professor professor = Professor.builder().build();
+		professor.setId(id);
 		professor.setCpf(cpf);
 		professor.setNome(nome);
 		professor.setMatricula(matricula);
 		professor.setEmail(email);
 		professor.setTipo(funcao);
 		professor.setGrau(grau);
-
 		return professor;
 	}
 
 	@Override
 	public Coordenadora construirCoordenadora() {
 		Coordenadora coordenadora = Coordenadora.builder().build();
+		coordenadora.setId(id);
 		coordenadora.setCpf(cpf);
 		coordenadora.setNome(nome);
 		coordenadora.setMatricula(matricula);
 		coordenadora.setEmail(email);
 		coordenadora.setTipo(funcao);
 		coordenadora.setGrau(grau);
-
 		return coordenadora;
 	}
 }

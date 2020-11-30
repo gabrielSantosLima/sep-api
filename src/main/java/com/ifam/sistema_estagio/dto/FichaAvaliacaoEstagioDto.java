@@ -14,6 +14,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 public class FichaAvaliacaoEstagioDto implements IObjetoDto<FichaDeAvaliacaoEstagio> {
+    private String id;
     private Double notaConhecimento;
     private Double notaOrganizacao;
     private Double notaAtividades;
@@ -24,6 +25,7 @@ public class FichaAvaliacaoEstagioDto implements IObjetoDto<FichaDeAvaliacaoEsta
     @Override
     public FichaDeAvaliacaoEstagio construirEntidade() {
         return FichaDeAvaliacaoEstagio.builder()
+                .id(id)
                 .ata(ata.construirEntidade())
                 .professor(avaliador.construirProfessor())
                 .nota(NotaEstagio.builder()

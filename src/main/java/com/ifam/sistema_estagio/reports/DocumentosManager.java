@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ifam.sistema_estagio.reports.fields.*;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
 import net.sf.jasperreports.engine.JRException;
@@ -39,64 +40,69 @@ public class DocumentosManager {
 	private static final String IMAGEM_IFAM_LIVRO_REGISTRO = "livro-registro.jpg";
 
 	private JasperReport compilarRelatorio(String nomeArquivo) throws JRException, IOException {
-		InputStream jasperTemplate = new FileInputStream(DIR_RELATORIOS + nomeArquivo);
+		val jasperTemplate = new FileInputStream(DIR_RELATORIOS + nomeArquivo);
 		return JasperCompileManager.compileReport(jasperTemplate);
 	}
 
 	private String carregarRecursosDeImagem(String nomeArquivo) {
-		String caminho = DIR_RELATORIOS + nomeArquivo;
-		File file = new File(caminho);
+		val caminho = DIR_RELATORIOS + nomeArquivo;
+		val file = new File(caminho);
 		return file.getAbsolutePath();
 	}
 
-	private JasperPrint retornarJasperPrint(JasperReport report, Map<String, Object> parameters, List<?> list) throws JRException {
-		return JasperFillManager.fillReport(report, parameters, new JRBeanCollectionDataSource(list));
+	private JasperPrint retornarJasperPrint(
+			JasperReport report,
+			Map<String, Object> parametros,
+			List<?> list
+	) throws JRException {
+		return JasperFillManager.fillReport(
+				report,
+				parametros,
+				new JRBeanCollectionDataSource(list)
+		);
 	}
-	
+
+	private byte[] gerarMultiPdfs(List<JasperPrint> prints) throws JRException {
+		val exporter = new JRPdfExporter();
+		val out = new ByteArrayOutputStream();
+		exporter.setExporterInput(SimpleExporterInput.getInstance(prints));
+		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
+		exporter.setConfiguration(new SimplePdfExporterConfiguration());
+		exporter.exportReport();
+		return out.toByteArray();
+	}
+
 	private byte[] gerarPdf(JasperPrint print) throws JRException {
 		return JasperExportManager.exportReportToPdf(print);		
 	}
 
 	public byte[] gerarCertificado(List<CertificadoFields> certificados, List<FrenteCertificadoFields> certificadosFrente)
 			throws JRException, IOException {
-		String image = carregarRecursosDeImagem(IMAGEM_IFAM_LIVRO_REGISTRO);
-		String image1 = carregarRecursosDeImagem(IMAGEM_CANTO);
-		String image2 = carregarRecursosDeImagem(IMAGEM_BRASAO);
-		String image3 = carregarRecursosDeImagem(IMAGEM_IFAM);
+		val image = carregarRecursosDeImagem(IMAGEM_IFAM_LIVRO_REGISTRO);
+		val image1 = carregarRecursosDeImagem(IMAGEM_CANTO);
+		val image2 = carregarRecursosDeImagem(IMAGEM_BRASAO);
+		val image3 = carregarRecursosDeImagem(IMAGEM_IFAM);
 
-		Map<String, Object> parameters = new HashMap<String, Object>();
-		parameters.put("image1", image1);
-		parameters.put("image2", image2);
-		parameters.put("image3", image3);
+		val parametros = new HashMap<String, Object>();
+		parametros.put("image1", image1);
+		parametros.put("image2", image2);
+		parametros.put("image3", image3);
 
-		Map<String, Object> parametersFrente = new HashMap<String, Object>();
-		parametersFrente.put("image", image);
+		val parametrosFrente = new HashMap<String, Object>();
+		parametrosFrente.put("image", image);
 
-		List<JasperPrint> prints = new ArrayList<>();
-
-		JasperReport reportVerso = compilarRelatorio(RELATORIO_CERTIFICADO);
-		JasperReport reportFrente = compilarRelatorio(RELATORIO_CERTIFICADO_FRENTE);
-
-		prints.add(retornarJasperPrint(reportVerso, parameters, certificados));
-		prints.add(retornarJasperPrint(reportFrente, parametersFrente, certificadosFrente));
-
-		JRPdfExporter exporter = new JRPdfExporter();
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		exporter.setExporterInput(SimpleExporterInput.getInstance(prints));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
-		exporter.setConfiguration(new SimplePdfExporterConfiguration());
-		exporter.exportReport();
-
-		byte[] pdf = out.toByteArray();
-		return pdf;
+		val prints = new ArrayList<JasperPrint>();
+		val reportVerso = compilarRelatorio(RELATORIO_CERTIFICADO);
+		val reportFrente = compilarRelatorio(RELATORIO_CERTIFICADO_FRENTE);
+		prints.add(retornarJasperPrint(reportVerso, parametros, certificados));
+		prints.add(retornarJasperPrint(reportFrente, parametrosFrente, certificadosFrente));
+		return gerarMultiPdfs(prints);
 	}
 
-	public byte[] gerarFichaDeAvaliacaoEstagio(
-			List<FichaDeAvaliacaoEstagioFields> fichas) throws JRException, IOException {
+	public byte[] gerarFichaDeAvaliacaoEstagio(List<FichaDeAvaliacaoEstagioFields> fichas) throws JRException, IOException {
 		JasperReport report = compilarRelatorio(RELATORIO_FICHA_ESTAGIO);
 		JasperPrint print = retornarJasperPrint(report, null, fichas);
-		byte[] pdf = gerarPdf(print);
-		return pdf;
+		return gerarPdf(print);
 	}
 
 	public byte[] gerarFichaDeAvaliacaoProjeto(
@@ -109,34 +115,21 @@ public class DocumentosManager {
 		JasperReport relatorioReport = compilarRelatorio(RELATORIO_FICHA_PROJETO_RELATORIO);
 		
 		List<JasperPrint> prints = new ArrayList<>();
-		
 		prints.add(retornarJasperPrint(capaReport, null, capa));
 		prints.add(retornarJasperPrint(defesaReport, null, defesas));
 		prints.add(retornarJasperPrint(relatorioReport, null, relatorios));
-		
-		JRPdfExporter exporter = new JRPdfExporter();
-		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		exporter.setExporterInput(SimpleExporterInput.getInstance(prints));
-		exporter.setExporterOutput(new SimpleOutputStreamExporterOutput(out));
-		exporter.setConfiguration(new SimplePdfExporterConfiguration());
-		exporter.exportReport();
-		
-		byte[] pdf = out.toByteArray();
-		
-		return pdf;
+		return gerarMultiPdfs(prints);
 	}
 
 	public byte[] gerarAtaEstagio(List<AtaEstagioFields> atas) throws JRException, IOException {
 		JasperReport report = compilarRelatorio(RELATORIO_ATA_ESTAGIO);
 		JasperPrint print = retornarJasperPrint(report, null, atas);
-		byte[] pdf = gerarPdf(print);
-		return pdf;
+		return gerarPdf(print);
 	}
 
 	public byte[] gerarAtaProjeto(List<AtaProjetoFields> atas) throws JRException, IOException {
 		JasperReport report = compilarRelatorio(RELATORIO_ATA_PROJETO);
 		JasperPrint print = retornarJasperPrint(report, null, atas);
-		byte[] pdf = gerarPdf(print);
-		return pdf;
+		return gerarPdf(print);
 	}
 }

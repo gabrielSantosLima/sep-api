@@ -1,5 +1,7 @@
 package com.ifam.sistema_estagio.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ifam.sistema_estagio.config.HexIdGenerator;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -31,6 +33,7 @@ public class NotificacaoBancas {
     @Column(nullable = false, name = "ja_visualizado")
     private Boolean jaVisualizado;
 
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "coordenadora_id")
     private Coordenadora coordenadora;

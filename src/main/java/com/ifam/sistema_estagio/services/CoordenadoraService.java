@@ -1,6 +1,6 @@
 package com.ifam.sistema_estagio.services;
 
-import java.util.Optional;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,9 +12,9 @@ import com.ifam.sistema_estagio.repository.CoordenadoraRepository;
 public class CoordenadoraService extends GenericService<Coordenadora, CoordenadoraRepository> {
 
 	@Autowired
-	private CoordenadoraRepository repository;
+	private CoordenadoraRepository coordenadoraRepository;
 
-	public Optional<Coordenadora> findByNome(String nome) {
-		return repository.findByNome(nome);
+	public List<Coordenadora> encontrarPorNome(String nome){
+		return coordenadoraRepository.findByNomeContainingIgnoreCase(nome);
 	}
 }

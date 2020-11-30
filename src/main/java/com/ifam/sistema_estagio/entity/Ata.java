@@ -7,12 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ifam.sistema_estagio.config.HexIdGenerator;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
@@ -47,12 +48,15 @@ public class Ata {
 	@Enumerated(EnumType.STRING)
 	private TipoServico tipo;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "ata")
 	private List<FichaDeAvaliacaoEstagio> fichasEstagio;
 
+	@JsonBackReference
 	@OneToMany(mappedBy = "ata")
 	private List<FichaDeAvaliacaoProjeto> fichasProjeto;
-	
+
+	@JsonManagedReference
 	@OneToOne
 	private Banca banca;
 }

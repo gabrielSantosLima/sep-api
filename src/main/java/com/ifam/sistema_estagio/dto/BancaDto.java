@@ -20,6 +20,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BancaDto implements Serializable,IObjetoDto<Banca>{
+	private String id;
 	private Date data;
 	private TipoServico tipo;
 	private Curso curso;
@@ -50,6 +51,7 @@ public class BancaDto implements Serializable,IObjetoDto<Banca>{
 				.collect(Collectors.toList());
 
 		return Banca.builder()
+				.id(id)
 				.curso(curso)
 				.data(data)
 				.local(local)
