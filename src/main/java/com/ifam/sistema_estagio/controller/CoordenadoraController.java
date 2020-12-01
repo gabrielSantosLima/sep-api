@@ -1,13 +1,12 @@
 package com.ifam.sistema_estagio.controller;
 
-import com.ifam.sistema_estagio.entity.Coordenadora;
 import com.ifam.sistema_estagio.services.CoordenadoraService;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
 
 @RestController
 @RequestMapping("/coordenadores")
@@ -18,34 +17,43 @@ public class CoordenadoraController {
     private CoordenadoraService coordenadoraService;
 
     @GetMapping
-    public ResponseEntity<List<Coordenadora>> listar(){
+    public ResponseEntity<Object> listar(){
         try{
             val coordenadoras = coordenadoraService.listar();
             return ResponseEntity.ok(coordenadoras);
         }catch(Exception e){
-            return ResponseEntity.badRequest().build();
+            val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
         }
     }
 
     @GetMapping("/{idCoordenadora}")
-    public ResponseEntity<Coordenadora> encontrarPorId(@PathVariable String idCoordenadora){
+    public ResponseEntity<Object> encontrarPorId(@PathVariable String idCoordenadora){
         try{
             val coordenadora = coordenadoraService.encontrarPorId(idCoordenadora);
             val coordenadoraNaoExiste = !coordenadora.isPresent();
             if(coordenadoraNaoExiste) return ResponseEntity.ok().build();
             return ResponseEntity.ok(coordenadora.get());
         }catch(Exception e){
-            return ResponseEntity.badRequest().build();
+            val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
         }
     }
 
     @GetMapping("/encontrar-nome")
-    public ResponseEntity<List<Coordenadora>> encontrarPorNome(@RequestParam String nome){
+    public ResponseEntity<Object> encontrarPorNome(@RequestParam String nome){
         try{
             val coordenadoras = coordenadoraService.encontrarPorNome(nome);
             return ResponseEntity.ok(coordenadoras);
         }catch (Exception e){
-            return ResponseEntity.badRequest().build();
+            val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
         }
     }
 }

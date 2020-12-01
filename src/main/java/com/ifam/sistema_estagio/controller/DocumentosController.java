@@ -1,10 +1,12 @@
 package com.ifam.sistema_estagio.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
 import com.ifam.sistema_estagio.reports.fields.*;
 import com.ifam.sistema_estagio.reports.messages.*;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +32,7 @@ public class DocumentosController {
 	private final AtaProjetoBuilderMessage ataProjetoBuilderMessage = new AtaProjetoBuilderMessage();
 
 	@PostMapping(path = "/certificado", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<byte[]> gerarCertificados(
+	public ResponseEntity<Object> gerarCertificados(
 			@RequestBody BancaDto banca,
 			@RequestParam(required = false, defaultValue = "false") boolean emBranco
 	) {
@@ -45,15 +47,18 @@ public class DocumentosController {
 				certificados = certificadoBuilderMessage.retornarMensagem(banca);
 				certificadosFrente = certificadoFrenteBuilderMessage.retornarMensagem(banca);
 			}
-			byte[] pdf = documentosManager.gerarCertificado(certificados, certificadosFrente);
+			val pdf = documentosManager.gerarCertificado(certificados, certificadosFrente);
 			return ResponseEntity.ok(pdf);
 		}catch(Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@PostMapping(path = "/ficha-estagio", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<byte[]> gerarFichaDeAvaliacaoEstagio(
+	public ResponseEntity<Object> gerarFichaDeAvaliacaoEstagio(
 			@RequestBody BancaDto banca,
 			@RequestParam(required = false, defaultValue = "false") boolean emBranco
 	) {
@@ -67,12 +72,15 @@ public class DocumentosController {
 			byte[] pdf = documentosManager.gerarFichaDeAvaliacaoEstagio(fichas);
 			return ResponseEntity.ok(pdf);
 		}catch(Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@PostMapping(path = "/ficha-projeto", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<byte[]> gerarFichaDeAvaliacaoProjeto(
+	public ResponseEntity<Object> gerarFichaDeAvaliacaoProjeto(
 			@RequestBody BancaDto banca,
 			@RequestParam(required = false, defaultValue = "false") boolean emBranco
 	) {
@@ -92,12 +100,15 @@ public class DocumentosController {
 			byte[] pdf = documentosManager.gerarFichaDeAvaliacaoProjeto(relatorios, defesas, capas);
 			return ResponseEntity.ok(pdf);
 		}catch(Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@PostMapping(path = "/ata-estagio", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<byte[]> geraAtaEstagio(
+	public ResponseEntity<Object> geraAtaEstagio(
 			@RequestBody BancaDto banca,
 			@RequestParam(required = false, defaultValue = "false") boolean emBranco
 	) {
@@ -111,12 +122,15 @@ public class DocumentosController {
 			byte[] pdf = documentosManager.gerarAtaEstagio(atas);
 			return ResponseEntity.ok(pdf);
 		}catch(Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@PostMapping(path = "/ata-projeto", produces = MediaType.APPLICATION_PDF_VALUE)
-	public ResponseEntity<byte[]> geraAtaProjeto(
+	public ResponseEntity<Object> geraAtaProjeto(
 			@RequestBody BancaDto banca,
 			@RequestParam(required = false, defaultValue = "false") boolean emBranco
 	) {
@@ -127,10 +141,13 @@ public class DocumentosController {
 			} else {
 				atas = ataProjetoBuilderMessage.retornarMensagem(banca);
 			}
-			byte[] pdf = documentosManager.gerarAtaProjeto(atas);
+			val pdf = documentosManager.gerarAtaProjeto(atas);
 			return ResponseEntity.ok(pdf);
 		}catch(Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 }

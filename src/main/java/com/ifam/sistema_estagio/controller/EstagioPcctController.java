@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ifam.sistema_estagio.services.EstagioPcctService;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -21,41 +22,50 @@ public class EstagioPcctController {
 	private EstagioPcctService estagioPcctService;
 
 	@GetMapping
-	public ResponseEntity<List<EstagioPCCT>> listar(
+	public ResponseEntity<Object> listar(
 			@RequestParam(required = false) TipoServico tipoServico
 	){
 		try{
 			val estagioPCCTS = estagioPcctService.listar(tipoServico);
 			return ResponseEntity.ok(estagioPCCTS);
-		}catch (Exception error){
-			return ResponseEntity.badRequest().build();
+		}catch (Exception e){
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@PostMapping
-	public ResponseEntity<EstagioPCCT> salvar(@RequestBody EstagioPCCTDto estagioPCCTDto){
+	public ResponseEntity<Object> salvar(@RequestBody EstagioPCCTDto estagioPCCTDto){
 		try{
 			val estagioPcctCriado = estagioPcctService.salvar(estagioPCCTDto.construirEntidade());
 			return ResponseEntity.ok(estagioPcctCriado);
 		}catch (Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@GetMapping("/{idEstagioPcct}")
-	public ResponseEntity<EstagioPCCT> encontrarPorId(@PathVariable String idEstagioPcct){
+	public ResponseEntity<Object> encontrarPorId(@PathVariable String idEstagioPcct){
 		try{
 			val estagioPcct = estagioPcctService.encontrarPorId(idEstagioPcct);
 			val estagioPcctNaoExiste = !estagioPcct.isPresent();
 			if(estagioPcctNaoExiste) return ResponseEntity.ok().build();
 			return ResponseEntity.ok(estagioPcct.get());
 		}catch (Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@PutMapping
-	public ResponseEntity<EstagioPCCT> atualizar(@RequestBody EstagioPCCTDto estagioPCCTDto){
+	public ResponseEntity<Object> atualizar(@RequestBody EstagioPCCTDto estagioPCCTDto){
 		try{
 			val estagioPcctAtualizado = estagioPcctService.atualizar(
 					estagioPCCTDto.getId(),
@@ -63,27 +73,36 @@ public class EstagioPcctController {
 			);
 			return ResponseEntity.ok(estagioPcctAtualizado);
 		}catch (Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@DeleteMapping("/{idEstagioPcct}")
-	public ResponseEntity<Boolean> deletar(@PathVariable String idEstagioPcct){
+	public ResponseEntity<Object> deletar(@PathVariable String idEstagioPcct){
 		try{
 			estagioPcctService.deletar(idEstagioPcct);
 			return ResponseEntity.ok(true);
 		}catch (Exception e){
-			return ResponseEntity.badRequest().body(false);
+			val mensagem = new HashMap<String, Object>();
+			mensagem.put("mensagem", e.getMessage());
+			mensagem.put("status", 404);
+			return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@PostMapping("/concluir/{idEstagioPcct}")
-	public ResponseEntity<EstagioPCCT> concluirEstagioPcct(@PathVariable String idEstagioPcct){
+	public ResponseEntity<Object> concluirEstagioPcct(@PathVariable String idEstagioPcct){
 		try{
 			val estagioPcct = estagioPcctService.concluirEstagio(idEstagioPcct);
 			return ResponseEntity.ok(estagioPcct);
 		}catch (Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 }

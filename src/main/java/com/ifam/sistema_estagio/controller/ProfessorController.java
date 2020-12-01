@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -19,34 +20,43 @@ public class ProfessorController {
     private ProfessorService professorService;
 
     @GetMapping
-    public ResponseEntity<List<Professor>> listar(){
+    public ResponseEntity<Object> listar(){
         try{
             val professores = professorService.listar();
             return ResponseEntity.ok(professores);
         }catch(Exception e){
-            return ResponseEntity.badRequest().build();
+            val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
         }
     }
 
     @GetMapping("/{idProfessor}")
-    public ResponseEntity<Professor> encontrarPorId(@PathVariable String idProfessor){
+    public ResponseEntity<Object> encontrarPorId(@PathVariable String idProfessor){
         try{
             val professor = professorService.encontrarPorId(idProfessor);
             val professorNaoExiste = !professor.isPresent();
             if(professorNaoExiste) return ResponseEntity.ok().build();
             return ResponseEntity.ok(professor.get());
         }catch(Exception e){
-            return ResponseEntity.badRequest().build();
+            val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
         }
     }
 
     @GetMapping("/encontrar-nome")
-    public ResponseEntity<List<Professor>> encontrarPorNome(@RequestParam String nome){
+    public ResponseEntity<Object> encontrarPorNome(@RequestParam String nome){
         try{
             val professores = professorService.encontrarPorNome(nome);
             return ResponseEntity.ok(professores);
         }catch (Exception e){
-            return ResponseEntity.badRequest().build();
+            val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
         }
     }
 }

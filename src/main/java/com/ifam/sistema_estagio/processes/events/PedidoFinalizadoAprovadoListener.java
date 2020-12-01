@@ -3,7 +3,6 @@ package com.ifam.sistema_estagio.processes.events;
 import com.ifam.sistema_estagio.dto.BancaDto;
 import com.ifam.sistema_estagio.processes.SolicitarBancaProcess;
 import com.ifam.sistema_estagio.services.BancaService;
-import com.ifam.sistema_estagio.services.CoordenadoraService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.ExecutionListener;
 import org.springframework.beans.factory.annotation.Autowired;
