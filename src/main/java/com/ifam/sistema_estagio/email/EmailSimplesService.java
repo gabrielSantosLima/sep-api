@@ -14,7 +14,7 @@ public class EmailSimplesService implements IEmailService{
 	private JavaMailSender emailSender;
 
 	@Override
-	public void send(EmailSimplesDto email) throws Exception{
+	public void enviar(EmailSimplesDto email) throws Exception{
 		try{
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(email.getTo());

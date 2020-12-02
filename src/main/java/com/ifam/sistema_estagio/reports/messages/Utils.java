@@ -4,6 +4,7 @@ import com.ifam.sistema_estagio.dto.BancaDto;
 import com.ifam.sistema_estagio.dto.UsuarioDto;
 import com.ifam.sistema_estagio.util.FormatarData;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
+import lombok.val;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,17 +21,15 @@ public class Utils {
 
     public static String retornarNomeDiscentes(BancaDto o){
         String nomeDiscentes = "";
-        List<UsuarioDto> discentes = retornarDiscentes(o);
-
+        val discentes = retornarDiscentes(o);
         for(UsuarioDto discente: discentes) {
-            Boolean naeEUltimo = discentes.indexOf(discente) != discentes.size() - 1;
+            val naeEUltimo = discentes.indexOf(discente) != discentes.size() - 1;
             if(naeEUltimo){
                 nomeDiscentes += discente.getNome() + ",";
                 continue;
             }
             nomeDiscentes += discente.getNome();
         };
-
         return nomeDiscentes;
     }
 
@@ -76,36 +75,18 @@ public class Utils {
 
     public static String retornarNomeAvaliadoresComQuebraDeLinha(BancaDto o){
         String nomeAvaliadores = "";
-        List<UsuarioDto> avaliadores = retornarAvaliadores(o);
-
+        val avaliadores = retornarAvaliadores(o);
         for(UsuarioDto avaliador: avaliadores) {
             nomeAvaliadores += avaliador.getNome() + " - " + avaliador.getFuncao().name().toLowerCase() + "<br>";
         };
-
-        return nomeAvaliadores;
-    }
-
-    public static String retornarNomeAvaliadoresComVirgula(BancaDto o){
-        String nomeAvaliadores = "";
-        List<UsuarioDto> avaliadores = retornarAvaliadores(o);
-
-        for(UsuarioDto avaliador: avaliadores) {
-            Boolean naeEUltimo = avaliadores.indexOf(avaliador) != avaliadores.size() - 1;
-            if(naeEUltimo){
-                nomeAvaliadores += avaliador.getNome() + ",";
-                continue;
-            }
-            nomeAvaliadores += avaliador.getNome();
-        };
-
         return nomeAvaliadores;
     }
 
     public static String retornarNomeEFuncaoAvaliadoresComVirgula(BancaDto o){
         String nomeAvaliadores = "";
-        List<UsuarioDto> avaliadores = retornarAvaliadores(o);
+        val avaliadores = retornarAvaliadores(o);
         for(UsuarioDto avaliador: avaliadores) {
-            Boolean naeEUltimo = avaliadores.indexOf(avaliador) != avaliadores.size() - 1;
+            val naeEUltimo = avaliadores.indexOf(avaliador) != avaliadores.size() - 1;
             nomeAvaliadores += avaliador.getNome() + " ("+ retornarFuncaoAvaliador(avaliador) +") ";
             if(naeEUltimo) nomeAvaliadores += ",";
         };

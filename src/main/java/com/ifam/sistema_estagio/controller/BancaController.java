@@ -8,8 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-
 @RestController
 @RequestMapping("/bancas")
 @SuppressWarnings("unused")
@@ -33,7 +31,7 @@ public class BancaController {
         try{
             val banca = bancaService.encontrarPorId(idBanca);
             val bancaNaoExiste = !banca.isPresent();
-            if(bancaNaoExiste) return ResponseEntity.ok().build();
+            if(bancaNaoExiste) throw new Exception("Banca não encontrada");
             return ResponseEntity.ok(banca.get());
         }catch (Exception e){
             return ErroRequisicaoFactoryException.construir(e);

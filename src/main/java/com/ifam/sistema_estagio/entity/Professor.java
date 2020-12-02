@@ -16,7 +16,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "professor")
+@Table(name = "professores")
 public class Professor extends Usuario{
 
 	@JsonBackReference

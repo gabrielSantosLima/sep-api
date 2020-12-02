@@ -1,13 +1,11 @@
 package com.ifam.sistema_estagio.reports.messages;
 
-import com.ifam.sistema_estagio.dto.AtaDto;
 import com.ifam.sistema_estagio.dto.BancaDto;
-import com.ifam.sistema_estagio.dto.FichaAvaliacaoEstagioDto;
-import com.ifam.sistema_estagio.dto.UsuarioDto;
 import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoEstagioFields;
 import com.ifam.sistema_estagio.util.FormatarData;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
+import lombok.val;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,29 +19,27 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
 
     @Override
     public List<FichaDeAvaliacaoEstagioFields> retornarMensagem(BancaDto o) {
-        List<FichaDeAvaliacaoEstagioFields> fichas = new ArrayList<>();
-
-        String discente = Utils.retornarNomeDiscentes(o);
-        String curso = Utils.retornarCurso(o);
-        String anoFinalizacao = retornarAnoFinalizado(o);
-        String funcaoDiscente = retornarFuncaoDiscentes(o);
-        String dataEmissao = retornarDataEmissao();
-
+        val fichas = new ArrayList<FichaDeAvaliacaoEstagioFields>();
+        val discente = Utils.retornarNomeDiscentes(o);
+        val curso = Utils.retornarCurso(o);
+        val anoFinalizacao = retornarAnoFinalizado(o);
+        val funcaoDiscente = retornarFuncaoDiscentes(o);
+        val dataEmissao = retornarDataEmissao();
         o.getAta().getFichasDeEstagio().forEach(ficha -> {
-            Boolean eDiscente = ficha.getAvaliador().getFuncao() == FuncaoEstagio.DISCENTE;
+            val eDiscente = ficha.getAvaliador().getFuncao() == FuncaoEstagio.DISCENTE;
             if(eDiscente) return;
 
-            Double notaConhecimentos = ficha.getNotaConhecimento();
-            Double notaOrganizacao = ficha.getNotaOrganizacao();
-            Double notaAtividades = ficha.getNotaAtividades();
-            Double notaApresentacao = ficha.getNotaApresentacao();
+            val notaConhecimentos = ficha.getNotaConhecimento();
+            val notaOrganizacao = ficha.getNotaOrganizacao();
+            val notaAtividades = ficha.getNotaAtividades();
+            val notaApresentacao = ficha.getNotaApresentacao();
             Double soma = notaConhecimentos + notaOrganizacao + notaAtividades + notaApresentacao;
 
-            String passou = verificarSePassou(soma >= MEDIA_APROVACAO);
-            String naoPassou = verificarSePassou(soma < MEDIA_APROVACAO);
+            val passou = verificarSePassou(soma >= MEDIA_APROVACAO);
+            val naoPassou = verificarSePassou(soma < MEDIA_APROVACAO);
 
-            String avaliador = ficha.getAvaliador().getNome();
-            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
+            val avaliador = ficha.getAvaliador().getNome();
+            val funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
 
             fichas.add(FichaDeAvaliacaoEstagioFields.builder()
                     .ano_finalizacao(anoFinalizacao)
@@ -68,21 +64,17 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
 
     @Override
     public List<FichaDeAvaliacaoEstagioFields> retornarMensagemParaPreencher(BancaDto o) {
-        List<FichaDeAvaliacaoEstagioFields> fichas = new ArrayList<>();
-
-        String discente = Utils.retornarNomeDiscentes(o);
-        String curso = Utils.retornarCurso(o);
-        String anoFinalizacao = retornarAnoFinalizado(o);
-        String funcaoDiscente = retornarFuncaoDiscentes(o);
-        String dataEmissao = retornarDataEmissao();
-
+        val fichas = new ArrayList<FichaDeAvaliacaoEstagioFields>();
+        val discente = Utils.retornarNomeDiscentes(o);
+        val curso = Utils.retornarCurso(o);
+        val anoFinalizacao = retornarAnoFinalizado(o);
+        val funcaoDiscente = retornarFuncaoDiscentes(o);
+        val dataEmissao = retornarDataEmissao();
         o.getAta().getFichasDeEstagio().forEach(ficha -> {
-            Boolean eDiscente = ficha.getAvaliador().getFuncao() == FuncaoEstagio.DISCENTE;
+            val eDiscente = ficha.getAvaliador().getFuncao() == FuncaoEstagio.DISCENTE;
             if (eDiscente) return;
-
-            String avaliador = ficha.getAvaliador().getNome();
-            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
-
+            val avaliador = ficha.getAvaliador().getNome();
+            val funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
             fichas.add(FichaDeAvaliacaoEstagioFields.builder()
                     .ano_finalizacao(anoFinalizacao)
                     .avaliador(avaliador)
@@ -101,7 +93,6 @@ public class FichaEstagioBuilderMessage implements IBuilderMessage<List<FichaDeA
                     .build()
             );
         });
-
         return fichas;
     }
 

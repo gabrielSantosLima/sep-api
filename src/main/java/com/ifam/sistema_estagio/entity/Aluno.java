@@ -24,7 +24,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "aluno")
+@Table(name = "alunos")
 public class Aluno extends Usuario{
 
 	@Column(nullable = false, name = "data_conclusao")

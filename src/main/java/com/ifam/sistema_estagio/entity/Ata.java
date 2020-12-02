@@ -14,7 +14,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ifam.sistema_estagio.config.HexIdGenerator;
+import com.ifam.sistema_estagio.config.IdentificadorHexadecimalGenerator;
+import com.ifam.sistema_estagio.util.ManipularNumerosHexadecimais;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
 import lombok.*;
@@ -26,16 +27,16 @@ import org.hibernate.annotations.GenericGenerator;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "ata")
+@Table(name = "atas")
 public class Ata {
 
 	@Id
-	@GeneratedValue(generator = HexIdGenerator.nome)
+	@GeneratedValue(generator = IdentificadorHexadecimalGenerator.nome)
 	@GenericGenerator(
-			name = HexIdGenerator.nome,
-			strategy = "com.ifam.sistema_estagio.config.HexIdGenerator"
+			name = IdentificadorHexadecimalGenerator.nome,
+			strategy = "com.ifam.sistema_estagio.config.IdentificadorHexadecimalGenerator"
 	)
-	@Column(length = 24)
+	@Column(length = ManipularNumerosHexadecimais.TAMANHO_NUMERO_ALEATORIO)
 	private String id;
 
 	@Column(name = "media_total")
@@ -44,7 +45,7 @@ public class Ata {
 	@Column(name = "descricao")
 	private String descricao;
 
-	@Column(nullable = false, name = "tipo", length = 1)
+	@Column(nullable = false, name = "tipo")
 	@Enumerated(EnumType.STRING)
 	private TipoServico tipo;
 

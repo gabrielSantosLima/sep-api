@@ -1,7 +1,5 @@
 package com.ifam.sistema_estagio.controller;
 
-import com.ifam.sistema_estagio.entity.Coordenadora;
-import com.ifam.sistema_estagio.entity.Professor;
 import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import com.ifam.sistema_estagio.services.ProfessorService;
 import lombok.val;
@@ -9,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("/professores")
@@ -35,7 +31,7 @@ public class ProfessorController {
         try{
             val professor = professorService.encontrarPorId(idProfessor);
             val professorNaoExiste = !professor.isPresent();
-            if(professorNaoExiste) return ResponseEntity.ok().build();
+            if(professorNaoExiste) throw new Exception("Professor não encontrado");
             return ResponseEntity.ok(professor.get());
         }catch(Exception e){
             return ErroRequisicaoFactoryException.construir(e);

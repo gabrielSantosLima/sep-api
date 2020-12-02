@@ -49,7 +49,7 @@ public class EstagioPcctController {
 		try{
 			val estagioPcct = estagioPcctService.encontrarPorId(idEstagioPcct);
 			val estagioPcctNaoExiste = !estagioPcct.isPresent();
-			if(estagioPcctNaoExiste) return ResponseEntity.ok().build();
+			if(estagioPcctNaoExiste) throw new Exception("Estágio/PCCT não encontrado");;
 			return ResponseEntity.ok(estagioPcct.get());
 		}catch (Exception e){
 			return ErroRequisicaoFactoryException.construir(e);
@@ -80,9 +80,9 @@ public class EstagioPcctController {
 	}
 
 	@PostMapping("/concluir/{idEstagioPcct}")
-	public ResponseEntity<Object> concluirEstagioPcct(@PathVariable String idEstagioPcct){
+	public ResponseEntity<Object> finalizarEstagioPcct(@PathVariable String idEstagioPcct){
 		try{
-			val estagioPcct = estagioPcctService.concluirEstagio(idEstagioPcct);
+			val estagioPcct = estagioPcctService.finalizarEstagioPcct(idEstagioPcct);
 			return ResponseEntity.ok(estagioPcct);
 		}catch (Exception e){
 			return ErroRequisicaoFactoryException.construir(e);

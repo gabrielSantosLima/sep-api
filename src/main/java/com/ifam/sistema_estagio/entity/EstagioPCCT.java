@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,7 +16,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ifam.sistema_estagio.config.HexIdGenerator;
+import com.ifam.sistema_estagio.config.IdentificadorHexadecimalGenerator;
+import com.ifam.sistema_estagio.util.ManipularNumerosHexadecimais;
 import com.ifam.sistema_estagio.util.enums.ModalidadeCurso;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 
@@ -34,12 +34,12 @@ import org.hibernate.annotations.GenericGenerator;
 public class EstagioPCCT {
 
 	@Id
-	@GeneratedValue(generator = HexIdGenerator.nome)
+	@GeneratedValue(generator = IdentificadorHexadecimalGenerator.nome)
 	@GenericGenerator(
-			name = HexIdGenerator.nome,
-			strategy = "com.ifam.sistema_estagio.config.HexIdGenerator"
+			name = IdentificadorHexadecimalGenerator.nome,
+			strategy = "com.ifam.sistema_estagio.config.IdentificadorHexadecimalGenerator"
 	)
-	@Column(length = 24)
+	@Column(length = ManipularNumerosHexadecimais.TAMANHO_NUMERO_ALEATORIO)
 	private String id;
 	
 	@Column(nullable = false, name = "titulo")

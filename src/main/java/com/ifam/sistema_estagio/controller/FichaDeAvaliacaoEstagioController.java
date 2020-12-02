@@ -44,7 +44,7 @@ public class FichaDeAvaliacaoEstagioController {
 		try{
 			val ficha = fichaDeAvaliacaoEstagioService.encontrarPorId(idFicha);
 			val fichaNaoExiste = !ficha.isPresent();
-			if(fichaNaoExiste) return null;
+			if(fichaNaoExiste) throw new Exception("Ficha não encontrada");;
 			return ResponseEntity.ok(ficha.get());
 		}catch (Exception e){
 			return ErroRequisicaoFactoryException.construir(e);
