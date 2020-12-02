@@ -2,6 +2,7 @@ package com.ifam.sistema_estagio.controller;
 
 import com.ifam.sistema_estagio.dto.FichaAvaliacaoProjetoDto;
 import com.ifam.sistema_estagio.entity.FichaDeAvaliacaoProjeto;
+import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +29,7 @@ public class FichaDeAvaliacaoProjetoController {
 			val fichaCriada =  fichaDeAvaliacaoProjetoService.salvar(fichaAvaliacaoProjetoDto.construirEntidade());
 			return ResponseEntity.ok(fichaCriada);
 		}catch(Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -41,10 +39,7 @@ public class FichaDeAvaliacaoProjetoController {
 			val fichas = fichaDeAvaliacaoProjetoService.listar();
 			return ResponseEntity.ok(fichas);
 		}catch(Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -56,10 +51,7 @@ public class FichaDeAvaliacaoProjetoController {
 			if(fichaNaoExiste) return null;
 			return ResponseEntity.ok(ficha.get());
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -74,10 +66,7 @@ public class FichaDeAvaliacaoProjetoController {
 			);
 			return ResponseEntity.ok(fichaAtualizada);
 		}catch(Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -87,10 +76,7 @@ public class FichaDeAvaliacaoProjetoController {
 			fichaDeAvaliacaoProjetoService.deletar(idFicha);
 			return ResponseEntity.ok(true);
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-			mensagem.put("mensagem", e.getMessage());
-			mensagem.put("status", 404);
-			return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 }

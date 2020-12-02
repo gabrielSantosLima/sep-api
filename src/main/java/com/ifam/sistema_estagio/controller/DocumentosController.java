@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
+import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import com.ifam.sistema_estagio.reports.fields.*;
 import com.ifam.sistema_estagio.reports.messages.*;
 import lombok.val;
@@ -50,10 +51,7 @@ public class DocumentosController {
 			val pdf = documentosManager.gerarCertificado(certificados, certificadosFrente);
 			return ResponseEntity.ok(pdf);
 		}catch(Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -72,10 +70,7 @@ public class DocumentosController {
 			byte[] pdf = documentosManager.gerarFichaDeAvaliacaoEstagio(fichas);
 			return ResponseEntity.ok(pdf);
 		}catch(Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -100,10 +95,7 @@ public class DocumentosController {
 			byte[] pdf = documentosManager.gerarFichaDeAvaliacaoProjeto(relatorios, defesas, capas);
 			return ResponseEntity.ok(pdf);
 		}catch(Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -122,10 +114,7 @@ public class DocumentosController {
 			byte[] pdf = documentosManager.gerarAtaEstagio(atas);
 			return ResponseEntity.ok(pdf);
 		}catch(Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -144,10 +133,7 @@ public class DocumentosController {
 			val pdf = documentosManager.gerarAtaProjeto(atas);
 			return ResponseEntity.ok(pdf);
 		}catch(Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 }

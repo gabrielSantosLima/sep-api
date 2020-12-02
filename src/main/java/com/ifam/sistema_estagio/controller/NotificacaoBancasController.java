@@ -1,12 +1,11 @@
 package com.ifam.sistema_estagio.controller;
 
+import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import com.ifam.sistema_estagio.services.NoticacaoBancasService;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/notificacao-banca")
@@ -16,16 +15,28 @@ public class NotificacaoBancasController {
     @Autowired
     private NoticacaoBancasService noticacaoBancasService;
 
-    @GetMapping("/coordenadora/{idCoordenadora}")
-    public ResponseEntity<Object> listarBancasNovas(@PathVariable String idCoordenadora){
+    @GetMapping
+    public ResponseEntity<Object> listar(
+            @RequestParam(required = false, defaultValue = "false") boolean jaVisualizado
+    ){
         try{
-            val notificacoes = noticacaoBancasService.listarBancasAdicionadas(idCoordenadora);
+            val notificacoes = noticacaoBancasService.listar(jaVisualizado);
+            return ResponseEntity.ok(notificacoes);
+        }catch(Exception e){
+            return ErroRequisicaoFactoryException.construir(e);
+        }
+    }
+
+    @GetMapping("/coordenadora/{idCoordenadora}")
+    public ResponseEntity<Object> listarNotificacoesNaoVisualizadas(
+            @PathVariable String idCoordenadora,
+            @RequestParam(required = false, defaultValue = "false") boolean jaVisualizado
+    ){
+        try{
+            val notificacoes = noticacaoBancasService.listar(idCoordenadora,jaVisualizado);
             return ResponseEntity.ok(notificacoes);
         }catch (Exception e){
-            val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+            return ErroRequisicaoFactoryException.construir(e);
         }
     }
 
@@ -37,23 +48,17 @@ public class NotificacaoBancasController {
             if(notificacaoNaoExiste) return ResponseEntity.ok().build();
             return ResponseEntity.ok(notificacao.get());
         }catch (Exception e) {
-            val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+            return ErroRequisicaoFactoryException.construir(e);
         }
     }
 
     @PostMapping("/visualizar/{idNotificacao}")
     public ResponseEntity<Object> visualizarNotificacao(@PathVariable String idNotificacao){
         try {
-            boolean foiVisualizado = noticacaoBancasService.visualizarNotificacao(idNotificacao);
-            return ResponseEntity.ok(foiVisualizado);
+            val notificacaoVisualizada = noticacaoBancasService.visualizarNotificacao(idNotificacao);
+            return ResponseEntity.ok(notificacaoVisualizada);
         }catch (Exception e) {
-            val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+            return ErroRequisicaoFactoryException.construir(e);
         }
     }
 
@@ -63,10 +68,7 @@ public class NotificacaoBancasController {
             noticacaoBancasService.deletar(idNotificacao);
             return ResponseEntity.ok(true);
         }catch (Exception e) {
-            val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+            return ErroRequisicaoFactoryException.construir(e);
         }
     }
 }

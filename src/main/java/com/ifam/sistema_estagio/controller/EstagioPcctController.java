@@ -2,6 +2,7 @@ package com.ifam.sistema_estagio.controller;
 
 import com.ifam.sistema_estagio.dto.EstagioPCCTDto;
 import com.ifam.sistema_estagio.entity.EstagioPCCT;
+import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,7 @@ public class EstagioPcctController {
 			val estagioPCCTS = estagioPcctService.listar(tipoServico);
 			return ResponseEntity.ok(estagioPCCTS);
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -42,10 +40,7 @@ public class EstagioPcctController {
 			val estagioPcctCriado = estagioPcctService.salvar(estagioPCCTDto.construirEntidade());
 			return ResponseEntity.ok(estagioPcctCriado);
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -57,10 +52,7 @@ public class EstagioPcctController {
 			if(estagioPcctNaoExiste) return ResponseEntity.ok().build();
 			return ResponseEntity.ok(estagioPcct.get());
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -73,10 +65,7 @@ public class EstagioPcctController {
 			);
 			return ResponseEntity.ok(estagioPcctAtualizado);
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -86,10 +75,7 @@ public class EstagioPcctController {
 			estagioPcctService.deletar(idEstagioPcct);
 			return ResponseEntity.ok(true);
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-			mensagem.put("mensagem", e.getMessage());
-			mensagem.put("status", 404);
-			return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -99,10 +85,7 @@ public class EstagioPcctController {
 			val estagioPcct = estagioPcctService.concluirEstagio(idEstagioPcct);
 			return ResponseEntity.ok(estagioPcct);
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 }

@@ -1,12 +1,11 @@
 package com.ifam.sistema_estagio.controller;
 
+import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import com.ifam.sistema_estagio.services.CoordenadoraService;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/coordenadores")
@@ -22,10 +21,7 @@ public class CoordenadoraController {
             val coordenadoras = coordenadoraService.listar();
             return ResponseEntity.ok(coordenadoras);
         }catch(Exception e){
-            val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+            return ErroRequisicaoFactoryException.construir(e);
         }
     }
 
@@ -37,10 +33,7 @@ public class CoordenadoraController {
             if(coordenadoraNaoExiste) return ResponseEntity.ok().build();
             return ResponseEntity.ok(coordenadora.get());
         }catch(Exception e){
-            val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+            return ErroRequisicaoFactoryException.construir(e);
         }
     }
 
@@ -50,10 +43,7 @@ public class CoordenadoraController {
             val coordenadoras = coordenadoraService.encontrarPorNome(nome);
             return ResponseEntity.ok(coordenadoras);
         }catch (Exception e){
-            val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+            return ErroRequisicaoFactoryException.construir(e);
         }
     }
 }

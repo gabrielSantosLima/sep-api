@@ -1,10 +1,9 @@
 package com.ifam.sistema_estagio.controller;
 
+import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
 
 @RestController
 @RequestMapping("/**")
@@ -13,30 +12,22 @@ public class RotaNaoEncontradaController {
 
     @GetMapping
     public ResponseEntity<Object> rotaNaoEncontradaGet(){
-        val resposta = new HashMap<String, Object>();
-        resposta.put("mensagem", "Rota não encontrada");
-        return ResponseEntity.status(404).body(resposta);
+        return ErroRequisicaoFactoryException.construir(new Exception("Rota não encontrada."));
     }
 
     @PostMapping
     public ResponseEntity<Object> rotaNaoEncontradaPost(){
-        val resposta = new HashMap<String, Object>();
-        resposta.put("mensagem", "Rota não encontrada");
-        return ResponseEntity.status(404).body(resposta);
+        return ErroRequisicaoFactoryException.construir(new Exception("Rota não encontrada."));
     }
 
     @PutMapping
     public ResponseEntity<Object> rotaNaoEncontradaPut(){
-        val resposta = new HashMap<String, Object>();
-        resposta.put("mensagem", "Rota não encontrada");
-        return ResponseEntity.status(404).body(resposta);
+        return ErroRequisicaoFactoryException.construir(new Exception("Rota não encontrada."));
     }
 
     @DeleteMapping
     public ResponseEntity<Object> rotaNaoEncontradaDelete(){
-        val resposta = new HashMap<String, Object>();
-        resposta.put("mensagem", "Rota não encontrada");
-        return ResponseEntity.status(404).body(resposta);
+        return ErroRequisicaoFactoryException.construir(new Exception("Rota não encontrada."));
     }
 
 }

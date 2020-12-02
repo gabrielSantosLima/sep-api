@@ -16,21 +16,21 @@ public class GenericService<E, R extends JpaRepository>{
 
 	@Transactional
 	public E salvar(E e) throws Exception {
-		if(e == null) throw new Exception("[service] Entidade nula!");
+		if(e == null) throw new Exception("Entidade nula");
 		return (E) repository.save(e);
 	}
 
 	@Transactional
 	public E atualizar(String id, E newE) throws Exception {
-		if(newE == null) throw new Exception("[service] Entidade nula!");
-		if(!existe(id)) throw new Exception("[service] Entidade não existe!");
+		if(newE == null) throw new Exception("Entidade nula");
+		if(!existe(id)) throw new Exception("Entidade não existe!");
 		val updatedE = (E) repository.save(newE);
 		return updatedE;
 	}
 
 	@Transactional
 	public void deletar(String id) throws Exception {
-		if(!existe(id)) throw new Exception("[service] Entidade não existe!");
+		if(!existe(id)) throw new Exception("Entidade não existe");
 		repository.deleteById(id);
 	}
 

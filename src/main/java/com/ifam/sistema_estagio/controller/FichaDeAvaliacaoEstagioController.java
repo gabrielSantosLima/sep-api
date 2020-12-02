@@ -1,16 +1,13 @@
 package com.ifam.sistema_estagio.controller;
 
 import com.ifam.sistema_estagio.dto.FichaAvaliacaoEstagioDto;
-import com.ifam.sistema_estagio.entity.FichaDeAvaliacaoEstagio;
+import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ifam.sistema_estagio.services.FichaDeAvaliacaoEstagioService;
-
-import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("/fichas-de-avaliacao-estagio")
@@ -28,10 +25,7 @@ public class FichaDeAvaliacaoEstagioController {
 			val fichaCriada =  fichaDeAvaliacaoEstagioService.salvar(fichaAvaliacaoEstagioDto.construirEntidade());
 			return ResponseEntity.ok(fichaCriada);
 		}catch(Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -41,10 +35,7 @@ public class FichaDeAvaliacaoEstagioController {
 			val fichas = fichaDeAvaliacaoEstagioService.listar();
 			return ResponseEntity.ok(fichas);
 		}catch(Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -56,10 +47,7 @@ public class FichaDeAvaliacaoEstagioController {
 			if(fichaNaoExiste) return null;
 			return ResponseEntity.ok(ficha.get());
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -74,10 +62,7 @@ public class FichaDeAvaliacaoEstagioController {
 			);
 			return ResponseEntity.ok(fichaAtualizada);
 		}catch(Exception e){
-			val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -87,10 +72,7 @@ public class FichaDeAvaliacaoEstagioController {
 			fichaDeAvaliacaoEstagioService.deletar(idFicha);
 			return ResponseEntity.ok(true);
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-			mensagem.put("mensagem", e.getMessage());
-			mensagem.put("status", 404);
-			return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 }

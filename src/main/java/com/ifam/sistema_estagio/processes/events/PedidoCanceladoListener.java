@@ -9,7 +9,8 @@ public class PedidoCanceladoListener implements ExecutionListener {
 
     @Override
     public void notify(DelegateExecution execution) throws Exception {
-        System.out.println("[Banca Cancelada] Uma foi foi cancelada! Id do processo: "+ execution.getProcessInstanceId());
+        System.out.println("[Banca Cancelada] Uma banca foi cancelada! Id do processo: "+ execution.getProcessInstanceId());
         execution.removeVariables();
+        execution.removeVariablesLocal();
     }
 }

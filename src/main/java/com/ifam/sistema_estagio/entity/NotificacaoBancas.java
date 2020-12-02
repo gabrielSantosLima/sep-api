@@ -1,6 +1,5 @@
 package com.ifam.sistema_estagio.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ifam.sistema_estagio.config.HexIdGenerator;
 import lombok.*;
@@ -10,8 +9,10 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@Entity
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 @Table(name="notificacao_bancas")
 public class NotificacaoBancas {
 
