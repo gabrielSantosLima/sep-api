@@ -6,6 +6,7 @@ import com.ifam.sistema_estagio.dto.UsuarioDto;
 import com.ifam.sistema_estagio.reports.fields.AtaProjetoFields;
 import com.ifam.sistema_estagio.util.FormatarData;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
+import lombok.val;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,17 +16,17 @@ public class AtaProjetoBuilderMessage implements IBuilderMessage<List<AtaProjeto
 
     @Override
     public List<AtaProjetoFields> retornarMensagem(BancaDto o) {
-        List<AtaProjetoFields> atas = new ArrayList<>();
-        String data = Utils.retornarDataPadraoNomeCidade(o);
-        String membro1 = retornarColaboradoresProjeto(o).get(0).getNome();
-        String membro2 = retornarColaboradoresProjeto(o).get(1).getNome();
-        String presidente = Utils.retornarOrientador(o).getNome();
-        String titulo = Utils.retornarTitulo(o);
-        String media = o.getAta().getMediaTotal().toString();
+        val atas = new ArrayList<AtaProjetoFields>();
+        val data = Utils.retornarDataPadraoNomeCidade(o);
+        val membro1 = retornarColaboradoresProjeto(o).get(0).getNome();
+        val membro2 = retornarColaboradoresProjeto(o).get(1).getNome();
+        val presidente = Utils.retornarOrientador(o).getNome();
+        val titulo = Utils.retornarTitulo(o);
+        val media = o.getAta().getMediaTotal().toString();
 
         Utils.retornarDiscentes(o).forEach(discente -> {
-            String mensagem = retornarMensagemCompleta(o, discente);
-            String curso = Utils.retornarCurso(o).toUpperCase();
+            val mensagem = retornarMensagemCompleta(o, discente);
+            val curso = Utils.retornarCurso(o).toUpperCase();
 
             atas.add(AtaProjetoFields.builder()
                     .data(data)
@@ -74,15 +75,13 @@ public class AtaProjetoBuilderMessage implements IBuilderMessage<List<AtaProjeto
     }
 
     private List<UsuarioDto> retornarColaboradoresProjeto(BancaDto o){
-        List<UsuarioDto> colaboradores = new ArrayList<>();
-        List<FichaAvaliacaoProjetoDto> fichas = o.getAta()
+        val colaboradores = new ArrayList<UsuarioDto>();
+        val fichas = o.getAta()
                 .getFichasDeProjeto()
                 .stream()
                 .filter(ficha -> ficha.getAvaliador().getFuncao() == FuncaoEstagio.COLABORADOR)
                 .collect(Collectors.toList());
-
         fichas.forEach(ficha -> colaboradores.add(ficha.getAvaliador()));
-
         return colaboradores;
     }
 }

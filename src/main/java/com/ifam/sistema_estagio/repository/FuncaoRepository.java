@@ -9,6 +9,5 @@ import com.ifam.sistema_estagio.entity.Funcao;
 
 @Repository
 public interface FuncaoRepository extends JpaRepository<Funcao, String>{
-	
-	Optional<Funcao> findByNome(String nome); 
+	Optional<Funcao> findByNome(String nome);
 }

@@ -69,6 +69,7 @@ public class SolicitarBancaProcess {
 		val resposta = new HashMap<String, Object>();
 		resposta.put("idProcesso", processInstance.getId());
 		resposta.put("idParticipantes", idParticipantes);
+		resposta.put("criadoEm", new Date());
 		return resposta;
 	}
 
@@ -113,7 +114,8 @@ public class SolicitarBancaProcess {
 			enviarMensagem(idProcesso, NOME_MENSAGEM_CONFIRMAR_PARTICIPACAO);
 		}
 	}
-@Transactional
+
+	@Transactional
 	public void confirmarParticipacaoTodos(@NonNull String idProcesso) {
 		removerVariable(idProcesso, VAR_PARTICIPANTES_CONFIRMADOS);
 		mudarVariavel(idProcesso, VAR_CONFIRMADO, true);

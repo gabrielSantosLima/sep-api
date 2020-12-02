@@ -51,7 +51,7 @@ public class SolicitarBancaController {
 	){
 		try{
 			solicitarBancaProcess.confirmarParticipacao(idProcesso, idParticipante, resposta);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok(true);
 		}catch (Exception e){
 			return ErroRequisicaoFactoryException.construir(e);
 		}
@@ -61,7 +61,7 @@ public class SolicitarBancaController {
 	public ResponseEntity<Object> confirmarParticipacaoTodos(@PathVariable String idProcesso){
 		try{
 			solicitarBancaProcess.confirmarParticipacaoTodos(idProcesso);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok(true);
 		}catch (Exception e){
 			return ErroRequisicaoFactoryException.construir(e);
 		}
@@ -74,7 +74,7 @@ public class SolicitarBancaController {
 	){
 		try{
 			solicitarBancaProcess.verificarAprovacaoBanca(idProcesso, resposta);
-			return ResponseEntity.ok().build();
+			return ResponseEntity.ok(true);
 		}catch (Exception e){
 			return ErroRequisicaoFactoryException.construir(e);
 		}

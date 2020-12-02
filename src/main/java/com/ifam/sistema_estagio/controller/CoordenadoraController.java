@@ -30,7 +30,7 @@ public class CoordenadoraController {
         try{
             val coordenadora = coordenadoraService.encontrarPorId(idCoordenadora);
             val coordenadoraNaoExiste = !coordenadora.isPresent();
-            if(coordenadoraNaoExiste) return ResponseEntity.ok().build();
+            if(coordenadoraNaoExiste) throw new Exception("Coordenador(a) não encontrado(a)");
             return ResponseEntity.ok(coordenadora.get());
         }catch(Exception e){
             return ErroRequisicaoFactoryException.construir(e);

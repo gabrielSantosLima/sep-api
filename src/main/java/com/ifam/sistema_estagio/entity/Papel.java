@@ -12,7 +12,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.ifam.sistema_estagio.config.HexIdGenerator;
+import com.ifam.sistema_estagio.config.IdentificadorHexadecimalGenerator;
+import com.ifam.sistema_estagio.util.ManipularNumerosHexadecimais;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -21,16 +22,16 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @Builder
 @AllArgsConstructor
-@Table(name = "papel")
+@Table(name = "papeis")
 public class Papel {
 
 	@Id
-	@GeneratedValue(generator = HexIdGenerator.nome)
+	@GeneratedValue(generator = IdentificadorHexadecimalGenerator.nome)
 	@GenericGenerator(
-			name = HexIdGenerator.nome,
-			strategy = "com.ifam.sistema_estagio.config.HexIdGenerator"
+			name = IdentificadorHexadecimalGenerator.nome,
+			strategy = "com.ifam.sistema_estagio.config.IdentificadorHexadecimalGenerator"
 	)
-	@Column(length = 24)
+	@Column(length = ManipularNumerosHexadecimais.TAMANHO_NUMERO_ALEATORIO)
 	private Integer id;
 	
 	@Column(name = "nome")

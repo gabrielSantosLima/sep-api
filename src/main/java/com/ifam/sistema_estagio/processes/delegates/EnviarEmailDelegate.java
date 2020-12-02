@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class EnviarEmailDelegate implements JavaDelegate{
 	private final String ASSUNTO = "SEP - Sistema de Estágio e PCCT - Confirmação de participação";
 	private final String NOME_SEM_AUTOR = "Sem definição";
-	private final String ROTA_CONFIRMACAO_PARTICIPACAO = "/solicitar-banca/confirmar-participacao/";
+	private final String ROTA_CONFIRMAR_PARTICIPACAO = "/solicitar-banca/confirmar-participacao/";
 
 	@Autowired
 	private EmailHtmlService emailService;
@@ -43,16 +43,20 @@ public class EnviarEmailDelegate implements JavaDelegate{
 		val titulo = banca.getEstagioPCCT().getTitulo();
 
 		participantes.forEach(participante -> {
-			enviarEmail(
-					nomeAutor,
-					participante,
-					idInstance,
-					titulo,
-					curso,
-					tipo,
-					dataFormatada,
-					horaFormatada
-			);
+			try {
+				enviarEmail(
+						nomeAutor,
+						participante,
+						idInstance,
+						titulo,
+						curso,
+						tipo,
+						dataFormatada,
+						horaFormatada
+				);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		});
 	}
 
@@ -65,7 +69,7 @@ public class EnviarEmailDelegate implements JavaDelegate{
 			String tipo,
 			String data,
 			String hora
-	){
+	) throws Exception {
 		val email = new EmailSimplesDto();
 		email.setTo(participante.getEmail());
 		email.setSubject(ASSUNTO);
@@ -78,17 +82,16 @@ public class EnviarEmailDelegate implements JavaDelegate{
 		params.put("horario",hora);
 		params.put("titulo",titulo);
 		params.put("autor",nomeAutor);
-		params.put("url",
-				Aplicacao.BASE_URL.getValor() + ROTA_CONFIRMACAO_PARTICIPACAO +
+		params.put("url", Aplicacao.BASE_URL.getValor() +
+				ROTA_CONFIRMAR_PARTICIPACAO +
 				idProcesso + "/" +
 				participante.getId()
 		);
 		email.setParams(params);
 		try{
-			// TODO ativar novamente quando tiver internet
-//			emailService.send(email);
+			emailService.enviar(email);
 		}catch (Exception e){
-			e.printStackTrace();
+			throw new Exception("Falha ao enviar e-mails");
 		}
 	}
 }

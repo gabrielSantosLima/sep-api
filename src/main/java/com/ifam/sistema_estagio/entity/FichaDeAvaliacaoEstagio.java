@@ -3,7 +3,8 @@ package com.ifam.sistema_estagio.entity;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.ifam.sistema_estagio.config.HexIdGenerator;
+import com.ifam.sistema_estagio.config.IdentificadorHexadecimalGenerator;
+import com.ifam.sistema_estagio.util.ManipularNumerosHexadecimais;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,16 +13,16 @@ import org.hibernate.annotations.GenericGenerator;
 @Setter
 @AllArgsConstructor
 @Builder
-@Table(name = "ficha_de_avaliacao_estagio")
+@Table(name = "fichas_de_avaliacoes_estagio")
 public class FichaDeAvaliacaoEstagio{
 
 	@Id
-	@GeneratedValue(generator = HexIdGenerator.nome)
+	@GeneratedValue(generator = IdentificadorHexadecimalGenerator.nome)
 	@GenericGenerator(
-			name = HexIdGenerator.nome,
-			strategy = "com.ifam.sistema_estagio.config.HexIdGenerator"
+			name = IdentificadorHexadecimalGenerator.nome,
+			strategy = "com.ifam.sistema_estagio.config.IdentificadorHexadecimalGenerator"
 	)
-	@Column(length = 24)
+	@Column(length = ManipularNumerosHexadecimais.TAMANHO_NUMERO_ALEATORIO)
 	private String id;
 
 	@JsonManagedReference

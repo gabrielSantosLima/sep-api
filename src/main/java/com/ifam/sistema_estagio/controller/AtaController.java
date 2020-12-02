@@ -33,7 +33,7 @@ public class AtaController {
 		try{
 			val ata = ataService.encontrarPorBanca(idAta);
 			val ataNaoExiste = !ata.isPresent();
-			if(ataNaoExiste) return ResponseEntity.ok().build();
+			if(ataNaoExiste) throw new Exception("Ata não encontrada");
 			return ResponseEntity.ok(ata.get());
 		}catch (Exception e){
 			return ErroRequisicaoFactoryException.construir(e);
@@ -45,7 +45,7 @@ public class AtaController {
 		try{
 			val ata = ataService.encontrarPorId(idAta);
 			val ataNaoExiste = !ata.isPresent();
-			if(ataNaoExiste) return ResponseEntity.ok().build();
+			if(ataNaoExiste) throw new Exception("Ata não encontrada");
 			return ResponseEntity.ok(ata.get());
 		}catch (Exception e){
 			return ErroRequisicaoFactoryException.construir(e);

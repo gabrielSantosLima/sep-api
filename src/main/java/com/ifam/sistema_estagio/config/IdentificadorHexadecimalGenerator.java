@@ -6,7 +6,7 @@ import org.hibernate.engine.spi.SharedSessionContractImplementor;
 import org.hibernate.id.IdentifierGenerator;
 import java.io.Serializable;
 
-public class HexIdGenerator implements IdentifierGenerator {
+public class IdentificadorHexadecimalGenerator implements IdentifierGenerator {
 
     public static final String nome = "hexGenerator";
 

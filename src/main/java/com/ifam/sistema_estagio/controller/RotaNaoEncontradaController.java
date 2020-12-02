@@ -1,7 +1,6 @@
 package com.ifam.sistema_estagio.controller;
 
 import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
-import lombok.val;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

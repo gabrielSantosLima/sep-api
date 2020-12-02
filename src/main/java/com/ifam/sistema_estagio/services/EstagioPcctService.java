@@ -1,6 +1,5 @@
 package com.ifam.sistema_estagio.services;
 
-import com.ifam.sistema_estagio.util.enums.Curso;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,7 @@ public class EstagioPcctService extends GenericService<EstagioPCCT, EstagioPcctR
 		return estagioPcctRepository.findByTipo(tipo);
 	}
 
-	public EstagioPCCT concluirEstagio(String idEstagio) throws Exception {
+	public EstagioPCCT finalizarEstagioPcct(String idEstagio) throws Exception {
 		val estagioPcct = encontrarPorId(idEstagio);
 		val estagioPcctNaoExiste = !estagioPcct.isPresent();
 		if(estagioPcctNaoExiste) throw new Exception("Estágio não existe");

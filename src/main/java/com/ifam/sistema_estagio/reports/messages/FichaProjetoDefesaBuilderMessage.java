@@ -1,38 +1,32 @@
 package com.ifam.sistema_estagio.reports.messages;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
-import com.ifam.sistema_estagio.dto.FichaAvaliacaoProjetoDto;
-import com.ifam.sistema_estagio.dto.UsuarioDto;
-import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoProjetoCapaFields;
 import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoProjetoDefesaFields;
-import com.ifam.sistema_estagio.util.FormatarData;
-import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
+import lombok.val;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class FichaProjetoDefesaBuilderMessage implements IBuilderMessage<List<FichaDeAvaliacaoProjetoDefesaFields>, BancaDto> {
 
     @Override
     public List<FichaDeAvaliacaoProjetoDefesaFields> retornarMensagem(BancaDto o) {
-        List<FichaDeAvaliacaoProjetoDefesaFields> fichas = new ArrayList<>();
+        val fichas = new ArrayList<FichaDeAvaliacaoProjetoDefesaFields>();
 
-        String autor = Utils.retornarNomeDiscentes(o);
-        String titulo = Utils.retornarTitulo(o);
-        String data = Utils.retornarDataPadraoNomeCidade(o);
+        val autor = Utils.retornarNomeDiscentes(o);
+        val titulo = Utils.retornarTitulo(o);
+        val data = Utils.retornarDataPadraoNomeCidade(o);
 
         o.getAta().getFichasDeProjeto().forEach(ficha -> {
-            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
-            String nomeAvaliador = ficha.getAvaliador().getNome();
+            val funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
+            val nomeAvaliador = ficha.getAvaliador().getNome();
 
-            Double notaQualidade = ficha.getNotaSlide();
-            Double notaConhecimento = ficha.getNotaAssunto();
-            Double notaClareza = ficha.getNotaClareza();
-            Double notaLinguagem = ficha.getNotaLinguagem();
-            Double notaTempo = ficha.getNotaTempo();
-            Double notaResposta = ficha.getNotaRespostas();
+            val notaQualidade = ficha.getNotaSlide();
+            val notaConhecimento = ficha.getNotaAssunto();
+            val notaClareza = ficha.getNotaClareza();
+            val notaLinguagem = ficha.getNotaLinguagem();
+            val notaTempo = ficha.getNotaTempo();
+            val notaResposta = ficha.getNotaRespostas();
 
             Double soma = notaQualidade +
                     notaConhecimento +
@@ -62,15 +56,15 @@ public class FichaProjetoDefesaBuilderMessage implements IBuilderMessage<List<Fi
 
     @Override
     public List<FichaDeAvaliacaoProjetoDefesaFields> retornarMensagemParaPreencher(BancaDto o) {
-        List<FichaDeAvaliacaoProjetoDefesaFields> fichas = new ArrayList<>();
+        val fichas = new ArrayList<FichaDeAvaliacaoProjetoDefesaFields>();
 
-        String autor = Utils.retornarNomeDiscentes(o);
-        String titulo = Utils.retornarTitulo(o);
-        String data = Utils.retornarDataPadraoNomeCidade(o);
+        val autor = Utils.retornarNomeDiscentes(o);
+        val titulo = Utils.retornarTitulo(o);
+        val data = Utils.retornarDataPadraoNomeCidade(o);
 
         o.getAta().getFichasDeProjeto().forEach(ficha -> {
-            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
-            String nomeAvaliador = ficha.getAvaliador().getNome();
+            val funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
+            val nomeAvaliador = ficha.getAvaliador().getNome();
 
             fichas.add(FichaDeAvaliacaoProjetoDefesaFields.builder()
                     .autor(autor)

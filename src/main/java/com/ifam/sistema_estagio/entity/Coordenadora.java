@@ -15,7 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Table(name = "coordenadora")
+@Table(name = "coordenadores")
 public class Coordenadora extends Usuario{
 
 	@JsonBackReference

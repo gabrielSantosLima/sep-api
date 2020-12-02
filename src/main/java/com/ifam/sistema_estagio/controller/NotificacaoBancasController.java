@@ -45,7 +45,7 @@ public class NotificacaoBancasController {
         try {
             val notificacao = noticacaoBancasService.encontrarPorId(idNotificacao);
             val notificacaoNaoExiste = !notificacao.isPresent();
-            if(notificacaoNaoExiste) return ResponseEntity.ok().build();
+            if(notificacaoNaoExiste) throw new Exception("Notificação da banca não encontrada");
             return ResponseEntity.ok(notificacao.get());
         }catch (Exception e) {
             return ErroRequisicaoFactoryException.construir(e);

@@ -7,7 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import com.ifam.sistema_estagio.config.HexIdGenerator;
+import com.ifam.sistema_estagio.config.IdentificadorHexadecimalGenerator;
+import com.ifam.sistema_estagio.util.ManipularNumerosHexadecimais;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 import com.ifam.sistema_estagio.util.enums.GrauAcademico;
 
@@ -21,12 +22,12 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 public abstract class Usuario {
 	@Id
-	@GeneratedValue(generator = HexIdGenerator.nome)
+	@GeneratedValue(generator = IdentificadorHexadecimalGenerator.nome)
 	@GenericGenerator(
-			name = HexIdGenerator.nome,
-			strategy = "com.ifam.sistema_estagio.config.HexIdGenerator"
+			name = IdentificadorHexadecimalGenerator.nome,
+			strategy = "com.ifam.sistema_estagio.config.IdentificadorHexadecimalGenerator"
 	)
-	@Column(length = 24)
+	@Column(length = ManipularNumerosHexadecimais.TAMANHO_NUMERO_ALEATORIO)
 	private String id;
 
 	@Column(nullable = false, name = "matricula")

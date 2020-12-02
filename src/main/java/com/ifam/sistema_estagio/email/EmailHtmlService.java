@@ -21,7 +21,7 @@ public class EmailHtmlService implements IEmailService {
     private SpringTemplateEngine springTemplateEngine;
 
     @Override
-    public void send(EmailSimplesDto email) throws Exception{
+    public void enviar(EmailSimplesDto email) throws Exception{
         try{
             val message = emailSender.createMimeMessage();
             val helper = new MimeMessageHelper(message, true);
@@ -33,7 +33,7 @@ public class EmailHtmlService implements IEmailService {
             message.setContent(text, HTML_VALUE);
             emailSender.send(message);
         }catch (Exception e) {
-            throw new Exception("[email-texto-service] Erro ao enviar e-mail: " + e.getMessage());
+            throw new Exception("Erro ao enviar e-mail");
         }
     }
 }

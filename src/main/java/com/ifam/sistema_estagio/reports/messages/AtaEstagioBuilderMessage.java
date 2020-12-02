@@ -1,11 +1,11 @@
 package com.ifam.sistema_estagio.reports.messages;
 
-import com.ifam.sistema_estagio.dto.FichaAvaliacaoEstagioDto;
 import com.ifam.sistema_estagio.dto.UsuarioDto;
 import com.ifam.sistema_estagio.reports.fields.AtaEstagioFields;
 import com.ifam.sistema_estagio.dto.BancaDto;
 import com.ifam.sistema_estagio.util.FormatarData;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
+import lombok.val;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,19 +15,19 @@ public class AtaEstagioBuilderMessage implements IBuilderMessage<List<AtaEstagio
 
     @Override
     public List<AtaEstagioFields> retornarMensagem(BancaDto o) {
-        List<AtaEstagioFields> atas = new ArrayList<>();
-        String data = Utils.retornarDataPadraoNomeCidade(o);
-        String membro1 = retornarColaboradores(o).get(0).getNome();
-        String membro2 = retornarColaboradores(o).get(1).getNome();
-        String presidente = Utils.retornarOrientador(o).getNome();
-        String coordenador = Utils.retornarCoordenador(o).getNome();
-        String horaFinalizado = FormatarData.porMascaraHoraPadrao(o.getHoraFinalizado());
+        val atas = new ArrayList<AtaEstagioFields>();
+        val data = Utils.retornarDataPadraoNomeCidade(o);
+        val membro1 = retornarColaboradores(o).get(0).getNome();
+        val membro2 = retornarColaboradores(o).get(1).getNome();
+        val presidente = Utils.retornarOrientador(o).getNome();
+        val coordenador = Utils.retornarCoordenador(o).getNome();
+        val horaFinalizado = FormatarData.porMascaraHoraPadrao(o.getHoraFinalizado());
 
         Utils.retornarDiscentes(o).forEach(discente -> {
-            String mensagemCabecalho = retornarMensagemCabecalho(discente);
-            String mensagem = retornarMensagemCompleta(o, discente);
-            String mensagemChefe = retornarMensagemChefe(o, discente);
-            String curso = Utils.retornarCurso(o);
+            val mensagemCabecalho = retornarMensagemCabecalho(discente);
+            val mensagem = retornarMensagemCompleta(o, discente);
+            val mensagemChefe = retornarMensagemChefe(o, discente);
+            val curso = Utils.retornarCurso(o);
 
             atas.add(AtaEstagioFields.builder()
                     .aluno(discente.getNome())
@@ -44,7 +44,6 @@ public class AtaEstagioBuilderMessage implements IBuilderMessage<List<AtaEstagio
                     .titulo(mensagemCabecalho)
                     .build());
         });
-
         return atas;
     }
 
@@ -93,15 +92,13 @@ public class AtaEstagioBuilderMessage implements IBuilderMessage<List<AtaEstagio
     }
 
     private List<UsuarioDto> retornarColaboradores(BancaDto o){
-        List<UsuarioDto> colaboradores = new ArrayList<>();
-        List<FichaAvaliacaoEstagioDto> fichas = o.getAta()
+        val colaboradores = new ArrayList<UsuarioDto>();
+        val fichas = o.getAta()
                 .getFichasDeEstagio()
                 .stream()
                 .filter(ficha -> ficha.getAvaliador().getFuncao() == FuncaoEstagio.COLABORADOR)
                 .collect(Collectors.toList());
-
         fichas.forEach(ficha -> colaboradores.add(ficha.getAvaliador()));
-
         return colaboradores;
     }
 }

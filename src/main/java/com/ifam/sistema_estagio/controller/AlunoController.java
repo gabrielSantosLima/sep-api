@@ -30,7 +30,7 @@ public class AlunoController {
         try{
             val aluno = alunoService.encontrarPorId(idAluno);
             val alunoNaoExiste = !aluno.isPresent();
-            if(alunoNaoExiste) return ResponseEntity.ok().build();
+            if(alunoNaoExiste) throw new Exception("Aluno não encontrado");
             return ResponseEntity.ok(aluno.get());
         }catch(Exception e){
             return ErroRequisicaoFactoryException.construir(e);

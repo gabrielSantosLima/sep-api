@@ -2,6 +2,7 @@ package com.ifam.sistema_estagio.reports.messages;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
 import com.ifam.sistema_estagio.reports.fields.FichaDeAvaliacaoProjetoRelatorioFields;
+import lombok.val;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,23 +11,23 @@ public class FichaProjetoRelatorioBuilderMessage implements IBuilderMessage<List
 
     @Override
     public List<FichaDeAvaliacaoProjetoRelatorioFields> retornarMensagem(BancaDto o) {
-        List<FichaDeAvaliacaoProjetoRelatorioFields> fichas = new ArrayList<>();
+        val fichas = new ArrayList<FichaDeAvaliacaoProjetoRelatorioFields>();
 
-        String autor = Utils.retornarNomeDiscentes(o);
-        String titulo = Utils.retornarTitulo(o);
-        String data = Utils.retornarDataPadraoNomeCidade(o);
+        val autor = Utils.retornarNomeDiscentes(o);
+        val titulo = Utils.retornarTitulo(o);
+        val data = Utils.retornarDataPadraoNomeCidade(o);
 
         o.getAta().getFichasDeProjeto().forEach(ficha -> {
-            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
-            String nomeAvaliador = ficha.getAvaliador().getNome();
+            val funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
+            val nomeAvaliador = ficha.getAvaliador().getNome();
 
-            Double notaApresentacao = ficha.getNotaApresentacao();
-            Double notaABNT = ficha.getNotaABNT();
-            Double notaMetodologia = ficha.getNotaMetodologia();
-            Double notaConteudo = ficha.getNotaConteudo();
-            Double notaFund = ficha.getNotaFund();
-            Double notaDiagramas = ficha.getNotaDiagramas();
-            Double notaResultados = ficha.getNotaResultados();
+            val notaApresentacao = ficha.getNotaApresentacao();
+            val notaABNT = ficha.getNotaABNT();
+            val notaMetodologia = ficha.getNotaMetodologia();
+            val notaConteudo = ficha.getNotaConteudo();
+            val notaFund = ficha.getNotaFund();
+            val notaDiagramas = ficha.getNotaDiagramas();
+            val notaResultados = ficha.getNotaResultados();
 
             Double media = notaApresentacao +
                     notaABNT +
@@ -58,15 +59,15 @@ public class FichaProjetoRelatorioBuilderMessage implements IBuilderMessage<List
 
     @Override
     public List<FichaDeAvaliacaoProjetoRelatorioFields> retornarMensagemParaPreencher(BancaDto o) {
-        List<FichaDeAvaliacaoProjetoRelatorioFields> fichas = new ArrayList<>();
+        val fichas = new ArrayList<FichaDeAvaliacaoProjetoRelatorioFields>();
 
-        String autor = Utils.retornarNomeDiscentes(o);
-        String titulo = Utils.retornarTitulo(o);
-        String data = Utils.retornarDataPadraoNomeCidade(o);
+        val autor = Utils.retornarNomeDiscentes(o);
+        val titulo = Utils.retornarTitulo(o);
+        val data = Utils.retornarDataPadraoNomeCidade(o);
 
         o.getAta().getFichasDeProjeto().forEach(ficha -> {
-            String funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
-            String nomeAvaliador = ficha.getAvaliador().getNome();
+            val funcaoAvaliador = Utils.retornarFuncaoAvaliador(ficha.getAvaliador());
+            val nomeAvaliador = ficha.getAvaliador().getNome();
 
             fichas.add(FichaDeAvaliacaoProjetoRelatorioFields.builder()
                     .autor(autor)
