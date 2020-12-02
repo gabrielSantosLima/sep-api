@@ -2,22 +2,23 @@ package com.ifam.sistema_estagio.processes;
 
 import java.util.*;
 
-import com.ifam.sistema_estagio.dto.RespostaAprovacaoBancaDto;
 import com.ifam.sistema_estagio.services.BancaService;
-import com.ifam.sistema_estagio.util.ManipularNumerosHexadecimais;
+import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
+import lombok.NonNull;
 import lombok.val;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.TaskService;
-import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
 
+import javax.transaction.Transactional;
+
 @Service
 public class SolicitarBancaProcess {
 	
-	private final String ID_PROCESSO = "solicitar-banca";
+	private final String NOME_ID_PROCESSO = "solicitar-banca";
 	private final String NOME_MENSAGEM_CONFIRMAR_PARTICIPACAO = "confirmarBancaMessage";
 	private final String NOME_MENSAGEM_APROVAR_BANCA = "aprovarBancaMessage";
 	public static final String VAR_BANCA = "banca";
@@ -35,53 +36,70 @@ public class SolicitarBancaProcess {
 	@Autowired
 	private BancaService bancaService;
 
+	@Transactional
 	public Map<String, Object> iniciarProcesso(BancaDto banca) throws Exception {
-		val variables = new HashMap<String, Object>();
-		val response = new HashMap<String, Object>();
-
 		if(banca == null) throw new Exception("Banca inválida");
 
+		val estagioSemCoordenador = banca.getParticipantes().stream()
+				.filter(participante -> participante.getFuncao() == FuncaoEstagio.COORDENADOR)
+				.count() == 0;
+		val estagioSemOrientador = banca.getParticipantes().stream()
+				.filter(participante -> participante.getFuncao() == FuncaoEstagio.ORIENTADOR)
+				.count() == 0;
+		if (estagioSemCoordenador) throw new Exception("Banca sem nenhum coordenador(a)");
+		if (estagioSemOrientador) throw new Exception("Banca sem nenhum orientador(a)");
+
+		val params = new HashMap<String, Object>();
+		params.put(VAR_BANCA, banca);
+		params.put(VAR_TOTAL_PARTICIPANTES, banca.getParticipantes().size());
+		params.put(VAR_PARTICIPANTES_CONFIRMADOS, new ArrayList<String>());
+		params.put(VAR_CONFIRMADO, false);
+		params.put(VAR_APROVADO, false);
+
+		val processInstance = runtimeService.startProcessInstanceByKey(
+				NOME_ID_PROCESSO,
+				params
+		);
+
+		val idParticipantes = new HashMap<String, Object>();
 		banca.getParticipantes().forEach(participante -> {
-			String idParticipante = ManipularNumerosHexadecimais.numeroAleatorio();
-			participante.setId(idParticipante);
-			response.put(participante.getNome(), idParticipante);
+			idParticipantes.put(participante.getNome(), participante.getId());
 		});
 
-		variables.put(VAR_BANCA, banca);
-		variables.put(VAR_TOTAL_PARTICIPANTES, banca.getParticipantes().size());
-		variables.put(VAR_PARTICIPANTES_CONFIRMADOS, new ArrayList<String>());
-		variables.put(VAR_CONFIRMADO, false);
-		variables.put(VAR_APROVADO, false);
-
-		ProcessInstance processInstance = runtimeService.startProcessInstanceByKey(ID_PROCESSO, variables);
-
-		response.put("idProcesso", processInstance.getId());
-
-		return response;
+		val resposta = new HashMap<String, Object>();
+		resposta.put("idProcesso", processInstance.getId());
+		resposta.put("idParticipantes", idParticipantes);
+		return resposta;
 	}
 
+	@Transactional
 	public long listarQuantidadeDeProcessos(){
-		return taskService.createTaskQuery().processDefinitionKey(ID_PROCESSO).count();
+		return runtimeService.createExecutionQuery().processInstanceId(NOME_ID_PROCESSO).count();
 	}
 
-	public BancaDto listarBancaPorProcesso(String idProcesso) throws Exception {
+	@Transactional
+	public BancaDto listarBancaPorProcesso(@NonNull String idProcesso) throws Exception {
 		if(idProcesso.isEmpty()) throw new Exception("Id de processo inválido");
 		val banca =  (BancaDto) retornarVariavel(idProcesso, VAR_BANCA);
 		return banca;
 	}
 
-	public void confirmarParticipacao(String idProcesso, String idParticipante, Boolean resposta){
-		val participantesConfirmados = (List<String>) retornarVariavel(idProcesso,VAR_PARTICIPANTES_CONFIRMADOS);
+	@Transactional
+	public void confirmarParticipacao(@NonNull String idProcesso, String idParticipante, Boolean resposta) throws Exception {
+		val participantesConfirmados = (List<String>) retornarVariavel(
+				idProcesso,
+				VAR_PARTICIPANTES_CONFIRMADOS
+		);
 		val totalParticipantes = (Integer) retornarVariavel(idProcesso,VAR_TOTAL_PARTICIPANTES);
 		val jaConfirmado = participantesConfirmados.contains(idParticipante);
 
-		if(jaConfirmado) return;
+		if(jaConfirmado) throw new Exception("Participante já confirmou/cancelou sua participação");
 
 		val naoConfirmou = !resposta;
 		if(naoConfirmou){
 			removerVariable(idProcesso, VAR_PARTICIPANTES_CONFIRMADOS);
 			mudarVariavel(idProcesso, VAR_CONFIRMADO, false);
-			enviarMensagem(NOME_MENSAGEM_CONFIRMAR_PARTICIPACAO, idProcesso);
+			enviarMensagem(idProcesso, NOME_MENSAGEM_CONFIRMAR_PARTICIPACAO);
 			return;
 		}
 
@@ -92,33 +110,45 @@ public class SolicitarBancaProcess {
 		if(totalParticipantes == participantesConfirmados.size()){
 			removerVariable(idProcesso, VAR_PARTICIPANTES_CONFIRMADOS);
 			mudarVariavel(idProcesso, VAR_CONFIRMADO, true);
-			enviarMensagem(NOME_MENSAGEM_CONFIRMAR_PARTICIPACAO, idProcesso);
+			enviarMensagem(idProcesso, NOME_MENSAGEM_CONFIRMAR_PARTICIPACAO);
 		}
 	}
+@Transactional
+	public void confirmarParticipacaoTodos(@NonNull String idProcesso) {
+		removerVariable(idProcesso, VAR_PARTICIPANTES_CONFIRMADOS);
+		mudarVariavel(idProcesso, VAR_CONFIRMADO, true);
+		enviarMensagem(idProcesso, NOME_MENSAGEM_CONFIRMAR_PARTICIPACAO);
+	}
 
-	public void verificarAprovacaoBanca(String idProcesso,Boolean resposta){
+	@Transactional
+	public void verificarAprovacaoBanca(@NonNull String idProcesso,Boolean resposta){
 		enviarResultadoBanca(idProcesso, resposta);
 	}
 
-	private void enviarResultadoBanca(String idProcesso, Boolean foiAprovado){
+	@Transactional
+	private void enviarResultadoBanca(@NonNull String idProcesso, Boolean foiAprovado){
 		mudarVariavel(idProcesso, VAR_APROVADO, foiAprovado);
-		enviarMensagem(NOME_MENSAGEM_APROVAR_BANCA, idProcesso);
+		enviarMensagem(idProcesso, NOME_MENSAGEM_APROVAR_BANCA);
 	}
 
-	private void enviarMensagem(String nomeMensagem, String idProcesso){
+	@Transactional
+	private void enviarMensagem(String idProcesso, String nomeMensagem){
 		runtimeService.createMessageCorrelation(nomeMensagem)
 				.processInstanceId(idProcesso)
 				.correlate();
 	}
 
+	@Transactional
 	private void mudarVariavel(String idProcesso, String nome, Object valor){
 		runtimeService.setVariable(idProcesso, nome, valor);
 	}
 
+	@Transactional
 	private Object retornarVariavel(String idProcesso, String nome){
 		return runtimeService.getVariable(idProcesso, nome);
 	}
 
+	@Transactional
 	private void removerVariable(String idProcesso, String nome){
 		runtimeService.removeVariable(idProcesso, nome);
 	}

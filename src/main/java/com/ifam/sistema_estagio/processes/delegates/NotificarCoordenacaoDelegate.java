@@ -29,7 +29,7 @@ public class NotificarCoordenacaoDelegate implements JavaDelegate {
         val idProcesso = execution.getProcessInstanceId();
         val resultado = execution.getVariable(SolicitarBancaProcess.VAR_BANCA);
 
-        if(!(resultado instanceof BancaDto)) throw new Exception("[notificação-banca] Erro ao notificar banca!");
+        if(!(resultado instanceof BancaDto)) throw new Exception("Erro ao notificar banca!");
 
         val banca = (BancaDto) resultado;
 
@@ -38,22 +38,18 @@ public class NotificarCoordenacaoDelegate implements JavaDelegate {
                 .stream()
                 .filter(participante -> participante.getFuncao() == FuncaoEstagio.COORDENADOR)
                 .findFirst();
-
         val coordenadorNaoExiste = !coordenadoraDto.isPresent();
+        if(coordenadorNaoExiste) throw new Exception("Sem coordenador(a) de banca");
 
-        if(coordenadorNaoExiste) throw new Exception("[notificação-banca] Sem coordenador(a) de banca");
-
-        val nome = coordenadoraDto.get().getId();
-        val coordenadora = coordenadoraService.encontrarPorId(nome);
-
+        val idCoordenadora = coordenadoraDto.get().getId();
+        val coordenadora = coordenadoraService.encontrarPorId(idCoordenadora);
         val coordenadorNaoEncontrado = !coordenadora.isPresent();
-
-        if(coordenadorNaoEncontrado) throw new Exception("[notificação-banca] Coordenadora não existe.");
+        if(coordenadorNaoEncontrado) throw new Exception("Coordenadora não existe.");
 
         val dataNotificacao = FormatarData.porMascaraDataPadrao(new Date());
-
         noticacaoBancasService.salvar(NotificacaoBancas.builder()
                 .dataNotificacao(dataNotificacao)
+                .jaVisualizado(false)
                 .idProcesso(idProcesso)
                 .coordenadora(coordenadora.get())
                 .build()

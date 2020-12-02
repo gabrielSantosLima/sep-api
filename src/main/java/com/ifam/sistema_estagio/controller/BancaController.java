@@ -1,5 +1,6 @@
 package com.ifam.sistema_estagio.controller;
 
+import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import com.ifam.sistema_estagio.services.BancaService;
 import com.ifam.sistema_estagio.util.enums.Curso;
 import lombok.val;
@@ -23,10 +24,7 @@ public class BancaController {
             val bancas = bancaService.listarPorCurso(curso);
             return ResponseEntity.ok(bancas);
         }catch (Exception e){
-            val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+            return ErroRequisicaoFactoryException.construir(e);
         }
     }
 
@@ -38,10 +36,7 @@ public class BancaController {
             if(bancaNaoExiste) return ResponseEntity.ok().build();
             return ResponseEntity.ok(banca.get());
         }catch (Exception e){
-            val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+            return ErroRequisicaoFactoryException.construir(e);
         }
     }
 
@@ -51,10 +46,7 @@ public class BancaController {
             bancaService.deletar(idBanca);
             return ResponseEntity.ok(true);
         }catch (Exception e){
-            val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+            return ErroRequisicaoFactoryException.construir(e);
         }
     }
 
@@ -64,10 +56,7 @@ public class BancaController {
             bancaService.finalizarBanca(idBanca);
             return ResponseEntity.ok(true);
         }catch (Exception e){
-            val mensagem = new HashMap<String, Object>();
-            mensagem.put("mensagem", e.getMessage());
-            mensagem.put("status", 404);
-            return ResponseEntity.status(404).body(mensagem);
+            return ErroRequisicaoFactoryException.construir(e);
         }
     }
 }

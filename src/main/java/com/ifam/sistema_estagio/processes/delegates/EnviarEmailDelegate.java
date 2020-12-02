@@ -20,6 +20,7 @@ import java.util.HashMap;
 public class EnviarEmailDelegate implements JavaDelegate{
 	private final String ASSUNTO = "SEP - Sistema de Estágio e PCCT - Confirmação de participação";
 	private final String NOME_SEM_AUTOR = "Sem definição";
+	private final String ROTA_CONFIRMACAO_PARTICIPACAO = "/solicitar-banca/confirmar-participacao/";
 
 	@Autowired
 	private EmailHtmlService emailService;
@@ -65,7 +66,7 @@ public class EnviarEmailDelegate implements JavaDelegate{
 			String data,
 			String hora
 	){
-		EmailSimplesDto email = new EmailSimplesDto();
+		val email = new EmailSimplesDto();
 		email.setTo(participante.getEmail());
 		email.setSubject(ASSUNTO);
 
@@ -78,14 +79,14 @@ public class EnviarEmailDelegate implements JavaDelegate{
 		params.put("titulo",titulo);
 		params.put("autor",nomeAutor);
 		params.put("url",
-				Aplicacao.BASE_URL.getValor() +
-				"/solicitar-banca/confirmar-participacao/" +
+				Aplicacao.BASE_URL.getValor() + ROTA_CONFIRMACAO_PARTICIPACAO +
 				idProcesso + "/" +
 				participante.getId()
 		);
 		email.setParams(params);
 		try{
-			emailService.send(email);
+			// TODO ativar novamente quando tiver internet
+//			emailService.send(email);
 		}catch (Exception e){
 			e.printStackTrace();
 		}

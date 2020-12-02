@@ -1,6 +1,6 @@
 package com.ifam.sistema_estagio.controller;
 
-import com.ifam.sistema_estagio.entity.Ata;
+import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import com.ifam.sistema_estagio.services.AtaService;
 
 import java.util.HashMap;
-import java.util.List;
 
 @RestController
 @RequestMapping("/atas")
@@ -25,29 +24,23 @@ public class AtaController {
 			val atas = ataService.listar();
 			return ResponseEntity.ok(atas);
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-			mensagem.put("mensagem", e.getMessage());
-			mensagem.put("status", 404);
-			return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
-	@GetMapping("/banca/{idBanca}")
-	public ResponseEntity<Object> encontrarPorBanca(@PathVariable String idBanca){
+	@GetMapping("/banca/{idAta}")
+	public ResponseEntity<Object> encontrarPorBanca(@PathVariable String idAta){
 		try{
-			val ata = ataService.encontrarPorBanca(idBanca);
+			val ata = ataService.encontrarPorBanca(idAta);
 			val ataNaoExiste = !ata.isPresent();
 			if(ataNaoExiste) return ResponseEntity.ok().build();
 			return ResponseEntity.ok(ata.get());
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-			mensagem.put("mensagem", e.getMessage());
-			mensagem.put("status", 404);
-			return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
-	@GetMapping("/{idBanca}")
+	@GetMapping("/{idAta}")
 	public ResponseEntity<Object> encontrarPorId(@PathVariable String idAta){
 		try{
 			val ata = ataService.encontrarPorId(idAta);
@@ -55,10 +48,7 @@ public class AtaController {
 			if(ataNaoExiste) return ResponseEntity.ok().build();
 			return ResponseEntity.ok(ata.get());
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-			mensagem.put("mensagem", e.getMessage());
-			mensagem.put("status", 404);
-			return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 
@@ -68,10 +58,7 @@ public class AtaController {
 			ataService.deletar(idAta);
 			return ResponseEntity.ok(true);
 		}catch (Exception e){
-			val mensagem = new HashMap<String, Object>();
-			mensagem.put("mensagem", e.getMessage());
-			mensagem.put("status", 404);
-			return ResponseEntity.status(404).body(mensagem);
+			return ErroRequisicaoFactoryException.construir(e);
 		}
 	}
 }

@@ -9,6 +9,6 @@ public class IniciaPedidoListener implements ExecutionListener {
 
     @Override
     public void notify(DelegateExecution execution) throws Exception {
-
+        System.out.println("[solicitação-banca] Processo iniciado: "+ execution.getProcessInstanceId());
     }
 }

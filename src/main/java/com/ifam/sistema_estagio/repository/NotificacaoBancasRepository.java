@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface NotificacaoBancasRepository extends JpaRepository<NotificacaoBancas, String> {
+    List<NotificacaoBancas> findByJaVisualizado(Boolean jaVisualizado);
     List<NotificacaoBancas> findByJaVisualizadoAndCoordenadora(Boolean jaVisualizado, Coordenadora coordenadora);
 }
