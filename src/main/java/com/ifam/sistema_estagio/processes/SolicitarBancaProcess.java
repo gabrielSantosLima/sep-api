@@ -70,12 +70,20 @@ public class SolicitarBancaProcess {
 		return banca;
 	}
 
-	public void confirmarParticipacao(String idProcesso, String idParticipante){
+	public void confirmarParticipacao(String idProcesso, String idParticipante, Boolean resposta){
 		val participantesConfirmados = (List<String>) retornarVariavel(idProcesso,VAR_PARTICIPANTES_CONFIRMADOS);
 		val totalParticipantes = (Integer) retornarVariavel(idProcesso,VAR_TOTAL_PARTICIPANTES);
 		val jaConfirmado = participantesConfirmados.contains(idParticipante);
 
 		if(jaConfirmado) return;
+
+		val naoConfirmou = !resposta;
+		if(naoConfirmou){
+			removerVariable(idProcesso, VAR_PARTICIPANTES_CONFIRMADOS);
+			mudarVariavel(idProcesso, VAR_CONFIRMADO, false);
+			enviarMensagem(NOME_MENSAGEM_CONFIRMAR_PARTICIPACAO, idProcesso);
+			return;
+		}
 
 		participantesConfirmados.add(idParticipante);
 
@@ -88,9 +96,8 @@ public class SolicitarBancaProcess {
 		}
 	}
 
-	public void verificarAprovacaoBanca(String idProcesso,RespostaAprovacaoBancaDto resposta){
-		val foiAprovado = resposta.getAprovaBanca();
-		enviarResultadoBanca(idProcesso, foiAprovado);
+	public void verificarAprovacaoBanca(String idProcesso,Boolean resposta){
+		enviarResultadoBanca(idProcesso, resposta);
 	}
 
 	private void enviarResultadoBanca(String idProcesso, Boolean foiAprovado){

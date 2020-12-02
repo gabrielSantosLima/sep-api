@@ -3,18 +3,18 @@ package com.ifam.sistema_estagio.processes.delegates;
 import com.ifam.sistema_estagio.dto.BancaDto;
 import com.ifam.sistema_estagio.dto.EmailSimplesDto;
 import com.ifam.sistema_estagio.dto.UsuarioDto;
+import com.ifam.sistema_estagio.email.EmailHtmlService;
 import com.ifam.sistema_estagio.processes.SolicitarBancaProcess;
-import com.ifam.sistema_estagio.email.EmailSimplesService;
 import com.ifam.sistema_estagio.util.FormatarData;
 import com.ifam.sistema_estagio.util.enums.Aplicacao;
 import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.val;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
 
 @Service("enviarEmailService")
 public class EnviarEmailDelegate implements JavaDelegate{
@@ -22,7 +22,7 @@ public class EnviarEmailDelegate implements JavaDelegate{
 	private final String NOME_SEM_AUTOR = "Sem definição";
 
 	@Autowired
-	private EmailSimplesService emailService;
+	private EmailHtmlService emailService;
 
 	@Override
 	public void execute(DelegateExecution execution) throws Exception {
@@ -66,66 +66,28 @@ public class EnviarEmailDelegate implements JavaDelegate{
 			String hora
 	){
 		EmailSimplesDto email = new EmailSimplesDto();
-		val mensagem = getMensagemBanca(
-			new MensagemBanca(
-					nomeAutor,
-					idProcesso,
-					titulo,
-					curso,
-					tipo,
-					data,
-					hora,
-					participante
-			)
-		);
-
 		email.setTo(participante.getEmail());
 		email.setSubject(ASSUNTO);
-		email.setMessage(mensagem);
 
+		val params = new HashMap<String, Object>();
+		params.put("nome", participante.getNome());
+		params.put("tipo",tipo);
+		params.put("curso",curso);
+		params.put("data", data);
+		params.put("horario",hora);
+		params.put("titulo",titulo);
+		params.put("autor",nomeAutor);
+		params.put("url",
+				Aplicacao.BASE_URL.getValor() +
+				"/solicitar-banca/confirmar-participacao/" +
+				idProcesso + "/" +
+				participante.getId()
+		);
+		email.setParams(params);
 		try{
 			emailService.send(email);
 		}catch (Exception e){
 			e.printStackTrace();
 		}
 	}
-
-	private String getMensagemBanca(MensagemBanca mensagemBanca){
-		return "Olá, " +
-				mensagemBanca.getParticipante().getNome() +
-				"\n" +
-				"Você foi convidado para participar da banca de " +
-				mensagemBanca.getTipo() +
-				" do curso de " +
-				mensagemBanca.getCurso() +
-				" no dia " +
-				mensagemBanca.getData() +
-				" às " +
-				mensagemBanca.getHora() +
-				"\n" +
-				"O título da apresentação será: " +
-				mensagemBanca.getTitulo() + "." +
-				"\n" +
-				"Apresentado por: " +
-				mensagemBanca.getNomeAutor() + "." +
-				"\n\n" +
-				"Confirme sua participação em: " +
-				Aplicacao.BASE_URL.getValor() + "/solicitar-banca/confirmar-participacao/" +
-				mensagemBanca.getIdProcesso() +
-				"/" +
-				mensagemBanca.getParticipante().getId();
-	}
-}
-
-@Getter
-@AllArgsConstructor
-class MensagemBanca{
-	private String nomeAutor;
-	private String idProcesso;
-	private String titulo;
-	private String curso;
-	private String tipo;
-	private String data;
-	private String hora;
-	private UsuarioDto participante;
 }

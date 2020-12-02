@@ -18,11 +18,9 @@ public class EmailSimplesService implements IEmailService{
 		try{
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setTo(email.getTo());
-			message.setText(email.getMessage());
 			message.setSubject(email.getSubject());
-
+			message.setText(email.getMessage());
 			emailSender.send(message);
-
 			return;
 		}catch (Exception e) {
 			throw new Exception("[email-texto-service] Erro ao enviar e-mail: " + e.getMessage());

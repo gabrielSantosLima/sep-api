@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.ifam.sistema_estagio.services.FichaDeAvaliacaoEstagioService;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -20,41 +21,50 @@ public class FichaDeAvaliacaoEstagioController {
 	private FichaDeAvaliacaoEstagioService fichaDeAvaliacaoEstagioService;
 
 	@PostMapping
-	public ResponseEntity<FichaDeAvaliacaoEstagio> salvar(
+	public ResponseEntity<Object> salvar(
 			@RequestBody FichaAvaliacaoEstagioDto fichaAvaliacaoEstagioDto
 	){
 		try{
 			val fichaCriada =  fichaDeAvaliacaoEstagioService.salvar(fichaAvaliacaoEstagioDto.construirEntidade());
 			return ResponseEntity.ok(fichaCriada);
 		}catch(Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@GetMapping
-	public ResponseEntity<List<FichaDeAvaliacaoEstagio>> listar(){
+	public ResponseEntity<Object> listar(){
 		try{
 			val fichas = fichaDeAvaliacaoEstagioService.listar();
 			return ResponseEntity.ok(fichas);
 		}catch(Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@GetMapping("/{idFicha}")
-	public ResponseEntity<FichaDeAvaliacaoEstagio> encontrarPorId(@PathVariable String idFicha){
+	public ResponseEntity<Object> encontrarPorId(@PathVariable String idFicha){
 		try{
 			val ficha = fichaDeAvaliacaoEstagioService.encontrarPorId(idFicha);
 			val fichaNaoExiste = !ficha.isPresent();
 			if(fichaNaoExiste) return null;
 			return ResponseEntity.ok(ficha.get());
 		}catch (Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@PutMapping
-	public ResponseEntity<FichaDeAvaliacaoEstagio> atualizar(
+	public ResponseEntity<Object> atualizar(
 			@RequestBody FichaAvaliacaoEstagioDto fichaAvaliacaoEstagioDto
 	){
 		try{
@@ -64,17 +74,23 @@ public class FichaDeAvaliacaoEstagioController {
 			);
 			return ResponseEntity.ok(fichaAtualizada);
 		}catch(Exception e){
-			return ResponseEntity.badRequest().build();
+			val mensagem = new HashMap<String, Object>();
+            mensagem.put("mensagem", e.getMessage());
+            mensagem.put("status", 404);
+            return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 
 	@DeleteMapping("/{idFicha}")
-	public ResponseEntity<Boolean> deletar(@PathVariable String idFicha){
+	public ResponseEntity<Object> deletar(@PathVariable String idFicha){
 		try{
 			fichaDeAvaliacaoEstagioService.deletar(idFicha);
 			return ResponseEntity.ok(true);
 		}catch (Exception e){
-			return ResponseEntity.badRequest().body(false);
+			val mensagem = new HashMap<String, Object>();
+			mensagem.put("mensagem", e.getMessage());
+			mensagem.put("status", 404);
+			return ResponseEntity.status(404).body(mensagem);
 		}
 	}
 }

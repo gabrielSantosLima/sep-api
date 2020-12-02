@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Map;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,4 +15,5 @@ public class EmailSimplesDto{
 	private String to;
 	private String subject;
 	private String message;
+	private Map<String, Object> params;
 }

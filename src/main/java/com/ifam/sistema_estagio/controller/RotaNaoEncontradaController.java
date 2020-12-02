@@ -1,20 +1,40 @@
 package com.ifam.sistema_estagio.controller;
 
+import lombok.val;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/**")
+@SuppressWarnings("unused")
 public class RotaNaoEncontradaController {
 
     @GetMapping
-    public ResponseEntity<Map<String, Object>> rotaNaoEncontrada(){
-        Map<String, Object> resposta = new HashMap<>();
+    public ResponseEntity<Object> rotaNaoEncontradaGet(){
+        val resposta = new HashMap<String, Object>();
+        resposta.put("mensagem", "Rota não encontrada");
+        return ResponseEntity.status(404).body(resposta);
+    }
+
+    @PostMapping
+    public ResponseEntity<Object> rotaNaoEncontradaPost(){
+        val resposta = new HashMap<String, Object>();
+        resposta.put("mensagem", "Rota não encontrada");
+        return ResponseEntity.status(404).body(resposta);
+    }
+
+    @PutMapping
+    public ResponseEntity<Object> rotaNaoEncontradaPut(){
+        val resposta = new HashMap<String, Object>();
+        resposta.put("mensagem", "Rota não encontrada");
+        return ResponseEntity.status(404).body(resposta);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Object> rotaNaoEncontradaDelete(){
+        val resposta = new HashMap<String, Object>();
         resposta.put("mensagem", "Rota não encontrada");
         return ResponseEntity.status(404).body(resposta);
     }
