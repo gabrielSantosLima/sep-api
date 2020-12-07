@@ -25,6 +25,16 @@ public class AlunoController {
         }
     }
 
+    @GetMapping("/estagio-pcct/{idEstagio}")
+    public ResponseEntity<Object> listarPorEstagio(@PathVariable String idEstagio){
+        try{
+            val alunos = alunoService.encontrarPorEstagioPcct(idEstagio);
+            return ResponseEntity.ok(alunos);
+        }catch(Exception e){
+            return ErroRequisicaoFactoryException.construir(e);
+        }
+    }
+
     @GetMapping("/{idAluno}")
     public ResponseEntity<Object> encontrarPorId(@PathVariable String idAluno){
         try{

@@ -17,6 +17,9 @@ public class BancaService extends GenericService<Banca, BancaRepository> {
 	@Autowired
 	private BancaRepository bancaRepository;
 
+	@Autowired
+	private EstagioPcctService estagioPcctService;
+
 	public Boolean finalizarBanca(String idBanca) throws Exception {
 		val banca = encontrarPorId(idBanca);
 		val naoExiste = !banca.isPresent();
@@ -29,5 +32,12 @@ public class BancaService extends GenericService<Banca, BancaRepository> {
 	public List<Banca> listarPorCurso(Curso curso){
 		if(curso == null) return listar();
 		return bancaRepository.findByCurso(curso);
+	}
+
+	public List<Banca> encontrarPorEstagioPcct(String idEstagio) throws Exception {
+		val estagioPCCT = estagioPcctService.encontrarPorId(idEstagio);
+		val estagioNaoEncontrado = !estagioPCCT.isPresent();
+		if(estagioNaoEncontrado) throw new Exception("Estágio/PCCT não existe");
+		return bancaRepository.findByEstagioPcct(estagioPCCT.get());
 	}
 }

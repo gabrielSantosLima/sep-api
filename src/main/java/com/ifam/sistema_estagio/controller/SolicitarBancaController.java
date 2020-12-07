@@ -70,7 +70,7 @@ public class SolicitarBancaController {
 	@GetMapping("/aprovar-banca/{idProcesso}")
 	public ResponseEntity<Object> aprovarBanca(
 			@PathVariable String idProcesso,
-			@RequestParam	 Boolean resposta
+			@RequestParam Boolean resposta
 	){
 		try{
 			solicitarBancaProcess.verificarAprovacaoBanca(idProcesso, resposta);

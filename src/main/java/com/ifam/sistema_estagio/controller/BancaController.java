@@ -26,6 +26,16 @@ public class BancaController {
         }
     }
 
+    @GetMapping("/estagio-pcct/{idEstagio}")
+    public ResponseEntity<Object> listarPorEstagioPcct(@PathVariable String idEstagio){
+        try{
+            val bancas = bancaService.encontrarPorEstagioPcct(idEstagio);
+            return ResponseEntity.ok(bancas);
+        }catch (Exception e){
+            return ErroRequisicaoFactoryException.construir(e);
+        }
+    }
+
     @GetMapping("/{idBanca}")
     public ResponseEntity<Object> encontrarPorId(@PathVariable String idBanca){
         try{

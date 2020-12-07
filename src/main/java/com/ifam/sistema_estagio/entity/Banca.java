@@ -60,7 +60,7 @@ public class Banca {
 	@OneToOne
 	private Ata ata;
 
-	@JsonBackReference
+	@JsonManagedReference
 	@ManyToMany
 	private List<Professor> avaliadores;
 

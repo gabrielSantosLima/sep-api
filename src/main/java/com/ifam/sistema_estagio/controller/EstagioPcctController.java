@@ -44,10 +44,10 @@ public class EstagioPcctController {
 		}
 	}
 
-	@GetMapping("/{idEstagioPcct}")
-	public ResponseEntity<Object> encontrarPorId(@PathVariable String idEstagioPcct){
+	@GetMapping("/{idEstagio}")
+	public ResponseEntity<Object> encontrarPorId(@PathVariable String idEstagio){
 		try{
-			val estagioPcct = estagioPcctService.encontrarPorId(idEstagioPcct);
+			val estagioPcct = estagioPcctService.encontrarPorId(idEstagio);
 			val estagioPcctNaoExiste = !estagioPcct.isPresent();
 			if(estagioPcctNaoExiste) throw new Exception("Estágio/PCCT não encontrado");;
 			return ResponseEntity.ok(estagioPcct.get());
