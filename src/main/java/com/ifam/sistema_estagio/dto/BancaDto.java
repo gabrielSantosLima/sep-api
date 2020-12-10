@@ -28,26 +28,18 @@ public class BancaDto implements Serializable,IObjetoDto<Banca>{
 	private Date horaInicio;
 	private Date horaFinalizado;
 	private EstagioPCCTDto estagioPCCT;
-	private List<UsuarioDto> participantes;
+	private List<UsuarioDto> avaliadores;
+	private UsuarioDto coordenadora;
 	private AtaDto ata;
+
+	public BancaDto(String id){
+		this.id = id;
+	}
 
 	@Override
 	public Banca construirEntidade() {
-		Coordenadora coordenadora = participantes.stream()
-				.filter(participante -> participante.getFuncao() == FuncaoEstagio.COORDENADOR)
-				.findFirst()
-				.get()
-				.construirCoordenadora();
-
-		List<Professor> avaliadores = participantes.stream()
-				.filter(participante ->
-						participante.getFuncao() == FuncaoEstagio.COLABORADOR ||
-						participante.getFuncao() == FuncaoEstagio.ORIENTADOR ||
-						participante.getFuncao() == FuncaoEstagio.COORDENADOR_ADJUNTO
-				)
-				.collect(Collectors.toList())
-				.stream()
-				.map(participante -> participante.construirProfessor())
+		List<Professor> avaliadoresEntidade = avaliadores.stream()
+				.map(participante -> participante == null ? null: participante.construirProfessor())
 				.collect(Collectors.toList());
 
 		return Banca.builder()
@@ -58,9 +50,9 @@ public class BancaDto implements Serializable,IObjetoDto<Banca>{
 				.tipo(tipo)
 				.horaFinalizado(horaFinalizado)
 				.horaInicio(horaInicio)
-				.coordenadora(coordenadora)
-				.estagioPcct(estagioPCCT.construirEntidade())
-				.avaliadores(avaliadores)
+				.coordenadora(coordenadora == null ? null : coordenadora.construirCoordenadora())
+				.estagioPcct(estagioPCCT == null? null : estagioPCCT.construirEntidade())
+				.avaliadores(avaliadoresEntidade)
 				.build();
 	}
 }

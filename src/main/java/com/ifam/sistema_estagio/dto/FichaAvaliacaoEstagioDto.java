@@ -22,12 +22,16 @@ public class FichaAvaliacaoEstagioDto implements IObjetoDto<FichaDeAvaliacaoEsta
     private UsuarioDto avaliador;
     private AtaDto ata;
 
+    public FichaAvaliacaoEstagioDto(String id){
+        this.id = id;
+    }
+
     @Override
     public FichaDeAvaliacaoEstagio construirEntidade() {
         return FichaDeAvaliacaoEstagio.builder()
                 .id(id)
-                .ata(ata.construirEntidade())
-                .professor(avaliador.construirProfessor())
+                .ata(ata == null ? null: ata.construirEntidade())
+                .professor(avaliador == null ? null: avaliador.construirProfessor())
                 .nota(NotaEstagio.builder()
                         .notaApresentacao(notaApresentacao)
                         .notaAtividades(notaAtividades)

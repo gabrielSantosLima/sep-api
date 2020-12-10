@@ -1,24 +1,18 @@
 package com.ifam.sistema_estagio.dto;
 
-import com.ifam.sistema_estagio.entity.Aluno;
 import com.ifam.sistema_estagio.entity.EstagioPCCT;
-import com.ifam.sistema_estagio.entity.Professor;
-import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 import com.ifam.sistema_estagio.util.enums.ModalidadeCurso;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.File;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Getter
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class EstagioPCCTDto implements IObjetoDto<EstagioPCCT>{
     private String id;
     private String titulo;
@@ -29,21 +23,16 @@ public class EstagioPCCTDto implements IObjetoDto<EstagioPCCT>{
     private TipoServico tipo;
     private File anexo;
     private ModalidadeCurso modalidadeCurso;
-    private List<UsuarioDto> participantes;
+    private UsuarioDto responsavel;
+    private List<UsuarioDto> alunos;
+    private List<BancaDto> bancas;
+
+    public EstagioPCCTDto(String id){
+        this.id = id;
+    }
 
     @Override
     public EstagioPCCT construirEntidade() {
-        Professor responsavel = participantes.stream()
-                .filter(participante -> participante.getFuncao() == FuncaoEstagio.ORIENTADOR)
-                .findFirst()
-                .get()
-                .construirProfessor();
-
-        List<Aluno> alunos = participantes.stream()
-                .filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
-                .map(participante -> participante.construirAluno())
-                .collect(Collectors.toList());
-
         return EstagioPCCT.builder()
                 .id(id)
                 .cargaHoraria(cargaHoraria)
@@ -52,8 +41,7 @@ public class EstagioPCCTDto implements IObjetoDto<EstagioPCCT>{
                 .descricao(descricao)
                 .tipo(tipo)
                 .titulo(titulo)
-                .responsavel(responsavel)
-                .alunos(alunos)
+                .responsavel(responsavel == null ? null : responsavel.construirProfessor())
                 .modalidadeCurso(modalidadeCurso)
                 .anexo(anexo)
                 .build();

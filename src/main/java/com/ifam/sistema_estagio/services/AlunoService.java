@@ -3,7 +3,7 @@ package com.ifam.sistema_estagio.services;
 import java.util.List;
 import java.util.Optional;
 
-import com.ifam.sistema_estagio.entity.EstagioPCCT;
+import com.ifam.sistema_estagio.entity.Coordenadora;
 import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +24,28 @@ public class AlunoService extends GenericService<Aluno, AlunoRepository>{
 		return alunoRepository.findByNomeContainingIgnoreCase(nome);
 	}
 
+	public List<Aluno> encontrarPorMatricula(String matricula){
+		return alunoRepository.findByMatriculaContainingIgnoreCase(matricula);
+	}
+
 	public List<Aluno> encontrarPorEstagioPcct(String idEstagio) throws Exception {
 		val estagioPCCT = estagioPcctService.encontrarPorId(idEstagio);
 		val estagioNaoEncontrado = !estagioPCCT.isPresent();
 		if(estagioNaoEncontrado) throw new Exception("Estágio/PCCT não existe");
 		return alunoRepository.findByEstagioPcct(estagioPCCT.get());
+	}
+
+	@Override
+	public Aluno salvar(Aluno aluno) throws Exception {
+		val alunoOptional = encontrarPorCpf(aluno.getCpf());
+		if(alunoOptional.isPresent()){
+			return alunoOptional.get();
+		}
+		return super.salvar(aluno);
+	}
+
+
+	public Optional<Aluno> encontrarPorCpf(String cpf){
+		return alunoRepository.findByCpf(cpf);
 	}
 }

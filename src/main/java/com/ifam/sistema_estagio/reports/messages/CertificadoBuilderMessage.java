@@ -20,10 +20,10 @@ public class CertificadoBuilderMessage implements IBuilderMessage<List<Certifica
         val curso = Utils.retornarCurso(o);
         val tipoBanca = Utils.retornarTipoBanca(o);
 
-        o.getParticipantes().forEach(participante -> {
+        o.getAvaliadores().forEach(avaliador -> {
             val data = FormatarData.porMascaraDataPadraoNomeCidade(o.getData());
             val mensagem = retornarMensagemCompleta(
-                    participante,
+                    avaliador,
                     nomeDiscentes,
                     curso,
                     tipoBanca
@@ -35,6 +35,37 @@ public class CertificadoBuilderMessage implements IBuilderMessage<List<Certifica
                     .build()
             );
         });
+
+        o.getEstagioPCCT().getAlunos().forEach(aluno -> {
+            val data = FormatarData.porMascaraDataPadraoNomeCidade(o.getData());
+            val mensagem = retornarMensagemCompleta(
+                    aluno,
+                    nomeDiscentes,
+                    curso,
+                    tipoBanca
+            );
+
+            certificados.add(CertificadoFields.builder()
+                    .data(data)
+                    .mensagem(mensagem)
+                    .build()
+            );
+        });
+
+        val data = FormatarData.porMascaraDataPadraoNomeCidade(o.getData());
+        val mensagem = retornarMensagemCompleta(
+                o.getCoordenadora(),
+                nomeDiscentes,
+                curso,
+                tipoBanca
+        );
+
+        certificados.add(CertificadoFields.builder()
+                .data(data)
+                .mensagem(mensagem)
+                .build()
+        );
+
         return certificados;
     }
 

@@ -29,7 +29,7 @@ public class EnviarEmailDelegate implements JavaDelegate{
 	public void execute(DelegateExecution execution) throws Exception {
 		val idInstance = execution.getProcessInstanceId();
 		val banca = (BancaDto) execution.getVariable(SolicitarBancaProcess.VAR_BANCA);
-		val participantes = banca.getParticipantes();
+		val participantes = banca.getAvaliadores();
 
 		val autor = participantes.stream()
 				.filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)

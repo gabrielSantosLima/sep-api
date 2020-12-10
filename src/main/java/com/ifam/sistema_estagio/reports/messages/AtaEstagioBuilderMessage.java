@@ -20,7 +20,7 @@ public class AtaEstagioBuilderMessage implements IBuilderMessage<List<AtaEstagio
         val membro1 = retornarColaboradores(o).get(0).getNome();
         val membro2 = retornarColaboradores(o).get(1).getNome();
         val presidente = Utils.retornarOrientador(o).getNome();
-        val coordenador = Utils.retornarCoordenador(o).getNome();
+        val coordenador = o.getCoordenadora().getNome();
         val horaFinalizado = FormatarData.porMascaraHoraPadrao(o.getHoraFinalizado());
 
         Utils.retornarDiscentes(o).forEach(discente -> {

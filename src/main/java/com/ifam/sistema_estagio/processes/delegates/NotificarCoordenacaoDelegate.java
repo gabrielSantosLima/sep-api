@@ -6,7 +6,6 @@ import com.ifam.sistema_estagio.processes.SolicitarBancaProcess;
 import com.ifam.sistema_estagio.services.CoordenadoraService;
 import com.ifam.sistema_estagio.services.NoticacaoBancasService;
 import com.ifam.sistema_estagio.util.FormatarData;
-import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 import lombok.val;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -33,15 +32,9 @@ public class NotificarCoordenacaoDelegate implements JavaDelegate {
 
         val banca = (BancaDto) resultado;
 
-        val coordenadoraDto = banca
-                .getParticipantes()
-                .stream()
-                .filter(participante -> participante.getFuncao() == FuncaoEstagio.COORDENADOR)
-                .findFirst();
-        val coordenadorNaoExiste = !coordenadoraDto.isPresent();
-        if(coordenadorNaoExiste) throw new Exception("Sem coordenador(a) de banca");
+        val coordenadoraDto = banca.getCoordenadora();
 
-        val idCoordenadora = coordenadoraDto.get().getId();
+        val idCoordenadora = coordenadoraDto.getId();
         val coordenadora = coordenadoraService.encontrarPorId(idCoordenadora);
         val coordenadorNaoEncontrado = !coordenadora.isPresent();
         if(coordenadorNaoEncontrado) throw new Exception("Coordenadora não existe.");

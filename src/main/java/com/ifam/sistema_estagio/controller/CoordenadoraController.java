@@ -1,5 +1,6 @@
 package com.ifam.sistema_estagio.controller;
 
+import com.ifam.sistema_estagio.dto.UsuarioDto;
 import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import com.ifam.sistema_estagio.services.CoordenadoraService;
 import lombok.val;
@@ -25,6 +26,16 @@ public class CoordenadoraController {
         }
     }
 
+    @PostMapping
+    public ResponseEntity<Object> salvar(@RequestBody UsuarioDto usuarioDto){
+        try{
+            val coordenadora = coordenadoraService.salvar(usuarioDto.construirCoordenadora());
+            return ResponseEntity.ok(coordenadora);
+        }catch(Exception e){
+            return ErroRequisicaoFactoryException.construir(e);
+        }
+    }
+
     @GetMapping("/{idCoordenadora}")
     public ResponseEntity<Object> encontrarPorId(@PathVariable String idCoordenadora){
         try{
@@ -41,6 +52,16 @@ public class CoordenadoraController {
     public ResponseEntity<Object> encontrarPorNome(@RequestParam String nome){
         try{
             val coordenadoras = coordenadoraService.encontrarPorNome(nome);
+            return ResponseEntity.ok(coordenadoras);
+        }catch (Exception e){
+            return ErroRequisicaoFactoryException.construir(e);
+        }
+    }
+
+    @GetMapping("/encontrar-matricula")
+    public ResponseEntity<Object> encontrarPorMatricula(@RequestParam String matricula){
+        try{
+            val coordenadoras = coordenadoraService.encontrarPorMatricula(matricula);
             return ResponseEntity.ok(coordenadoras);
         }catch (Exception e){
             return ErroRequisicaoFactoryException.construir(e);
