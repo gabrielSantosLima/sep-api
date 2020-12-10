@@ -40,18 +40,15 @@ public class SolicitarBancaProcess {
 	public Map<String, Object> iniciarProcesso(BancaDto banca) throws Exception {
 		if(banca == null) throw new Exception("Banca inválida");
 
-		val estagioSemCoordenador = banca.getParticipantes().stream()
-				.filter(participante -> participante.getFuncao() == FuncaoEstagio.COORDENADOR)
-				.count() == 0;
-		val estagioSemOrientador = banca.getParticipantes().stream()
-				.filter(participante -> participante.getFuncao() == FuncaoEstagio.ORIENTADOR)
-				.count() == 0;
+		val estagioSemCoordenador = banca.getCoordenadora() == null;
+		val estagioSemOrientador = banca.getEstagioPCCT().getResponsavel() == null;
+
 		if (estagioSemCoordenador) throw new Exception("Banca sem nenhum coordenador(a)");
 		if (estagioSemOrientador) throw new Exception("Banca sem nenhum orientador(a)");
 
 		val params = new HashMap<String, Object>();
 		params.put(VAR_BANCA, banca);
-		params.put(VAR_TOTAL_PARTICIPANTES, banca.getParticipantes().size());
+		params.put(VAR_TOTAL_PARTICIPANTES, banca.getAvaliadores().size());
 		params.put(VAR_PARTICIPANTES_CONFIRMADOS, new ArrayList<String>());
 		params.put(VAR_CONFIRMADO, false);
 		params.put(VAR_APROVADO, false);
@@ -62,7 +59,7 @@ public class SolicitarBancaProcess {
 		);
 
 		val idParticipantes = new HashMap<String, Object>();
-		banca.getParticipantes().forEach(participante -> {
+		banca.getAvaliadores().forEach(participante -> {
 			idParticipantes.put(participante.getNome(), participante.getId());
 		});
 

@@ -24,6 +24,7 @@ public class BancaService extends GenericService<Banca, BancaRepository> {
 		val banca = encontrarPorId(idBanca);
 		val naoExiste = !banca.isPresent();
 		if(naoExiste) return false;
+		if(banca.get().getHoraFinalizado() != null) return true;
 		banca.get().setHoraFinalizado(new Date());
 		atualizar(idBanca, banca.get());
 		return true;

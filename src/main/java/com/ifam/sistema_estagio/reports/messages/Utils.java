@@ -34,7 +34,7 @@ public class Utils {
     }
 
     public static List<UsuarioDto> retornarDiscentes(BancaDto o){
-        return o.getParticipantes().stream()
+        return o.getEstagioPCCT().getAlunos().stream()
                 .filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
                 .collect(Collectors.toList());
     }
@@ -52,25 +52,13 @@ public class Utils {
     }
 
     public static List<UsuarioDto> retornarAvaliadores(BancaDto o){
-        return o.getParticipantes()
+        return o.getAvaliadores()
                 .stream()
                 .filter(participante -> participante.getFuncao() != FuncaoEstagio.DISCENTE)
                 .collect(Collectors.toList());
     }
     public static UsuarioDto retornarOrientador(BancaDto o){
-        return o.getParticipantes()
-                .stream()
-                .filter(participante -> participante.getFuncao() == FuncaoEstagio.ORIENTADOR)
-                .findFirst()
-                .get();
-    }
-
-    public static UsuarioDto retornarCoordenador(BancaDto o){
-        return o.getParticipantes()
-                .stream()
-                .filter(participante -> participante.getFuncao() == FuncaoEstagio.COORDENADOR)
-                .findFirst()
-                .get();
+        return o.getEstagioPCCT().getResponsavel();
     }
 
     public static String retornarNomeAvaliadoresComQuebraDeLinha(BancaDto o){

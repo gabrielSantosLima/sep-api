@@ -16,7 +16,8 @@ public class CertificadoFrenteBuilderMessage implements IBuilderMessage<List<Fre
         val data = Utils.retornarDataPadraoNomeCidade(o);
         val titulo = Utils.retornarTitulo(o);
         val participantes = Utils.retornarNomeAvaliadoresComQuebraDeLinha(o);
-        o.getParticipantes().forEach(participante -> {
+
+        o.getAvaliadores().forEach(participante -> {
             certificados.add(FrenteCertificadoFields.builder()
                     .autores(autores)
                     .data(data)
@@ -25,6 +26,24 @@ public class CertificadoFrenteBuilderMessage implements IBuilderMessage<List<Fre
                     .build()
             );
         });
+
+        o.getEstagioPCCT().getAlunos().forEach(participante -> {
+            certificados.add(FrenteCertificadoFields.builder()
+                    .autores(autores)
+                    .data(data)
+                    .titulo(titulo)
+                    .participantes(participantes)
+                    .build()
+            );
+        });
+
+        certificados.add(FrenteCertificadoFields.builder()
+                .autores(autores)
+                .data(data)
+                .titulo(titulo)
+                .participantes(participantes)
+                .build()
+        );
         return certificados;
     }
 
@@ -34,15 +53,14 @@ public class CertificadoFrenteBuilderMessage implements IBuilderMessage<List<Fre
         val autores = Utils.retornarNomeDiscentes(o);
         val titulo = Utils.retornarTitulo(o);
         val participantes = Utils.retornarNomeAvaliadoresComQuebraDeLinha(o);
-        o.getParticipantes().forEach(participante -> {
-            certificados.add(FrenteCertificadoFields.builder()
-                    .autores(autores)
-                    .data(CAMPO_VAZIO)
-                    .titulo(titulo)
-                    .participantes(participantes)
-                    .build()
-            );
-        });
+
+        certificados.add(FrenteCertificadoFields.builder()
+                .autores(autores)
+                .data(CAMPO_VAZIO)
+                .titulo(titulo)
+                .participantes(participantes)
+                .build()
+        );
         return certificados;
     }
 }

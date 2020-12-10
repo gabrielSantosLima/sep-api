@@ -4,10 +4,7 @@ import com.ifam.sistema_estagio.entity.Ata;
 import com.ifam.sistema_estagio.entity.FichaDeAvaliacaoEstagio;
 import com.ifam.sistema_estagio.entity.FichaDeAvaliacaoProjeto;
 import com.ifam.sistema_estagio.util.enums.TipoServico;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +13,7 @@ import java.util.stream.Collectors;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class AtaDto implements IObjetoDto<Ata>{
     private String id;
     private Double mediaTotal;
@@ -25,14 +23,18 @@ public class AtaDto implements IObjetoDto<Ata>{
     private List<FichaAvaliacaoEstagioDto> fichasDeEstagio;
     private List<FichaAvaliacaoProjetoDto> fichasDeProjeto;
 
+    public AtaDto(String id){
+        this.id = id;
+    }
+
     @Override
     public Ata construirEntidade() {
         List<FichaDeAvaliacaoEstagio> fichaDeAvaliacaoEstagios = fichasDeEstagio.stream()
-                .map(ficha -> ficha.construirEntidade())
+                .map(ficha -> ficha == null ? null : ficha.construirEntidade())
                 .collect(Collectors.toList());
 
         List<FichaDeAvaliacaoProjeto> fichaDeAvaliacaoProjetos = fichasDeProjeto.stream()
-                .map(ficha -> ficha.construirEntidade())
+                .map(ficha -> ficha == null ? null : ficha.construirEntidade())
                 .collect(Collectors.toList());
 
         return Ata.builder()

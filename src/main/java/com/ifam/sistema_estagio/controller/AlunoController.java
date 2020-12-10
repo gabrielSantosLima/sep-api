@@ -1,5 +1,6 @@
 package com.ifam.sistema_estagio.controller;
 
+import com.ifam.sistema_estagio.dto.UsuarioDto;
 import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
 import com.ifam.sistema_estagio.services.AlunoService;
 import lombok.val;
@@ -20,6 +21,16 @@ public class AlunoController {
         try{
             val alunos = alunoService.listar();
             return ResponseEntity.ok(alunos);
+        }catch(Exception e){
+            return ErroRequisicaoFactoryException.construir(e);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<Object> salvar(@RequestBody UsuarioDto usuarioDto){
+        try{
+            val aluno = alunoService.salvar(usuarioDto.construirAluno());
+            return ResponseEntity.ok(aluno);
         }catch(Exception e){
             return ErroRequisicaoFactoryException.construir(e);
         }
@@ -51,6 +62,16 @@ public class AlunoController {
     public ResponseEntity<Object> encontrarPorNome(@RequestParam String nome){
         try{
             val alunos = alunoService.encontrarPorNome(nome);
+            return ResponseEntity.ok(alunos);
+        }catch (Exception e){
+            return ErroRequisicaoFactoryException.construir(e);
+        }
+    }
+
+    @GetMapping("/encontrar-matricula")
+    public ResponseEntity<Object> encontrarPorMatricula(@RequestParam String matricula){
+        try{
+            val alunos = alunoService.encontrarPorMatricula(matricula);
             return ResponseEntity.ok(alunos);
         }catch (Exception e){
             return ErroRequisicaoFactoryException.construir(e);

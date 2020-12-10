@@ -16,6 +16,7 @@ import java.util.Date;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class UsuarioDto implements IObjetoUsuarioDto {
 	private String id;
 	private String matricula;
@@ -30,12 +31,16 @@ public class UsuarioDto implements IObjetoUsuarioDto {
 	private GrauAcademico grau;
 	private EstagioPCCTDto estagioPcct;
 
+	public UsuarioDto(String id){
+		this.id = id;
+	}
+
 	@Override
 	public Aluno construirAluno() {
 		Aluno aluno = Aluno.builder()
 				.curso(curso)
 				.dataConclusao(dataConclusao)
-				.estagioPcct(estagioPcct.construirEntidade())
+				.estagioPcct(estagioPcct == null ? null : estagioPcct.construirEntidade())
 				.modalidadeCurso(modalidadeCurso)
 				.turma(turma)
 				.build();
