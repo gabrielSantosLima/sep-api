@@ -25,14 +25,14 @@ public class ProfessorService extends GenericService<Professor, ProfessorReposit
 
     @Override
     public Professor salvar(Professor professor) throws Exception {
-        val professorOptional = encontrarPorCpf(professor.getCpf());
-        if(professorOptional.isPresent()){
-            return professorOptional.get();
+        val professores = encontrarPorCpf(professor.getCpf());
+        if(professores.size() > 0){
+            return professores.get(0);
         }
         return super.salvar(professor);
     }
 
-    public Optional<Professor> encontrarPorCpf(String cpf){
+    public List<Professor> encontrarPorCpf(String cpf){
         return professorRepository.findByCpf(cpf);
     }
 }

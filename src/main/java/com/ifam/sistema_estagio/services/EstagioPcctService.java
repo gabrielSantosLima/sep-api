@@ -16,8 +16,9 @@ public class EstagioPcctService extends GenericService<EstagioPCCT, EstagioPcctR
 	@Autowired
 	private EstagioPcctRepository estagioPcctRepository;
 
-	public List<EstagioPCCT> listar(TipoServico tipo) {
+	public List<EstagioPCCT> listar(TipoServico tipo, String titulo) {
 		if(tipo == null) return listar();
+		if(titulo != null) return estagioPcctRepository.findByTitulo(titulo);
 		return estagioPcctRepository.findByTipo(tipo);
 	}
 

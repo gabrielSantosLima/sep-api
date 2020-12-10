@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface EstagioPcctRepository extends JpaRepository<EstagioPCCT, String>{
     List<EstagioPCCT> findByTipo(TipoServico tipo);
+    List<EstagioPCCT> findByTitulo(String titulo);
 }
