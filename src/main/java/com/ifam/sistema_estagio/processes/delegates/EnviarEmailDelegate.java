@@ -5,9 +5,9 @@ import com.ifam.sistema_estagio.dto.EmailSimplesDto;
 import com.ifam.sistema_estagio.dto.UsuarioDto;
 import com.ifam.sistema_estagio.email.EmailHtmlService;
 import com.ifam.sistema_estagio.processes.SolicitarBancaProcess;
+import com.ifam.sistema_estagio.reports.messages.Utils;
 import com.ifam.sistema_estagio.util.FormatarData;
 import com.ifam.sistema_estagio.util.enums.Aplicacao;
-import com.ifam.sistema_estagio.util.enums.FuncaoEstagio;
 import lombok.val;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -29,20 +29,16 @@ public class EnviarEmailDelegate implements JavaDelegate{
 	public void execute(DelegateExecution execution) throws Exception {
 		val idInstance = execution.getProcessInstanceId();
 		val banca = (BancaDto) execution.getVariable(SolicitarBancaProcess.VAR_BANCA);
-		val participantes = banca.getAvaliadores();
+		val autores = banca.getEstagioPCCT().getAlunos();
 
-		val autor = participantes.stream()
-				.filter(participante -> participante.getFuncao() == FuncaoEstagio.DISCENTE)
-				.findFirst();
-
-		val nomeAutor = autor.isPresent() ? autor.get().getNome() : NOME_SEM_AUTOR;
+		val nomeAutor = !autores.isEmpty() ? Utils.retornarNomeDiscentes(banca) : NOME_SEM_AUTOR;
 		val dataFormatada = FormatarData.porMascaraDataPadrao(banca.getData());
 		val horaFormatada = FormatarData.porMascaraHoraPadrao(banca.getHoraInicio());
 		val tipo = banca.getTipo().getValor().toLowerCase();
 		val curso = banca.getCurso().retornarNomeCurso().toLowerCase();
 		val titulo = banca.getEstagioPCCT().getTitulo();
 
-		participantes.forEach(participante -> {
+		banca.getAvaliadores().forEach(participante -> {
 			try {
 				enviarEmail(
 						nomeAutor,

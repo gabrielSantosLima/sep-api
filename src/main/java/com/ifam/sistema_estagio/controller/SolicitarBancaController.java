@@ -1,12 +1,14 @@
 package com.ifam.sistema_estagio.controller;
 
 import com.ifam.sistema_estagio.exceptions.ErroRequisicaoFactoryException;
+import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.ifam.sistema_estagio.dto.BancaDto;
 import com.ifam.sistema_estagio.processes.SolicitarBancaProcess;
+import org.springframework.web.servlet.ModelAndView;
 
 @RestController
 @RequestMapping("/solicitar-banca")
@@ -44,14 +46,15 @@ public class SolicitarBancaController {
 	}
 
 	@GetMapping("/confirmar-participacao/{idProcesso}/{idParticipante}")
-	public ResponseEntity<Object> confirmarParticipacao(
+	public Object confirmarParticipacao(
 			@PathVariable String idProcesso,
 			@PathVariable String idParticipante,
 			@RequestParam Boolean resposta
 	){
 		try{
+		    val modelAndView = new ModelAndView("resposta-confirmacao");
 			solicitarBancaProcess.confirmarParticipacao(idProcesso, idParticipante, resposta);
-			return ResponseEntity.ok(true);
+			return modelAndView;
 		}catch (Exception e){
 			return ErroRequisicaoFactoryException.construir(e);
 		}

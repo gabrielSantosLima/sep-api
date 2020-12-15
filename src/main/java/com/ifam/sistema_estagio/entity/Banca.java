@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.ifam.sistema_estagio.config.IdentificadorHexadecimalGenerator;
 import com.ifam.sistema_estagio.util.ManipularNumerosHexadecimais;
