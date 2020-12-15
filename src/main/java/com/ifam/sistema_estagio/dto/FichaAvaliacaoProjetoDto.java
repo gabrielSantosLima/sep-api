@@ -1,10 +1,7 @@
 package com.ifam.sistema_estagio.dto;
 
 import com.ifam.sistema_estagio.entity.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
@@ -12,6 +9,7 @@ import java.io.Serializable;
 @Setter
 @Builder
 @AllArgsConstructor
+@NoArgsConstructor
 public class FichaAvaliacaoProjetoDto implements IObjetoDto<FichaDeAvaliacaoProjeto> {
     private String id;
     private Double notaSlide;

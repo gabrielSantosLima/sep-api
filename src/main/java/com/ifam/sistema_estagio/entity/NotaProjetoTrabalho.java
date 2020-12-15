@@ -9,6 +9,8 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class NotaProjetoTrabalho {
 
 	@Column(name = "nota_apresentacao")

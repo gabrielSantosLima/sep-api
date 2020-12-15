@@ -28,13 +28,13 @@ public class CoordenadoraService extends GenericService<Coordenadora, Coordenado
 	@Override
 	public Coordenadora salvar(Coordenadora coordenadora) throws Exception {
 		val coordenadoraOptional = encontrarPorCpf(coordenadora.getCpf());
-		if(coordenadoraOptional.isPresent()){
-			return coordenadoraOptional.get();
+		if(coordenadoraOptional.size() > 0){
+			return coordenadoraOptional.get(0);
 		}
 		return super.salvar(coordenadora);
 	}
 
-	public Optional<Coordenadora> encontrarPorCpf(String cpf){
+	public List<Coordenadora> encontrarPorCpf(String cpf){
 		return coordenadoraRepository.findByCpf(cpf);
 	}
 }

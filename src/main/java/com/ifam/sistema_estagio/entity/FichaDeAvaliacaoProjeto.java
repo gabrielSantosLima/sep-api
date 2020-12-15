@@ -12,6 +12,8 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "fichas_de_avaliacoes_projeto")
 public class FichaDeAvaliacaoProjeto{
 

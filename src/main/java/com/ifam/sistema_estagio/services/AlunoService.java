@@ -37,15 +37,15 @@ public class AlunoService extends GenericService<Aluno, AlunoRepository>{
 
 	@Override
 	public Aluno salvar(Aluno aluno) throws Exception {
-		val alunoOptional = encontrarPorCpf(aluno.getCpf());
-		if(alunoOptional.isPresent()){
-			return alunoOptional.get();
+		val alunos = encontrarPorCpf(aluno.getCpf());
+		if(alunos.size() > 0){
+			return alunos.get(0);
 		}
 		return super.salvar(aluno);
 	}
 
 
-	public Optional<Aluno> encontrarPorCpf(String cpf){
+	public List<Aluno> encontrarPorCpf(String cpf){
 		return alunoRepository.findByCpf(cpf);
 	}
 }
