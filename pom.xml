@@ -98,14 +98,6 @@
 		</dependency>
 
 		<dependency>
-			<groupId>fonts.arial</groupId>
-			<artifactId>arial</artifactId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}\src\main\resources\fonts\Arial.jar</systemPath>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
